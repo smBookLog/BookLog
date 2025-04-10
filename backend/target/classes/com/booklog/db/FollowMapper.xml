@@ -1,3 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.booklog.db.FollowMapper"></mapper>
+<mapper namespace="com.booklog.db.FollowMapper">
+
+	<insert id="insertFollow"
+		parameterType="com.booklog.model.FollowDTO">
+		INSERT INTO FOLLOW (FOLLOWER_ID, FOLLOWING_ID, FOLLOW_DATE)
+		VALUES (#{followerId}, #{followingId}, NOW())
+	</insert>
+
+	<delete id="deleteFollow">
+		DELETE FROM FOLLOW
+		WHERE FOLLOWER_ID = #{followerId}
+		AND FOLLOWING_ID = #{followingId}
+	</delete>
+
+	<select id="findFollowing" resultType="string">
+		SELECT FOLLOWING_ID
+		FROM FOLLOW
+		WHERE FOLLOWER_ID = #{userId}
+	</select>
+
+	<select id="findFollowers" resultType="string">
+		SELECT FOLLOWER_ID
+		FROM FOLLOW
+		WHERE FOLLOWING_ID = #{userId}
+	</select>
+
+
+</mapper>

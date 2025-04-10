@@ -11,17 +11,45 @@ import com.booklog.model.ReadingLogDTO;
 @Mapper
 public interface ReadingLogMapper {
 
-   ArrayList<ReadingLogDTO> findMyLogs(@Param("userId") String userId, @Param("status") String status);
+	ArrayList<ReadingLogDTO> findMyLogs(@Param("userId") String userId, @Param("status") String status);
 
-   ArrayList<String> findTagsByLogIdx(int logIdx);
+	ArrayList<String> findTagsByLogIdx(int logIdx);
 
-   ArrayList<String> findQuotesByLogIdx(int logIdx);
-   
-   ArrayList<ReadingLogDTO> findLogs(@Param("userId") String userId, @Param("logIdx") int logIdx);
-   
-   ArrayList<CommentDTO> findCommentsByLogIdx(int logIdx);
+	ArrayList<String> findQuotesByLogIdx(int logIdx);
 
-   int insertLog(ReadingLogDTO log);
-   
-   
+	ArrayList<ReadingLogDTO> findLogs(@Param("userId") String userId, @Param("logIdx") int logIdx);
+
+	ArrayList<CommentDTO> findCommentsByLogIdx(int logIdx);
+
+	// 독서 기록 추가
+	int insertLog(ReadingLogDTO log);
+
+	// 독서 기록 수정
+	int updateLog(ReadingLogDTO log);
+
+	// 태그 전체 삭제
+	void deleteAllTags(int logIdx);
+
+	// 인용구 전체 삭제
+	void deleteAllQuotes(@Param("bookIdx") int bookIdx, @Param("userId") String userId);
+
+	// 태그 저장 전 TAG 테이블에 있는지 확인하고 없으면 삽입
+	void insertTag(@Param("tag") String tag);
+
+	// 삽입된 태그 이름으로 TAG_IDX 찾기
+	Integer selectTagIdxByName(@Param("tag") String tag);
+
+	// READING_LOG_TAG 테이블에 태그 연결
+	void insertReadingLogTag(@Param("logIdx") int logIdx, @Param("tagIdx") int tagIdx, @Param("userId") String userId);
+
+	// 인용구 삽입
+	void insertQuote(@Param("userId") String userId, @Param("bookIdx") int bookIdx, @Param("quote") String quote);
+
+	// 독서 기록 삭제
+	int deleteLog(int logIdx);
+	
+	// 인용구 하나 삭제
+	int deleteQuote(@Param("quoteIdx") int quoteIdx);
+
+
 }
