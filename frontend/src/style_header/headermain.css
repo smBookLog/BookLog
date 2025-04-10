@@ -1,0 +1,105 @@
+/* 전체 헤더 */
+.header {
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 상단 요소 가로 정렬 (중앙 기준) */
+.header-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* 로고 */
+.logo {
+  width: 150px;
+  height: auto;
+}
+
+/* 메뉴 */
+.nav-menu {
+  display: flex;
+  gap: 20px;
+  font-weight: bold;
+  font-size: 16px;
+  justify-content: center;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: gray;
+  font-weight: 500;
+}
+
+.nav-menu a:hover {
+  color: green;
+  font-weight: 800;
+}
+
+/* 검색창 */
+.search-box {
+  position: relative;
+}
+
+.search-box input {
+  padding: 8px 30px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  width: 200px;
+  font-size: 14px;
+  text-align: center;
+}
+.search-box .search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #333;
+    pointer-events: none; /* 클릭 방지 */
+  }
+  
+
+/* 유저 프로필 */
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 13px;
+}
+
+.user-info img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* PC/모바일 메뉴 위치 구분 */
+.pc-nav {
+  display: none;
+}
+.mobile-nav {
+  display: flex;
+  margin-top: 10px;
+}
+
+/* PC에서는 메뉴도 상단에 가로로 표시 */
+@media (min-width: 768px) {
+  .header-top {
+    flex-wrap: nowrap;
+  }
+
+  .pc-nav {
+    display: flex;
+  }
+
+  .mobile-nav {
+    display: none;
+  }
+}

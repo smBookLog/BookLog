@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Routes, Route } from 'react-router-dom';
+import Header_main from './components_header/Header_main';
+import Search from './components_header/Search'; // 검색창 이동
+import Information from './Information';
 
 function App() {
   const [ck, setCk] = useState('');
@@ -23,8 +27,15 @@ function App() {
 
   return (
     <div>
-      <p onClick={(e) => { setCk(e.target.innerText) }}>이걸 클릭</p>
-      <h1>{ck}</h1>
+      {/* <p onClick={(e) => { setCk(e.target.innerText) }}>이걸 클릭</p> */}
+      {/* <h1>{ck}</h1> */}
+      <br />
+      <Routes>
+            <Route path='/' element={<Header_main></Header_main>}></Route>
+            <Route path='/search' element={<Search></Search>}></Route>
+            <Route path='/information' element={<Information></Information>}></Route>
+            <Route path='/headermain' element={<Header_main></Header_main>}></Route>
+      </Routes>
     </div>
   );
 }
