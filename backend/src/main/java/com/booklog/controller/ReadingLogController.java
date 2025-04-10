@@ -52,9 +52,11 @@ public class ReadingLogController {
 
 			ArrayList<String> quotes = new ArrayList<>(readingLogMapper.findQuotesByLogIdx(logIdx));
 			ArrayList<CommentDTO> comments = new ArrayList<>(readingLogMapper.findCommentsByLogIdx(logIdx));
-
+			int likeCount = readingLogMapper.countLikes(logIdx);
+			
 			log.setQuotes(quotes);
 			log.setComments(comments);
+			log.setLikeCount(likeCount);
 		}
 		return logs;
 	}

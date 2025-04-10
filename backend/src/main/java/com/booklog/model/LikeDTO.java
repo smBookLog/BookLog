@@ -7,11 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProfileDTO {
+public class LikeDTO {
+    private int logIdx;
     private String userId;
-    private String nickname;
-    private String bio;
-    private String profileImg;
-    private int followingCount;
-    private int followerCount;
 }

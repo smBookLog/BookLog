@@ -60,7 +60,7 @@
 		RL.RATING,
 		RL.CONTENT,
 		RL.CREATED_AT AS createdAt,
-		
+
 		U.USER_ID AS userId,
 		U.PROFILE_IMG AS profileImgUrl,
 
@@ -69,11 +69,12 @@
 		B.GENRE,
 		B.DESCRIPTION,
 		B.BOOK_IMG AS bookImgUrl
-		
+
 		FROM READING_LOG RL
 		JOIN BOOK B ON RL.BOOK_IDX = B.BOOK_IDX
-		JOIN USER U ON RL.USER_ID = U.USER_ID
-		
+		JOIN USER U ON
+		RL.USER_ID = U.USER_ID
+
 		WHERE
 		RL.USER_ID = #{userId}
 		AND RL.LOG_IDX = #{logIdx}
@@ -177,4 +178,10 @@
 		WHERE
 		QUOTE_IDX = #{quoteIdx}
 	</delete>
+
+	<!-- 좋아요 수 조회 -->
+	<select id="countLikes" resultType="int">
+		SELECT COUNT(*) FROM READING_LOG_LIKE
+		WHERE LOG_IDX = #{logIdx}
+	</select>
 </mapper>

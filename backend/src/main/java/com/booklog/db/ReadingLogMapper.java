@@ -51,5 +51,6 @@ public interface ReadingLogMapper {
 	// 인용구 하나 삭제
 	int deleteQuote(@Param("quoteIdx") int quoteIdx);
 
-
+	int countLikes(@Param("logIdx") int logIdx);
+	
 }

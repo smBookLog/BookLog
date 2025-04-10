@@ -16,7 +16,6 @@ public class ReadingLogDTO {
    private String startDate;
    private String endDate;
    private int rating;
-   private int likeCount;
    private String content;
    private String createdAt;
 
@@ -27,8 +26,8 @@ public class ReadingLogDTO {
    private String description;
    private String bookImgUrl;
    
-   private String profileImgUrl;
-   
+   private String profileImgUrl;   
+   private int likeCount;
    private ArrayList<String> tags;
    private ArrayList<String> quotes;
    private ArrayList<CommentDTO> comments;
