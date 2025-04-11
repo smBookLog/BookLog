@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.booklog.db.MessageMapper">
+
+	<insert id="insertMessage"
+		parameterType="com.booklog.model.MessageDTO">
+		INSERT INTO MESSAGE (SENDER_ID, RECEIVER_ID, CONTENT,
+		SENT_AT)
+		VALUES (#{senderId}, #{receiverId}, #{content}, NOW())
+	</insert>
+
+	<select id="selectInbox"
+		resultType="com.booklog.model.MessageDTO">
+		SELECT
+		MESSAGE_IDX AS msgIdx,
+		SENDER_ID AS senderId,
+		RECEIVER_ID AS receiverId,
+		CONTENT AS
+		content,
+		SENT_AT AS sentAt
+		FROM MESSAGE
+		WHERE RECEIVER_ID = #{userId}
+		ORDER BY SENT_AT DESC
+	</select>
+
+	<select id="selectSent"
+		resultType="com.booklog.model.MessageDTO">
+		SELECT
+		MESSAGE_IDX AS msgIdx,
+		SENDER_ID AS senderId,
+		RECEIVER_ID AS receiverId,
+		CONTENT AS
+		content,
+		SENT_AT AS sentAt
+		FROM MESSAGE
+		WHERE SENDER_ID = #{userId}
+		ORDER BY SENT_AT DESC
+	</select>
+
+
+</mapper>
