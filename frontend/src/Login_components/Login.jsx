@@ -32,18 +32,38 @@ const Login = () => {
     } else {
       alert('ID 또는 비밀번호가 올바르지 않습니다.');
     }
-  };
 
-  return (
+    return (
 
-    <div className="container">
-      <div className="login-box">
-        <div className="logo-section">
-          <img src={image} style={{ width: '200px', height: '200px' }} className="logo" />
+      <div className="container">
+        <div className="login-box">
+          <div className="logo-section">
+            <img src={image} alt="logo" className="logo" />
+          </div>
+
+          <div className="input-section">
+            <input type="text" placeholder="ID" />
+            <input type="password" placeholder="PW" />
+          </div>
+
+          <div className="options">
+            <div>
+              <button onClick={() => navigate("/find-id")} className="link-btn">아이디찾기</button>
+              <button onClick={() => navigate("/find-pw")} className="link-btn">비밀번호찾기</button>
+            </div>
+            <label>
+              <input type="checkbox" />
+              로그인 상태 유지
+            </label>
+          </div>
+
+          <button className="login-btn" onClick={login}>로그인</button>
+          <button onClick={handleSignup} className="signup-btn">회원가입</button>
+
         </div>
 
         <div className="input-section">
-          <input style={{width:'372px'}} type="text" placeholder="ID" value={id} onChange={(e) => setId(e.target.value)} />
+          <input style={{ width: '372px' }} type="text" placeholder="ID" value={id} onChange={(e) => setId(e.target.value)} />
           <input style={{ width: '372px' }} type="password" placeholder="PW" value={pw} onChange={(e) => setPw(e.target.value)} />
         </div>
 
@@ -61,11 +81,8 @@ const Login = () => {
         <button className="login-btn" onClick={login}>로그인</button>
         <button onClick={handleSignup} className="signup-btn">회원가입</button>
       </div>
-    </div>
-
-
-  );
+    );
+  }
 }
 
-
-export default Login
+export default Login;

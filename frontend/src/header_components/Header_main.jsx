@@ -36,7 +36,7 @@ const Header = () => {
                 </div>
 
                 <div className="user-info">
-                    <Link to="/mypage" className='custom-link'>
+                    <Link to="/myprofile" className='custom-link'>
                         <img src={profileImg} alt="프로필" />
                         <br />
                         <span>내정보</span>
