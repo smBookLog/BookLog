@@ -1,3 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.booklog.db.UserMapper"></mapper>
+<mapper namespace="com.booklog.db.UserMapper">
+
+	<!-- 회원가입 -->
+	<insert id="insertUser"
+		parameterType="com.booklog.model.UserDTO">
+		INSERT INTO USER (USER_ID, NAME, USER_PW, NICKNAME,
+		EMAIL)
+		VALUES (#{userId}, #{name}, #{userPw}, #{nickname}, #{email});
+	</insert>
+
+	<!-- 중복 아이디 체크 -->
+	<select id="isUserIdExists" parameterType="string"
+		resultType="int">
+		SELECT COUNT(*) FROM USER WHERE USER_ID = #{userId}
+	</select>
+	
+	<!-- 중복 닉네임 체크 -->
+	<select id="isNicknameExists" parameterType="string"
+		resultType="int">
+		SELECT COUNT(*) FROM USER WHERE NICKNAME = #{nickname}
+	</select>
+
+	<!-- 중복 이메일 체크 -->
+	<select id="isEmailExists" parameterType="string"
+		resultType="int">
+		SELECT COUNT(*) FROM USER WHERE EMAIL = #{email}
+	</select>
+
+	<!-- 로그인 -->
+	<select id="login" parameterType="map"
+		resultType="com.booklog.model.UserDTO">
+		SELECT * FROM USER
+		WHERE USER_ID = #{userId} AND USER_PW = #{userPw}
+	</select>
+
+</mapper>
