@@ -11,14 +11,19 @@ import com.booklog.model.ReadingLogDTO;
 @Mapper
 public interface ReadingLogMapper {
 
+	// 나의 독서 기록 조회
 	ArrayList<ReadingLogDTO> findMyLogs(@Param("userId") String userId, @Param("status") String status);
 
+	// 태그 조회
 	ArrayList<String> findTagsByLogIdx(int logIdx);
 
+	// 인용구 조회
 	ArrayList<String> findQuotesByLogIdx(int logIdx);
 
+	// 피드용 독서 기록 조회
 	ArrayList<ReadingLogDTO> findLogs(@Param("userId") String userId, @Param("logIdx") int logIdx);
 
+	// 댓글 조회 
 	ArrayList<CommentDTO> findCommentsByLogIdx(int logIdx);
 
 	// 독서 기록 추가
@@ -51,6 +56,7 @@ public interface ReadingLogMapper {
 	// 인용구 하나 삭제
 	int deleteQuote(@Param("quoteIdx") int quoteIdx);
 
+	// 좋아요 수 조회
 	int countLikes(@Param("logIdx") int logIdx);
 	
 }
