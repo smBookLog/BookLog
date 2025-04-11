@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../FollowersChat_style/FollowersPage.css';
 
-const FollowersPage = ({ userId = 'jnvifrieir' }) => {
+const FollowersPage = () => {
+  const userId = 'user01';
   // const dummyData = {
   //   followers: ['이어정123', 'ASDF', '젤봐', '전이갈래', 'MeToo!', 'chlehdgh', '냉국수', '김수인'],
   //   following: ['UserA', 'UserB', 'UserC'],
@@ -13,20 +14,24 @@ const FollowersPage = ({ userId = 'jnvifrieir' }) => {
   const [following, setFollowing] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:8082/controller/following/${userId}`)
+    // 나를 팔로우하는 사람 (followers)
+    axios.get(`http://localhost:8082/controller/followers/${userId}`)
       .then(res => setFollowers(res.data))
       .catch(err => {
         console.error('팔로워 로딩 실패', err);
-        // setFollowers(dummyData.followers); // fallback
-      });
 
-      axios.get(`http://localhost:8082/controller/follow`)
+      });
+  
+    // 내가 팔로우하는 사람 (following)
+    axios.get(`http://localhost:8082/controller/following/${userId}`)
       .then(res => setFollowing(res.data))
       .catch(err => {
         console.error('팔로잉 로딩 실패', err);
-        // setFollowing(dummyData.following); // fallback
+
       });
   }, [userId]);
+  
+
 
   const handleFollow = (target) => {
     axios.post(`http://localhost:8082/controller/follow`, {
@@ -59,13 +64,13 @@ const FollowersPage = ({ userId = 'jnvifrieir' }) => {
         <h1>@{userId}</h1>
         <div className="tabs">
           <div
-            className={activeTab === 'followers' ? 'tab active' : 'tab'}
+            className={activeTab === 'followers' ? 'tab1 active' : 'tab1'}
             onClick={() => setActiveTab('followers')}
           >
             팔로워 {followers.length}
           </div>
           <div
-            className={activeTab === 'following' ? 'tab active' : 'tab'}
+            className={activeTab === 'following' ? 'tab1 active' : 'tab1'}
             onClick={() => setActiveTab('following')}
           >
             팔로잉 {following.length}
@@ -83,7 +88,7 @@ const FollowersPage = ({ userId = 'jnvifrieir' }) => {
               <span className="username">{name}</span>
               {activeTab === 'followers' ? (
                 following.includes(name) ? (
-                  <button className="unfollow-btn" onClick={() => handleUnfollow(name)}>
+                  <button className="unfollow-btn1" onClick={() => handleUnfollow(name)}>
                     언팔로우
                   </button>
                 ) : (
@@ -93,8 +98,8 @@ const FollowersPage = ({ userId = 'jnvifrieir' }) => {
                 )
               ) : (
                 <div className="btn-group">
-                  <button className="dm-btn">메시지</button>
-                  <button className="unfollow-btn" onClick={() => handleUnfollow(name)}>
+                  <button  className="dm-btn">메시지</button>
+                  <button className="unfollow-btn1" onClick={() => handleUnfollow(name)}>
                     언팔로우
                   </button>
                 </div>

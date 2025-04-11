@@ -127,7 +127,14 @@ function App() {
           </div>
         } />
         {/* 팔로우/팔로잉 */}
-        <Route path='/followers' element={<FollowersPage />}></Route>
+        <Route path='/followers' element={
+          <div className="app-container">
+          <Header />
+          <main className="main-content">
+          <FollowersPage />
+          </main>
+        </div>
+      } />
         {/* DM/채팅 */}
         <Route path='/chatpage' element={<ChatPage />}></Route>
         {/* 회원정보 수정 */}
