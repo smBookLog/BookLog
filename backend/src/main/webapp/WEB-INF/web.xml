@@ -44,5 +44,15 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
+	<filter>
+		<filter-name>corsFilter</filter-name>
+		<filter-class>com.example.filter.CorsFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>corsFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
 
 </web-app>

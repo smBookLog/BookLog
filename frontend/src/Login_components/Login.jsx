@@ -13,7 +13,7 @@ const Login = () => {
 
   // useEffect로 유저 데이터 가져오기
   useEffect(() => {
-    axios.get(`http://localhost:8082/`)
+    axios.get('http://localhost:8082/controller/login')
       .then(res => setUsers(res.data))
       .catch(err => console.error("유저 정보 불러오기 실패", err));
   }, []);
