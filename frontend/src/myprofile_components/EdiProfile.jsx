@@ -82,7 +82,7 @@ function EditProfile() {
                     </div>
 
                     {/* 관심분야 */}
-                    <div className="form-group">
+                    {/* <div className="form-group">
                         <label>관심 분야(최대 5개)</label>
                         <div className="tag-box">
                             <span className="tag red">로맨스</span>
@@ -90,7 +90,7 @@ function EditProfile() {
                             <span className="tag yellow">자기계발</span>
                             <button className="add-tag">＋</button>
                         </div>
-                    </div>
+                    </div> */}
 
                     {/* 소개글 */}
                     <div className="form-group">
