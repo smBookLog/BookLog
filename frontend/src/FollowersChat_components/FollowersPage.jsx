@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../FollowersChat_style/FollowersPage.css';
 
-const FollowersPage = ({ userId = 'jnvifrieir' }) => {
+const FollowersPage = () => {
   // const dummyData = {
   //   followers: ['이어정123', 'ASDF', '젤봐', '전이갈래', 'MeToo!', 'chlehdgh', '냉국수', '김수인'],
   //   following: ['UserA', 'UserB', 'UserC'],
   // };
-
+  const userId = 'user01';
   const [activeTab, setActiveTab] = useState('followers');
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
