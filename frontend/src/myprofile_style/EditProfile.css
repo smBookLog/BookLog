@@ -1,0 +1,182 @@
+.edit-container {
+  max-width: 400px;
+  margin: 0 auto;
+  font-family: 'Pretendard', sans-serif;
+  padding: 20px;
+  color: #222;
+}
+
+/* 헤더 */
+.edit-header {
+  background-color: white;
+  /* 필요 시 추가 */
+  /* padding: 0px 20px; */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logout-btn {
+  padding: 8px 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  font-size: 14px;
+  white-space: nowrap;
+  cursor: pointer;
+  width: auto;
+}
+
+
+/* 프로필 사진 */
+.profile-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+  
+}
+
+.profile-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+}
+
+/* 선 */
+.divider {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 16px 0;
+}
+
+/* 폼 */
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+/* .form-group {
+    margin-bottom: 12px;
+  } */
+.inline-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.check-btn1 {
+  padding: 8px 10px;
+  background-color: #146c2d;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+}
+
+/* .form-group.inline {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  } */
+input,
+select,
+textarea {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  width: 100%;
+}
+
+textarea {
+  resize: none;
+  height: 60px;
+}
+
+.check-btn {
+  background-color: #146c2d;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  font-size: 13px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.at {
+  margin: 0 4px;
+}
+
+/* 태그 */
+.tag-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tag {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 16px;
+  color: white;
+}
+
+.tag.red {
+  background-color: #e74c3c;
+}
+
+.tag.purple {
+  background-color: #8e44ad;
+}
+
+.tag.yellow {
+  background-color: #f1c40f;
+  color: #333;
+}
+
+.add-tag {
+  font-size: 18px;
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+}
+
+/* 버튼 영역 */
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.cancel-btn,
+.submit-btn {
+  padding: 8px 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background: white;
+  border: 1px solid #ccc;
+}
+
+.submit-btn {
+  background-color: #146c2d;
+  border: none;
+  color: white;
+}

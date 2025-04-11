@@ -1,0 +1,49 @@
+.tab-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+  }
+  
+  .tab-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  
+  .tabs-wrapper {
+    display: flex;
+    gap: 5px;
+    flex-grow: 1;
+  }
+  
+  .tab {
+    padding: 6px 12px;
+    border: none;
+    background-color: #f0f0f0;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    color: #555;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+  }
+  
+  .tab.active {
+    background-color: #2e7d32;
+    color: white;
+  }
+  
+  /* 미디어 쿼리 추가 - 모바일 화면에서의 반응형 디자인 */
+  @media (max-width: 480px) {
+    .tabs-wrapper {
+      overflow-x: auto;
+      white-space: nowrap;
+      padding-bottom: 5px;
+    }
+    
+    .tab {
+      flex: 0 0 auto;
+    }
+  }

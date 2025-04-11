@@ -1,0 +1,807 @@
+/* 기본 스타일 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.book-detail-container {
+    max-width: 768px;
+    margin: 0 auto;
+    background-color: #fff;
+    min-height: 100vh;
+}
+
+/* 헤더 스타일 */
+.header {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 100;
+}
+
+.back-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+
+.title {
+    flex-grow: 1;
+    text-align: center;
+    color: #4CAF50;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.underline {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+    width: fit-content;  /* 라벨 내용만큼만 너비 설정 */
+    width: 100%;               /* 또는 원하는 최대 너비 지정 */
+    max-width: 550px;          /* 적당한 최대 길이 지정 (원하는 만큼 조정 가능) */
+}
+
+/* 컨텐츠 스타일 */
+.content {
+    padding: 15px;
+}
+
+.section-title {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr; /* 왼쪽-제목-오른쪽 버튼 */
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  
+  .section-title h2 {
+    grid-column: 2; /* 가운데 칸에 위치 */
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+  }
+  
+  .edit-button {
+    grid-column: 3; /* 오른쪽 칸에 위치 */
+    justify-self: end;
+    background-color: #e8f5e9;
+    color: #4CAF50;
+    border: none;
+    border-radius: 15px;
+    padding: 5px 15px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+.book-info {
+    display: flex;
+    margin-bottom: 25px;
+    gap: 20px;
+}
+
+.book-cover {
+    width: 150px;       /* 원하는 가로 */
+    height: 230px;      /* 원하는 세로 */
+    overflow: hidden;   /* 이미지 넘칠 경우 자르기 (선택사항) */
+}
+
+.cover-image {
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    object-fit: cover;  /* 이미지 비율 무시하고 영역에 꽉 채움 */
+}
+
+.book-details {
+    flex-grow: 1;
+}
+
+.book-title-author {
+    margin-bottom: 15px;
+}
+
+.book-title-author h3 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.book-category {
+    font-size: 14px;
+}
+.book-category .category-row {
+    display: flex;
+    align-items: center;
+    column-gap: 40px; /* 라벨과 값 사이 간격 넓히기 */
+  }
+
+.category-row {
+    display: flex;
+    margin-bottom: 8px;
+    align-items: center;
+}
+
+.category-label {
+    min-width: 60px;
+    color: #757575;
+}
+
+.category-value {
+    flex-grow: 1;
+
+}
+
+.select-input {
+    width: 100%;
+    max-width: 200px;
+    padding: 5px 8px;
+    border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    background-color: white;
+    font-size: 14px;
+    color: #1976D2;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231976D2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.select-input:focus {
+    border-color: #1976D2;
+}
+
+.star-rating {
+    display: flex;
+    align-items: center;
+}
+
+.star {
+    color: #BDBDBD;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.filled-star {
+    color: #FFC107;
+}
+
+.tags {
+    align-items: flex-start;
+}
+
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.tag {
+    background-color: #F5F5F5;
+    border-radius: 15px;
+    padding: 3px 10px;
+    font-size: 12px;
+}
+
+.add-tag {
+    background-color: #EEEEEE;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* 커스텀 날짜 입력 필드 */
+.custom-date-input {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    color: #333;
+    font-size: 14px;
+}
+
+.custom-date-input:hover {
+    background-color: #f0f0f0;
+    border-color: #aaa;
+}
+
+.calendar-icon {
+    font-size: 16px;
+    color: #555;
+}
+
+.today-button {
+    margin-left: 8px;
+    padding: 5px 10px;
+    font-size: 13px;
+    background-color: #e8f5e9;
+    color: #388e3c;
+    border: 1px solid #c8e6c9;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.today-button:hover {
+    background-color: #d0f0d3;
+}
+
+.react-datepicker-wrapper {
+    width: 100%;
+}
+
+.react-datepicker__input-container input {
+    width: 120px;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.date-display-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+    font-size: 15px;
+    white-space: nowrap; /* 한 줄 유지 */
+}
+
+.date-separator {
+    font-size: 16px;
+    color: #444;
+}
+
+.read-summary {
+    white-space: nowrap;
+    font-weight: 500;
+    color: #333;
+}
+
+/* 인용구 섹션 */
+.quotes-section {
+    background-color: #F5F5F5;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.quotes-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.quotes-header h3 {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.more-button {
+    background: none;
+    border: none;
+    color: #757575;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.quotes-content {
+    font-size: 14px;
+}
+
+.quote {
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+/* 기존 CSS에 추가할 부분 */
+
+/* 인용구 섹션 스타일 업데이트 */
+.quotes-section {
+    background-color: #F5F5F5;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.quotes-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.quotes-header h3 {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.quotes-content {
+    font-size: 14px;
+    margin-bottom: 15px;  /* 아래 여백 추가 */
+}
+
+/* 인용구 말풍선 스타일 */
+.quote-bubble {
+    background-color: white;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 1.4;
+}
+
+.quote-bubble:last-child {
+    margin-bottom: 0;
+}
+
+.delete-icon {
+    color: #999;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.delete-icon:hover {
+    color: #f44336;
+}
+
+/* 추가하기 버튼 스타일 */
+.add-quote-button {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    color: #555;
+    font-size: 14px;
+    padding: 8px 0;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.add-quote-button:hover {
+    color: #4CAF50;
+}
+
+.add-icon {
+    margin-right: 6px;
+    font-size: 16px;
+}
+/* 기존 CSS에 추가할 부분 */
+
+/* 인용구 섹션 스타일 업데이트 */
+.quotes-section {
+    background-color: #F5F5F5;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.quotes-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.quotes-header h3 {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.quotes-content {
+    font-size: 14px;
+    margin-bottom: 15px;  /* 아래 여백 추가 */
+}
+
+/* 인용구 말풍선 스타일 */
+.quote-bubble {
+    background-color: white;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 1.4;
+}
+
+.quote-bubble:last-child {
+    margin-bottom: 0;
+}
+
+.delete-icon {
+    color: #999;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.delete-icon:hover {
+    color: #f44336;
+}
+
+/* 인용구 입력 폼 스타일 */
+.quote-form {
+    background-color: white;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 15px;
+}
+
+.quote-input {
+    width: 100%;
+    height: 80px;
+    border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    padding: 10px;
+    resize: none;
+    font-family: inherit;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.quote-form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.quote-form-button {
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+}
+
+.quote-form-button.save {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.quote-form-button.save:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.quote-form-button.cancel {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    color: #555;
+}
+
+/* 추가하기 버튼 스타일 */
+.add-quote-button {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    color: #555;
+    font-size: 14px;
+    padding: 8px 0;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.add-quote-button:hover {
+    color: #4CAF50;
+}
+
+.add-icon {
+    margin-right: 6px;
+    font-size: 16px;
+}
+
+/* 감상평 섹션 - 높이 수정 */
+.thoughts-input {
+    width: 100%;
+    height: 200px; /* 기존 100px에서 200px로 높이 증가 */
+    border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    padding: 10px;
+    resize: none;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+/* 태그 관련 스타일 */
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.tag-item {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.tag {
+    background-color: #F5F5F5;
+    border-radius: 15px;
+    padding: 3px 10px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.tag-delete {
+    margin-left: 3px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    line-height: 1;
+}
+
+.tag-delete:hover {
+    background-color: #f44336;
+    color: white;
+}
+
+.add-tag {
+    background-color: #EEEEEE;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.add-tag:hover {
+    background-color: #BDBDBD;
+}
+
+/* 태그 입력 폼 */
+.tag-form {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tag-input {
+    width: 100%;
+    border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    padding: 8px 10px;
+    font-family: inherit;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.tag-form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.tag-form-button {
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+}
+
+.tag-form-button.save {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.tag-form-button.save:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.tag-form-button.cancel {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    color: #555;
+}
+
+/* 인용구 입력 폼 스타일 */
+.quote-form {
+    background-color: white;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.quote-input {
+    width: 100%;
+    height: 80px;
+    border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    padding: 10px;
+    resize: none;
+    font-family: inherit;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.quote-form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.quote-form-button {
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+}
+
+.quote-form-button.save {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.quote-form-button.save:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.quote-form-button.cancel {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    color: #555;
+}
+
+/* 추가하기 버튼 스타일 */
+.add-quote-button {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    color: #555;
+    font-size: 14px;
+    padding: 8px 0;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.add-quote-button:hover {
+    color: #4CAF50;
+}
+
+.add-icon {
+    margin-right: 6px;
+    font-size: 16px;
+}
+
+/* 감상평 섹션 - 높이 수정 */
+.thoughts-section {
+    background-color: #F5F5F5;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.thoughts-section h3 {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.thoughts-input {
+    width: 100%;
+    height: 200px; /* 기존 100px에서 200px로 높이 증가 */
+    border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    padding: 10px;
+    resize: none;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 480px) {
+    .book-info {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .book-cover {
+        width: 130px;
+        margin-bottom: 15px;
+    }
+
+    .book-title-author {
+        text-align: center;
+    }
+
+    .category-row {
+        flex-wrap: wrap;
+    }
+
+    .category-label {
+        min-width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .select-input {
+        max-width: 100%;
+    }
+
+    .tag-container {
+        justify-content: center;
+    }
+
+    .date-display-line {
+        flex-direction: row; /* 세로가 아니라 가로 정렬 */
+        flex-wrap: wrap;
+        white-space: normal; /* 자동 줄바꿈 허용 */
+        align-items: center;
+        gap: 6px;
+    }
+
+    .custom-date-input {
+        width: 100%;
+    }
+
+    .today-button, .read-summary {
+        margin-left: 0;
+    }
+    .book-details {
+        width: 100%;
+    }
+
+    .cover-image {
+        max-width: 100%;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .book-cover {
+        width: 100px;
+    }
+}

@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  max-width: 100%; /*최대 너비 제한*/
+  margin: 0 auto; /*가운데 정렬*/
+  /* padding: 0 20px; 좌우 패딩 */
 }
 
 .App-logo {
@@ -15,7 +18,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
   align-items: center;
