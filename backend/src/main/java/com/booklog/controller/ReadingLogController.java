@@ -53,7 +53,7 @@ public class ReadingLogController {
 			ArrayList<String> quotes = new ArrayList<>(readingLogMapper.findQuotesByLogIdx(logIdx));
 			ArrayList<CommentDTO> comments = new ArrayList<>(readingLogMapper.findCommentsByLogIdx(logIdx));
 			int likeCount = readingLogMapper.countLikes(logIdx);
-			
+
 			log.setQuotes(quotes);
 			log.setComments(comments);
 			log.setLikeCount(likeCount);
@@ -80,33 +80,33 @@ public class ReadingLogController {
 //	}
 	@PostMapping("/log/add")
 	public String insertLog(@RequestBody ReadingLogDTO log) {
-	    int result = readingLogMapper.insertLog(log);
-	    
-	    if (result > 0) {
-	        // 태그 삽입
-	        if (log.getTags() != null) {
-	            for (String tag : log.getTags()) {
-	                // TAG 테이블에 없으면 INSERT
-	                readingLogMapper.insertTag(tag);
+		int result = readingLogMapper.insertLog(log);
 
-	                // TAG_IDX 조회
-	                Integer tagIdx = readingLogMapper.selectTagIdxByName(tag);
+		if (result > 0) {
+			// 태그 삽입
+			if (log.getTags() != null) {
+				for (String tag : log.getTags()) {
+					// TAG 테이블에 없으면 INSERT
+					readingLogMapper.insertTag(tag);
 
-	                if (tagIdx != null) {
-	                    // READING_LOG_TAG 테이블에 삽입
-	                    readingLogMapper.insertReadingLogTag(log.getLogIdx(), tagIdx, log.getUserId());
-	                }
-	            }
-	        }
+					// TAG_IDX 조회
+					Integer tagIdx = readingLogMapper.selectTagIdxByName(tag);
 
-	        // 인용구 삽입
-	        if (log.getQuotes() != null) {
-	            for (String quote : log.getQuotes()) {
-	                readingLogMapper.insertQuote(log.getUserId(), log.getBookIdx(), quote);
-	            }
-	        }
-	    }
-	    return result > 0 ? "success" : "fail";
+					if (tagIdx != null) {
+						// READING_LOG_TAG 테이블에 삽입
+						readingLogMapper.insertReadingLogTag(log.getLogIdx(), tagIdx, log.getUserId());
+					}
+				}
+			}
+
+			// 인용구 삽입
+			if (log.getQuotes() != null) {
+				for (String quote : log.getQuotes()) {
+					readingLogMapper.insertQuote(log.getUserId(), log.getBookIdx(), quote);
+				}
+			}
+		}
+		return result > 0 ? "success" : "fail";
 	}
 
 	// 독서 기록, 태그, 인용구 수정
@@ -122,38 +122,38 @@ public class ReadingLogController {
 //	}
 	@PutMapping("/log/update")
 	public String updateLog(@RequestBody ReadingLogDTO log) {
-	    int result = readingLogMapper.updateLog(log);
+		int result = readingLogMapper.updateLog(log);
 
-	    // 기존 태그/인용구 삭제
-	    readingLogMapper.deleteAllTags(log.getLogIdx());
-	    readingLogMapper.deleteAllQuotes(log.getBookIdx(), log.getUserId());
+		// 기존 태그/인용구 삭제
+		readingLogMapper.deleteAllTags(log.getLogIdx());
+		readingLogMapper.deleteAllQuotes(log.getBookIdx(), log.getUserId());
 
-	    // 태그 다시 삽입
-	    if (log.getTags() != null) {
-	        for (String tag : log.getTags()) {
-	            // TAG 테이블에 없으면 INSERT
-	            readingLogMapper.insertTag(tag);
+		// 태그 다시 삽입
+		if (log.getTags() != null) {
+			for (String tag : log.getTags()) {
+				// TAG 테이블에 없으면 INSERT
+				readingLogMapper.insertTag(tag);
 
-	            // TAG_IDX 조회
-	            Integer tagIdx = readingLogMapper.selectTagIdxByName(tag);
+				// TAG_IDX 조회
+				Integer tagIdx = readingLogMapper.selectTagIdxByName(tag);
 
-	            if (tagIdx != null) {
-	                // READING_LOG_TAG 테이블에 삽입
-	                readingLogMapper.insertReadingLogTag(log.getLogIdx(), tagIdx, log.getUserId());
-	            }
-	        }
-	    }
+				if (tagIdx != null) {
+					// READING_LOG_TAG 테이블에 삽입
+					readingLogMapper.insertReadingLogTag(log.getLogIdx(), tagIdx, log.getUserId());
+				}
+			}
+		}
 
-	    // 인용구 다시 삽입
-	    if (log.getQuotes() != null) {
-	        for (String quote : log.getQuotes()) {
-	            readingLogMapper.insertQuote(log.getUserId(), log.getBookIdx(), quote);
-	        }
-	    }
+		// 인용구 다시 삽입
+		if (log.getQuotes() != null) {
+			for (String quote : log.getQuotes()) {
+				readingLogMapper.insertQuote(log.getUserId(), log.getBookIdx(), quote);
+			}
+		}
 
-	    return result > 0 ? "updated" : "fail";
+		return result > 0 ? "updated" : "fail";
 	}
-	
+
 	// 독서 기록, 인용구, 태그, 댓글 삭제
 	// http://localhost:8082/controller/log/delete/45
 	@DeleteMapping("/log/delete/{logIdx}")
@@ -161,15 +161,12 @@ public class ReadingLogController {
 		int result = readingLogMapper.deleteLog(logIdx);
 		return result > 0 ? "success" : "fail";
 	}
-	
+
 	// 인용구만 삭제
-	// http://localhost:8082/controller//quote/delete/22
+	// http://localhost:8082/controller/quote/delete/22
 	@DeleteMapping("/quote/delete/{quoteIdx}")
 	public String deleteQuote(@PathVariable int quoteIdx) {
 	    int result = readingLogMapper.deleteQuote(quoteIdx);
 	    return result > 0 ? "success" : "fail";
 	}
-
-	
-
 }

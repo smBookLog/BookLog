@@ -1,0 +1,105 @@
+.search-container {
+  padding: 16px;
+  font-family: sans-serif;
+}
+
+.search-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.search-input {
+  flex-grow: 1;
+  padding: 12px 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.tab-menu {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 16px;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 8px 0;
+  font-size: 16px;
+  background: none;
+  border: none;
+  color: gray;
+  cursor: pointer;
+}
+
+.tab-button.active {
+  color: black;
+  font-weight: bold;
+  border-bottom: 2px solid black;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 16px 0 8px;
+}
+
+.account-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.account-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+  object-fit: cover;
+}
+
+.default-avatar {
+  background-color: #ddd;
+}
+
+.book-item {
+  margin-bottom: 24px;
+}
+
+.book-image {
+  width: 80px;
+  height: 112px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+
+.book-title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.book-author {
+  font-size: 12px;
+  color: gray;
+}
+.no-result {
+  text-align: center;
+  margin-top: 60px;
+  color: #666;
+  font-size: 14px;
+}
+
+/* < 색 */
+.custom-link {
+  color: black; /* 원하는 색상 */
+  text-decoration: none; /* 밑줄 제거 */
+  transition: color 0.3s; /* 부드러운 전환 효과 */
+}
+
+.custom-link:hover {
+  color: green; /* 마우스 올렸을 때 색상 */
+  font-weight: 500;
+}

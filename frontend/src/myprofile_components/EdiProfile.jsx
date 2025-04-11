@@ -1,0 +1,112 @@
+import React, { useState } from "react";
+import editprofile from "../myprofile_style/EditProfile.css";
+import image from "../etc_assets/profile.png"
+import Header from "../header_components/Header";
+
+function EditProfile() {
+    const [nickname, setNickname] = useState("박하얀하얀123");
+    return (
+        <div>
+            {/* 상단 헤더 */}
+            <header className="edit-header">
+                <div className="header-container">
+                    <Header />
+                    <button className="logout-btn">로그아웃</button>
+                </div>
+            </header>
+
+
+            <div className="edit-container">
+
+                {/* 프로필 이미지 */}
+                <div className="profile-section">
+                    <img
+                        className="profile-img"
+                        src={image}
+                        alt="유저 프로필"
+                    />
+                </div>
+
+                <hr className="divider" />
+
+                {/* 입력 폼 */}
+                {/* 성명 */}
+                <form className="form-section">
+                    <div className="form-group">
+                        <label>성명</label>
+                        <div className="readonly">
+                            <input style={{ width: '375px' }} type="text" placeholder="박수아"/>
+                        </div>
+                    </div>
+
+                    {/* 비밀번호 */}
+                    <div className="form-group">
+                        <label>비밀번호</label>
+                        <input style={{ width: '375px' }} type="password" placeholder="8~16자리, 숫자, 특수문자 모두 포함 가능" />
+                    </div>
+
+                    {/* 비밀번호 확인 */}
+                    <div className="form-group">
+                        <label>비밀번호 확인</label>
+                        <input style={{ width: '375px' }} type="password" placeholder="8~16자리, 숫자, 특수문자 모두 포함 가능" />
+                    </div>
+
+                    {/* 닉네임 */}
+                    <div className="form-group">
+                        <label>닉네임</label>
+                        <div className="inline-field">
+                            <input
+                                style={{ width: '600px' }}
+                                type="text"
+                                value={nickname}
+                                onChange={(e) => setNickname(e.target.value)}
+                            />
+                            <button type="button" className="check-btn1">
+                                중복 확인
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* 이메일 */}
+                    <div className="form-group">
+                        <label>이메일</label>
+                        <div className="inline-field">
+                            <input type="text" defaultValue="EchoRider" />
+                            <span>@</span>
+                            <select>
+                                <option>naver.com</option>
+                                <option>gmail.com</option>
+                                <option>daum.net</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    {/* 관심분야 */}
+                    <div className="form-group">
+                        <label>관심 분야(최대 5개)</label>
+                        <div className="tag-box">
+                            <span className="tag red">로맨스</span>
+                            <span className="tag purple">인문사회</span>
+                            <span className="tag yellow">자기계발</span>
+                            <button className="add-tag">＋</button>
+                        </div>
+                    </div>
+
+                    {/* 소개글 */}
+                    <div className="form-group">
+                        <label>소개</label>
+                        <textarea style={{ width: '380px' }} placeholder="수정할 소개글을 입력해주세요." />
+                    </div>
+
+                    {/* 버튼 */}
+                    <div className="button-group">
+                        <button className="cancel-btn">취소</button>
+                        <button className="submit-btn">수정</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
+}
+
+export default EditProfile;
