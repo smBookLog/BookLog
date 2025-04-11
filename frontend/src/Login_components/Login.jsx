@@ -17,12 +17,12 @@ const Login = () => {
       <div className="container">
         <div className="login-box">
           <div className="logo-section">
-            <img src={image} style={{width:'200px', height:'200px'}} className="logo" />
+            <img src={image} alt="logo" className="logo" />
           </div>
   
           <div className="input-section">
-            <input style={{width:'372px'}} type="text" placeholder="ID" />
-            <input style={{width:'372px'}} type="password" placeholder="PW" />
+            <input  type="text" placeholder="ID" />
+            <input  type="password" placeholder="PW" />
           </div>
   
           <div className="options">

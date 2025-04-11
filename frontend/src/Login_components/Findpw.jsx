@@ -14,7 +14,7 @@ const Findpw = () => {
   return (
     <div className="findpw-container">
       <div className="findpw-box">
-        <img src={img} style={{ width: '400px', height: '120px', display: 'flex', justifyContent: 'center' }}></img>
+        <img src={img} alt="logo" className="logo"></img>
         <br />
 
         <form>
@@ -30,7 +30,7 @@ const Findpw = () => {
           {/* 성명 */}
           <div className="form-group">
             <label>성명</label>
-            <input style={{ width: '395px' }} type="text" placeholder="성명" />
+            <input  type="text" placeholder="성명" />
           </div>
 
           {/* 이메일 */}
@@ -48,7 +48,7 @@ const Findpw = () => {
           </div>
 
           {/* 버튼 */}
-          <button style={{ width: '420px', marginLeft: '0px' }}
+          <button 
             type="submit" className="verify-btn" onClick={handleFindPassword} >비밀번호 찾기</button>
         </form>
       </div>
