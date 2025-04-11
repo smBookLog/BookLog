@@ -1,5 +1,6 @@
 import React, { useState} from 'react';
 import BookItem from './BookItem';
+
 import booklist from '../my_style/BookList.css'
 import { LuBookPlus } from "react-icons/lu";
 
@@ -44,7 +45,7 @@ const BookList = ({books}) => {
           </div>
   
           {/* 추가하기 버튼 */}
-          <a href="#" className="add-button">추가<LuBookPlus /></a>
+          <a href="/bookdetail" className="add-button">추가<LuBookPlus /></a>
         </div>
   
         {/* 도서 목록 출력 */}

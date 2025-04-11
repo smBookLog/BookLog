@@ -99,7 +99,7 @@ const Search = () => {
     return (
         <div className="search-container">
             <header className="search-top">
-                <Link to="/" >
+                <Link to="/main" >
                     <RiArrowLeftSLine size={35} />
                 </Link>
                 <input

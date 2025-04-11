@@ -3,10 +3,10 @@ import axios from 'axios';
 import '../FollowersChat_style/FollowersPage.css';
 
 const FollowersPage = ({ userId = 'jnvifrieir' }) => {
-  const dummyData = {
-    followers: ['이어정123', 'ASDF', '젤봐', '전이갈래', 'MeToo!', 'chlehdgh', '냉국수', '김수인'],
-    following: ['UserA', 'UserB', 'UserC'],
-  };
+  // const dummyData = {
+  //   followers: ['이어정123', 'ASDF', '젤봐', '전이갈래', 'MeToo!', 'chlehdgh', '냉국수', '김수인'],
+  //   following: ['UserA', 'UserB', 'UserC'],
+  // };
 
   const [activeTab, setActiveTab] = useState('followers');
   const [followers, setFollowers] = useState([]);
@@ -17,14 +17,14 @@ const FollowersPage = ({ userId = 'jnvifrieir' }) => {
       .then(res => setFollowers(res.data))
       .catch(err => {
         console.error('팔로워 로딩 실패', err);
-        setFollowers(dummyData.followers); // fallback
+        // setFollowers(dummyData.followers); // fallback
       });
 
-      axios.post(`http://localhost:8082/controller/follow`)
+      axios.get(`http://localhost:8082/controller/follow`)
       .then(res => setFollowing(res.data))
       .catch(err => {
         console.error('팔로잉 로딩 실패', err);
-        setFollowing(dummyData.following); // fallback
+        // setFollowing(dummyData.following); // fallback
       });
   }, [userId]);
 

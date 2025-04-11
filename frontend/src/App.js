@@ -24,7 +24,7 @@ import ChatPage from './FollowersChat_components/ChatPage'; // 채팅
 import Bookdetail from './BookDetail_components/Bookdetail'; // 독서 기록
 import TabBar from './my_components/TabBar'; // 독서 목록
 import BookList from './my_components/BookList';
-
+import ReviewList from './main_components/ReviewList';
 
 
 function App() {
@@ -64,6 +64,8 @@ function App() {
         {/* 헤더 */}
         <Route path='/Header_main' element={<Header_main></Header_main>}></Route>
         <Route path='/headermain' element={<Header_main></Header_main>}></Route>
+        {/* 검색창 */}
+        <Route path='/search' element={<Search></Search>}></Route>
 
         {/* 로그인 */}
         <Route path='/' element={<Login />}></Route>
@@ -75,7 +77,14 @@ function App() {
         <Route path='/signup' element={<Signup />}></Route>
 
         {/* 메인 */}
-        {/* <Route path='/main' element={}></Route> */}
+        <Route path='/main' element={
+          <div className="app">
+            <Header_main />
+            <main className="main-content">
+              <ReviewList />
+            </main>
+          </div>
+        }></Route>
 
         {/* FeedRLDetail */}
         <Route path='/FeedRLDetail' element={
@@ -83,8 +92,7 @@ function App() {
             <FeedRLDetail />
           </div>
         } />
-        {/* 검색창 */}
-        <Route path='/search' element={<Search></Search>}></Route>
+
         {/* 책 정보 */}
         <Route path='/information' element={<Information></Information>}></Route>
         {/* 독서 목록 */}
@@ -106,6 +114,7 @@ function App() {
             <Bookdetail />
           </div>
         } />
+
         {/* 마이페이지 */}
         <Route path='/mypage' element={
           <div className="app-container">
@@ -125,7 +134,7 @@ function App() {
         <Route path='/myprofile' element={<EditProfile></EditProfile>}></Route>
 
       </Routes>
-    </div>
+    </div >
   );
 }
 

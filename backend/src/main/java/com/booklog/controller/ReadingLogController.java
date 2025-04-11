@@ -169,39 +169,4 @@ public class ReadingLogController {
 	    int result = readingLogMapper.deleteQuote(quoteIdx);
 	    return result > 0 ? "success" : "fail";
 	}
-
-//<<<<<<< HEAD
-	// 독서 기록 추가
-	// http://localhost:8082/controller/log/add
-	// Key: Content-Type / Value: application/json 추가
-	/*
-	 * { "userId": "user02", "bookIdx": 7, "status": "FINISHED", "ST_DT":
-	 * "2024-01-01", "ED_DT": "2024-01-10", "rating": 5, "content": "정말 감명 깊게 읽었어요!"
-	 * }
-	 */
-//    @PostMapping("/log/add")
-//    public String insertLog(@RequestBody ReadingLogDTO log) {
-//        int result = readingLogMapper.insertLog(log);
-//        return result > 0 ? "success" : "fail";
-//    }
-
-//   @GetMapping("/test-db")
-//    public void testDatabaseConnection() {
-//        String userId = "user02"; // 테스트용 유저 아이디
-//        String status = "READING"; // 읽기 상태
-//
-//        ArrayList<ReadingLogDTO> logs = readingLogMapper.findLogs(userId, status);
-//
-//        System.out.println("===== DB 연결 테스트 결과 =====");
-//        for (ReadingLogDTO log : logs) {
-//            System.out.println(log);
-//        }
-//    }
-
-	/*
-	 * @GetMapping("/") public String test() { System.out.println("home test");
-	 * return "home"; }
-	 */
-//	=======
-//>>>>>>> e064c5f40666aa293434dc35fa94435ae19fbb08
 }

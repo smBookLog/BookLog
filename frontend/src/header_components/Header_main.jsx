@@ -19,7 +19,7 @@ const Header = () => {
 
                 {/* PC에서는 이 nav 위치가 옮겨짐 */}
                 <nav className="nav-menu pc-nav">
-                    <Link to="/">메인</Link>
+                    <Link to="/main">메인</Link>
                     <Link to="/mypage">나의 서재</Link>
                 </nav>
 

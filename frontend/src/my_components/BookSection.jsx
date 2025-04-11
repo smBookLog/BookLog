@@ -53,6 +53,7 @@ const BookSection = () => {
                 <button onClick={booklist} className="view-all-button">
                     전체 보기
                 </button>
+                
             </div>
 
             <div className="genre-filter-container">

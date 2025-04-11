@@ -54,5 +54,4 @@ public class FollowController {
 	public ArrayList<String> getFollowers(@PathVariable String userId) {
 	    return followMapper.findFollowers(userId);
 	}
-	
 }
