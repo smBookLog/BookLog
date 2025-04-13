@@ -1,8 +1,8 @@
 import React from 'react';
 import loge from '../header_assets/booklog_2.png';
 import { RiArrowLeftSLine } from "react-icons/ri";
+import { Link } from 'react-router-dom';
 import '../header_style/headermain.css';
-import { useNavigate, Link } from 'react-router-dom';
 
 const Header = () => {
     const headerStyle = {
@@ -26,7 +26,7 @@ const Header = () => {
     return (
         <header style={headerStyle_1}>
             <div style={headerStyle}>
-                <Link to="/" className='custom-link'>
+                <Link to="/main" className='custom-link'>
                     <RiArrowLeftSLine size={35} /> 
                 </Link>
                 <div style={headerStyle_loge}>

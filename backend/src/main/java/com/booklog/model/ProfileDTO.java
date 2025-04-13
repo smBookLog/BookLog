@@ -8,10 +8,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProfileDTO {
-    private String userId;
-    private String nickname;
-    private String bio;
-    private String profileImg;
-    private int followingCount;
-    private int followerCount;
+
+	private String userId;
+	private String nickname;
+	private String bio;
+	private String profileImg;
+	private int followingCount;
+	private int followerCount;
+
 }

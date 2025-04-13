@@ -6,14 +6,14 @@ const Findid = () => {
     return (
         <div className="findid-container">
           <div className="findid-box">
-            <img src={img} alt="logo" className="logo"></img>
+            <img src={img} style={{width:'400px', height:'120px', display: 'flex',justifyContent: 'center'}}></img>
             <br/>
     
             <form>
               {/* 성명 */}
               <div className="form-group">
                 <label>성명</label>
-                <input  placeholder="성명" />
+                <input style={{ width: '395px' }} type="text" placeholder="성명" />
               </div>
               <br/>
               {/* 이메일 */}
@@ -32,7 +32,7 @@ const Findid = () => {
                 <div style={{ marginTop: '30px'}}>
                   {/* 버튼 */}
                   <button type="button" className="verify-btn">메일 인증 받기</button>
-                  <button 
+                  <button style={{ width: '420px', marginLeft: '0px' }}
                     type="button" className="verify-btn">아이디 찾기</button>
               </div>
           </div>

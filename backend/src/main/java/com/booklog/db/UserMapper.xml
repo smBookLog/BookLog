@@ -15,7 +15,7 @@
 		resultType="int">
 		SELECT COUNT(*) FROM USER WHERE USER_ID = #{userId}
 	</select>
-	
+
 	<!-- 중복 닉네임 체크 -->
 	<select id="isNicknameExists" parameterType="string"
 		resultType="int">
@@ -32,7 +32,23 @@
 	<select id="login" parameterType="map"
 		resultType="com.booklog.model.UserDTO">
 		SELECT * FROM USER
-		WHERE USER_ID = #{userId} AND USER_PW = #{userPw}
+		WHERE USER_ID = #{userId} AND USER_PW =
+		#{userPw}
 	</select>
+
+	<!-- 개인 정보 및 프로필 수정 -->
+	<update id="updateUserInfo"
+		parameterType="com.booklog.model.UserDTO">
+		UPDATE USER
+		SET
+		<if test="nickname != null"> NICKNAME = #{nickname}, </if>
+		<if test="bio != null"> BIO = #{bio}, </if>
+		<if test="userPw != null"> USER_PW = #{userPw}, </if>
+		<if test="name != null"> NAME = #{name}, </if>
+		<if test="email != null"> EMAIL = #{email}, </if>
+		<if test="profileImg != null"> PROFILE_IMG = #{profileImg}, </if>
+		USER_ID = USER_ID  <!-- WHERE절 없으면 전체 수정됨 방지용 -->
+		WHERE USER_ID = #{userId}
+	</update>
 
 </mapper>

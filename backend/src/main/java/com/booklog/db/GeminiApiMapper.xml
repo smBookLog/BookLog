@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.booklog.db.GeminiApiMapper">
+
+	<!-- 인용구 조회 -->
+	<select id="findQuotesByUserId" parameterType="String"
+		resultType="string">
+		SELECT Q.CONTENT
+		FROM QUOTE Q
+		JOIN (
+		SELECT BOOK_IDX
+		FROM QUOTE
+		WHERE USER_ID = #{userId}
+		ORDER BY QUOTE_IDX DESC
+		LIMIT 1
+		) AS LATEST_BOOK ON Q.BOOK_IDX = LATEST_BOOK.BOOK_IDX
+		WHERE Q.USER_ID = #{userId}
+		ORDER BY Q.QUOTE_IDX DESC
+	</select>
+
+</mapper>

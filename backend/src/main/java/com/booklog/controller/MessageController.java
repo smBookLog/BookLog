@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.booklog.db.MessageMapper;
 import com.booklog.model.MessageDTO;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 @RestController
 public class MessageController {
 	
@@ -27,22 +27,22 @@ public class MessageController {
 //	  "receiverId": "user02",
 //	  "content": "안녕! 잘 지내?"
 //	}
-	@PostMapping("/message/send")
+	@PostMapping(value = "/message/send", produces = "text/plain; charset=UTF-8")
 	public String sendMessage(@RequestBody MessageDTO message) {
 	    int result = messageMapper.insertMessage(message);
-	    return result > 0 ? "sent" : "fail";
+	    return result > 0 ? "메시지 전송 완료" : "메시지 전송 실패";
 	}
 
 	// 받은 메시지 목록
 	// http://localhost:8082/controller/message/inbox/user01
-	@GetMapping("/message/inbox/{userId}")
+	@GetMapping(value = "/message/inbox/{userId}")
 	public ArrayList<MessageDTO> getInbox(@PathVariable String userId) {
 	    return messageMapper.selectInbox(userId);
 	}
 
 	// 보낸 메시지 목록
 	// http://localhost:8082/controller/message/sent/user01
-	@GetMapping("/message/sent/{userId}")
+	@GetMapping(value = "/message/sent/{userId}")
 	public ArrayList<MessageDTO> getSentMessages(@PathVariable String userId) {
 	    return messageMapper.selectSent(userId);
 	}

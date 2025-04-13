@@ -7,7 +7,7 @@ const Signup = () => {
   return (
     <div className="signup-container">
       <div>
-        <img src={img} alt="logo" className="logo"></img>
+        <img src={img} style={{ width: '400px', height: '120px', display: 'flex', justifyContent: 'center' }}></img>
         <br />
         <form>
           {/* 아이디 */}
@@ -22,21 +22,21 @@ const Signup = () => {
           {/* 성명 */}
           <div className="form-group">
             <label>성명</label>
-            <input  type="text" placeholder="성명" />
+            <input style={{ width: '424px' }} type="text" placeholder="성명" />
           </div>
 
           {/* 비밀번호 */}
           <div className="form-group">
             <label>비밀번호</label>
-            <input  type="password" placeholder="8~15자 영문, 숫자, 특수문자 모두 포함 가능" />
+            <input style={{ width: '424px' }} type="password" placeholder="8~15자 영문, 숫자, 특수문자 모두 포함 가능" />
           </div>
 
           {/* 비밀번호 확인 */}
           <div className="form-group">
             <label>비밀번호 확인</label>
-            <input  type="password" placeholder="비밀번호를 다시 입력해주세요" />
+            <input style={{ width: '424px' }} type="password" placeholder="비밀번호를 다시 입력해주세요" />
           </div>
-          
+
           {/* 닉네임 */}
           <div className="form-group">
             <label>닉네임</label>

@@ -16,7 +16,7 @@ import com.booklog.db.ReadingLogMapper;
 import com.booklog.model.CommentDTO;
 import com.booklog.model.ReadingLogDTO;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 @RestController
 public class ReadingLogController {
 
@@ -25,7 +25,7 @@ public class ReadingLogController {
 
 	// 독서 상태별 책과 독서기록 조회
 	// http://localhost:8082/controller/user01/FINISHED
-	@GetMapping("/{userId}/{status}")
+	@GetMapping(value = "/{userId}/{status}")
 	public ArrayList<ReadingLogDTO> myLogList(@PathVariable String userId, @PathVariable String status) {
 		ArrayList<ReadingLogDTO> logs = readingLogMapper.findMyLogs(userId, status);
 
@@ -43,7 +43,7 @@ public class ReadingLogController {
 
 	// 피드용 독서 기록 조회
 	// http://localhost:8082/controller/feed/user01/39
-	@GetMapping("/feed/{userId}/{logIdx}")
+	@GetMapping(value = "/feed/{userId}/{logIdx}")
 	public ArrayList<ReadingLogDTO> feedLogList(@PathVariable String userId, @PathVariable int logIdx) {
 		ArrayList<ReadingLogDTO> logs = readingLogMapper.findLogs(userId, logIdx);
 
@@ -78,7 +78,7 @@ public class ReadingLogController {
 //		    "생각하지 않는 것이 가장 안전하다."
 //		  ]
 //	}
-	@PostMapping("/log/add")
+	@PostMapping(value = "/log/add", produces = "text/plain; charset=UTF-8")
 	public String insertLog(@RequestBody ReadingLogDTO log) {
 		int result = readingLogMapper.insertLog(log);
 
@@ -106,7 +106,7 @@ public class ReadingLogController {
 				}
 			}
 		}
-		return result > 0 ? "success" : "fail";
+		return result > 0 ? "추가되었습니다." : "추가에 실패했습니다.";
 	}
 
 	// 독서 기록, 태그, 인용구 수정
@@ -120,7 +120,7 @@ public class ReadingLogController {
 //		  "rating": null,
 //		  "content": null
 //	}
-	@PutMapping("/log/update")
+	@PutMapping(value = "/log/update", produces = "text/plain; charset=UTF-8")
 	public String updateLog(@RequestBody ReadingLogDTO log) {
 		int result = readingLogMapper.updateLog(log);
 
@@ -151,22 +151,22 @@ public class ReadingLogController {
 			}
 		}
 
-		return result > 0 ? "updated" : "fail";
+		return result > 0 ? "수정되었습니다." : "수정에 실패했습니다.";
 	}
 
 	// 독서 기록, 인용구, 태그, 댓글 삭제
 	// http://localhost:8082/controller/log/delete/45
-	@DeleteMapping("/log/delete/{logIdx}")
+	@DeleteMapping(value = "/log/delete/{logIdx}", produces = "text/plain; charset=UTF-8")
 	public String deleteLog(@PathVariable int logIdx) {
 		int result = readingLogMapper.deleteLog(logIdx);
-		return result > 0 ? "success" : "fail";
+		return result > 0 ? "삭제되었습니다." : "삭제에 실패했습니다.";
 	}
 
 	// 인용구만 삭제
 	// http://localhost:8082/controller/quote/delete/22
-	@DeleteMapping("/quote/delete/{quoteIdx}")
+	@DeleteMapping(value = "/quote/delete/{quoteIdx}", produces = "text/plain; charset=UTF-8")
 	public String deleteQuote(@PathVariable int quoteIdx) {
 	    int result = readingLogMapper.deleteQuote(quoteIdx);
-	    return result > 0 ? "success" : "fail";
+	    return result > 0 ? "삭제되었습니다." : "삭제에 실패했습니다.";
 	}
 }

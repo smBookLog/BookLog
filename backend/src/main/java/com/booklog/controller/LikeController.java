@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.booklog.db.LikeMapper;
 import com.booklog.model.LikeDTO;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 @RestController
 public class LikeController {
 
@@ -21,35 +21,35 @@ public class LikeController {
 
 	// 좋아요 추가
 	// http://localhost:8082/controller/like
-	@PostMapping("/like")
+	@PostMapping(value = "/like", produces = "text/plain; charset=UTF-8")
 	public String like(@RequestBody LikeDTO like) {
 		int logIdx = like.getLogIdx();
 		String userId = like.getUserId();
 
 		if (likeMapper.hasLiked(logIdx, userId) == 0) {
 			likeMapper.insertLike(logIdx, userId);
-			return "liked";
+			return "좋아요 완료";
 		}
-		return "already liked";
+		return "이미 좋아요한 게시물입니다";
 	}
 
 	// 좋아요 취소
 	// http://localhost:8082/controller/dislike
-	@DeleteMapping("/dislike")
+	@DeleteMapping(value = "/dislike", produces = "text/plain; charset=UTF-8")
 	public String unlike(@RequestBody LikeDTO like) {
 	    int logIdx = like.getLogIdx();
 	    String userId = like.getUserId();
 
 	    if (likeMapper.hasLiked(logIdx, userId) > 0) {
 	        likeMapper.deleteLike(logIdx, userId);
-	        return "unliked";
+	        return "좋아요 취소 완료";
 	    }
-	    return "not liked";
+	    return "좋아요한 게시물이 아닙니다";
 	}
 
 	// 좋아요 수 조회
 	// http://localhost:8082/controller/39/likes
-	@GetMapping("/{logIdx}/likes")
+	@GetMapping(value = "/{logIdx}/likes")
 	public int getLikeCount(@PathVariable int logIdx) {
 		return likeMapper.countLikes(logIdx);
 	}

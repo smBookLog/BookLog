@@ -165,7 +165,7 @@
     padding-right: 30px;
     width: auto;
     align-items: center;
-    margin-left: 0px;  /* ← 이것이 가운데 정렬 핵심 */
+    margin-left: 60px;  /* ← 이것이 가운데 정렬 핵심 */
 
     /* margin-bottom: 15px; */
     /* padding: 40px; */

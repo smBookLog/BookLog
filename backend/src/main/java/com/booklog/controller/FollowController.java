@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.booklog.db.FollowMapper;
 import com.booklog.model.FollowDTO;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 @RestController
 public class FollowController {
 	
@@ -27,30 +27,30 @@ public class FollowController {
 //	  "followingId": "user03"
 //	}
 	// http://localhost:8082/controller/follow
-	@PostMapping("/follow")
+	@PostMapping(value = "/follow", produces = "text/plain; charset=UTF-8")
 	public String follow(@RequestBody FollowDTO follow) {
 	    int result = followMapper.insertFollow(follow);
-	    return result > 0 ? "followed" : "fail";
+	    return result > 0 ? "팔로우 완료" : "팔로우 실패";
 	}
 
 	// 언팔로우 하기
 	// http://localhost:8082/controller/unfollow/user01/user02
-	@DeleteMapping("/unfollow/{followerId}/{followingId}")
+	@DeleteMapping(value = "/unfollow/{followerId}/{followingId}", produces = "text/plain; charset=UTF-8")
 	public String unfollow(@PathVariable String followerId, @PathVariable String followingId) {
 	    int result = followMapper.deleteFollow(followerId, followingId);
-	    return result > 0 ? "unfollowed" : "fail";
+	    return result > 0 ? "언팔로우 완료" : "언팔로우 실패";
 	}
 
 	// 내가 팔로우한 사람 목록
 	// http://localhost:8082/controller/following/user01
-	@GetMapping("/following/{userId}")
+	@GetMapping(value = "/following/{userId}")
 	public ArrayList<String> getFollowing(@PathVariable String userId) {
 	    return followMapper.findFollowing(userId);
 	}
 
 	// 나를 팔로우하는 사람 목록
 	// http://localhost:8082/controller/followers/user01
-	@GetMapping("/followers/{userId}")
+	@GetMapping(value = "/followers/{userId}")
 	public ArrayList<String> getFollowers(@PathVariable String userId) {
 	    return followMapper.findFollowers(userId);
 	}

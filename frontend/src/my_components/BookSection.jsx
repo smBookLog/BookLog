@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import section from '../my_style/BookSection.css'
 import { useNavigate } from 'react-router-dom';
-import bookImg from '../etc_assets/bookinformation.png';
 
 const BookSection = () => {
     const [selectedCategory, setSelectedCategory] = useState('전체');
@@ -9,9 +8,7 @@ const BookSection = () => {
     // 도서 데이터
     const books = Array.from({ length: 7 }, (_, i) => ({
         id: i + 1,
-        image: bookImg , // public 폴더 또는 경로에 맞춰 수정
         title: '작품명',
-        author: '저자',
         rating: '★★★★☆'
     }));
 
@@ -21,7 +18,7 @@ const BookSection = () => {
     };
     const navigate = useNavigate();
 
-    const booklist = () => {
+    const booklist = () =>{
         navigate('/booklist');
     }
 
@@ -56,7 +53,7 @@ const BookSection = () => {
                 <button onClick={booklist} className="view-all-button">
                     전체 보기
                 </button>
-
+                
             </div>
 
             <div className="genre-filter-container">
@@ -80,12 +77,17 @@ const BookSection = () => {
             <div className="book-grid">
                 {books.map((book) => (
                     <div key={book.id} className="book-item">
-                    <div className="book-info">
-                      <img src={book.image} alt={book.title} className="book-cover-img" />
-                      <p className="book-title">{book.title}</p>
-                      <p className="book-author">{book.author}</p>
+                        <div className="book-cover">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                            </svg>
+                        </div>
+                        <div className="book-info">
+                            <h4 className="book-title">{book.title}</h4>
+                            <p className="book-rating">{book.rating}</p>
+                        </div>
                     </div>
-                  </div>
                 ))}
             </div>
         </div>

@@ -1,136 +1,83 @@
-/* 기본 설정 */
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f7f7f7;
-  padding: 20px;
-}
-
-.login-box {
-  background-color: white;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  width: 100%;
-  max-width: 400px;
-  box-sizing: border-box;
-}
-
-/* 로고 이미지 */
-.logo-section {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 30px;
-}
-
-.logo {
-  width: 200px;
-  height: auto;
-  max-width: 100%;
-}
-
-/* 모바일일 때 더 작게 */
-@media (max-width: 480px) {
-  .logo {
-    width: 140px;
-  }
-}
-
-/* 입력 폼 */
-.input-section input {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-sizing: border-box;
-}
-
-/* 옵션들 */
-.options {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-}
-
-.options .link-btn {
-  background: none;
-  border: none;
-  color: #555;
-  margin-right: 10px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.options label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  white-space: nowrap;
-  flex-shrink: 1;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  /* ✅ 줄 바꿈 방지 */
-  white-space: nowrap;
-}
-
-/* 버튼 */
-.login-btn, .signup-btn {
-  width: 100%;
-  padding: 12px;
-  background-color: #eee;
-  color: #333;
-  border: none;
-  border-radius: 4px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-}
-
-/* 마우스 올릴 때 색상 변경 */
-.login-btn:hover,
-.signup-btn:hover {
-  background-color: #146c2d;
-  color: white;
-}
-
-/* 클릭(눌렀을 때) 효과 */
-.login-btn:active,
-.signup-btn:active {
-  background-color: #146c2d;
-  transform: scale(0.98);
-  /* 눌린 듯한 느낌 */
-}
-
-/* 반응형 */
-@media (max-width: 480px) {
-  .login-box {
-    padding: 24px;
-  }
-
-  .options {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .options .link-btn {
-    margin-bottom: 6px;
-  }
-
-  .logo-section img {
-    width: 140px;
-    height: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #fff;
+    padding: 20px;
   }
   
-}
-
-
+  .login-box {
+    width: 400px;
+    max-width: 500px;
+    border: 1px solid #ddd;
+    padding: 90px;
+    border-radius: 14px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  .input-section input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    margin-left: -10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-left: 1px;
+  }
+  
+  .options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  .options label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    /* 텍스트와 체크박스 사이 여백 */
+    white-space: nowrap;
+    /* ✅ 줄 바꿈 방지 */
+  }
+  
+  .link-btn {
+    background: none;
+    border: none;
+    color: #555;
+    cursor: pointer;
+    margin-right: 5px;
+    text-decoration: underline;
+  }
+  
+  .login-btn,
+  .signup-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #eee;
+    color: #333;
+    border: none;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+  }
+  
+  /* 마우스 올릴 때 색상 변경 */
+  .login-btn:hover,
+  .signup-btn:hover {
+    background-color: #146c2d;
+    color: white;
+  }
+  
+  /* 클릭(눌렀을 때) 효과 */
+  .login-btn:active,
+  .signup-btn:active {
+    background-color: #bbb;
+    transform: scale(0.98);
+    /* 눌린 듯한 느낌 */
+  }

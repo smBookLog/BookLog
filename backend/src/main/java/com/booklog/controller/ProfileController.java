@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.booklog.db.ProfileMapper;
 import com.booklog.model.ProfileDTO;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 @RestController
 public class ProfileController {
 
@@ -18,7 +18,7 @@ public class ProfileController {
 	
 	// 프로필 조회
     // http://localhost:8082/controller/profile/user01
-    @GetMapping("/profile/{userId}")
+    @GetMapping(value = "/profile/{userId}")
     public ProfileDTO getProfile(@PathVariable String userId) {
         return profileMapper.getProfile(userId);
     }

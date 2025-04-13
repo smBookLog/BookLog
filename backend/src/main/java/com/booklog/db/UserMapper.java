@@ -17,6 +17,9 @@ public interface UserMapper {
 	int isEmailExists(String email);
 	
 	// 로그인용
-	 UserDTO login(@Param("userId") String userId, @Param("userPw") String userPw);
+	UserDTO login(@Param("userId") String userId, @Param("userPw") String userPw);
+	
+	// 개인 정보 및 프로필 수정
+	int updateUserInfo(UserDTO user);
 
 }

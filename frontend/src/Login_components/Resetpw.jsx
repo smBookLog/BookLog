@@ -5,7 +5,7 @@ const Resetpw = () => {
   return (
     <div className="resetpw-container">
       <div className="resetpw-box">
-        <img src={img} alt="logo" className="logo"></img>
+        <img src={img} style={{ width: '400px', height: '120px', display: 'flex', justifyContent: 'center' }}></img>
         <br />
 
         <form>
@@ -13,7 +13,7 @@ const Resetpw = () => {
           <div className="form-group">
             <label>비밀번호</label>
             <input
-              
+              style={{ width: '395px' }}
               type="password"
               placeholder="8~16자 이내, 영문, 숫자, 특수문자 모두 혼용 가능"
             />
@@ -22,11 +22,11 @@ const Resetpw = () => {
           {/* 비밀번호 확인 */}
           <div className="form-group">
             <label>비밀번호 확인</label>
-            <input  type="password" placeholder="비밀번호를 다시 입력해주세요" />
+            <input style={{ width: '395px' }} type="password" placeholder="비밀번호를 다시 입력해주세요" />
           </div>
 
           {/* 설정 버튼 */}
-          <button  type="submit" className="verify-btn">
+          <button style={{ width: '420px', marginLeft: '0px' }} type="submit" className="verify-btn">
             새 비밀번호 설정
           </button>
         </form>
