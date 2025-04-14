@@ -6,7 +6,6 @@
 		resultType="com.booklog.model.ProfileDTO">
 		SELECT
 		U.USER_ID AS userId,
-		U.NICKNAME,
 		U.BIO,
 		U.PROFILE_IMG AS profileImg,
 		(SELECT COUNT(*) FROM FOLLOW WHERE FOLLOWER_ID = U.USER_ID) AS

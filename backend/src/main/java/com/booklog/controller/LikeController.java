@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.booklog.db.LikeMapper;
 import com.booklog.model.LikeDTO;
 
-@CrossOrigin(origins = "http://localhost:3001")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class LikeController {
 

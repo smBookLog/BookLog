@@ -1,5 +1,6 @@
 package com.booklog.controller;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +21,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.booklog.db.GeminiApiMapper;
 
-@CrossOrigin(origins = "http://localhost:3001")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @PropertySource("classpath:config.properties")
 public class GeminiApiController {
@@ -34,6 +36,7 @@ public class GeminiApiController {
 	// http://localhost:8082/controller/recommend/user01
 	@PostMapping(value = "/recommend/{userId}", produces = "text/plain; charset=UTF-8")
 	public String getRecommendationFromLog(@PathVariable String userId) {
+		
 		// 인용구 불러오기
 		ArrayList<String> quotes = new ArrayList<>(geminiApiMapper.findQuotesByUserId(userId));
 
@@ -44,9 +47,12 @@ public class GeminiApiController {
 		String joinedQuotes = quotes.stream().map(q -> "- " + q).collect(Collectors.joining("\n"));
 
 		// 인용구와 prompt 결합
-		String prompt = "The following are quotes that the user saved from books they read. Based on these quotes, analyze the user's interests and recommend 5 books in Korean that match those themes."
-				+ "Provide only the book title, author, and publisher for each recommendation in Korean, without any explanation. Remember, no any explanation!!! \n"
-				+ joinedQuotes;
+		String prompt = "The following are quotes that the user saved from books they read. Based on these quotes, analyze the user's interests and recommend exactly 5 Korean books that match those themes. "
+		        + "The response must follow this **exact** format:\n"
+		        + "책 제목: , 작가: , ISBN: , 책 소개글: \n"
+		        + "List only the book title, author, ISBN and descripion in Korean. Do not explain anything. No numbering. No extra description. Just output in the above format.\n"
+		        + joinedQuotes;
+
 
 		// JSON body 생성
 		String jsonBody = "{\n" + "  \"contents\": [\n" + "    {\n" + "      \"parts\": [\n" + "        {\n"
@@ -56,7 +62,11 @@ public class GeminiApiController {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
 		HttpEntity<String> entity = new HttpEntity<>(jsonBody, headers);
+
+		// RestTemplate에 UTF-8 인코딩 설정 추가!
 		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.getMessageConverters()
+		    .add(0, new StringHttpMessageConverter(StandardCharsets.UTF_8));
 
 		String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key="
 				+ API_KEY;
@@ -71,17 +81,7 @@ public class GeminiApiController {
 		JSONArray parts = content.getJSONArray("parts");
 		String text = parts.getJSONObject(0).getString("text");
 
-		// 추천 책 정보 콘솔 창에 출력
-		System.out.println("# 추천 도서 목록:");
-		String[] lines = text.split("\n");
-		for (String line : lines) {
-			if (line.startsWith("1.") || line.startsWith("2.") || line.startsWith("3.") ||
-				line.startsWith("4.") || line.startsWith("5.")) {
-				System.out.println(line);
-			}
-		}
-
 		// 결과 반환
-		return response;
+		return text;
 	}
 }

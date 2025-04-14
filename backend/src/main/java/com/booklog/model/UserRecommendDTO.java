@@ -10,9 +10,8 @@ import lombok.NoArgsConstructor;
 public class UserRecommendDTO {
 	
     private String userId;
-    private String nickname;
     private String genre;
     private int genreCount;
-//    private String profileImg;
+    private String profileImg;
 
 }

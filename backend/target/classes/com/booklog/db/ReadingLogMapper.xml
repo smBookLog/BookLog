@@ -14,6 +14,7 @@
 		RL.RATING,
 		RL.CONTENT,
 
+		B.BOOK_IDX AS bookIdx,
 		B.TITLE,
 		B.AUTHOR,
 		B.GENRE,
@@ -64,6 +65,7 @@
 		U.USER_ID AS userId,
 		U.PROFILE_IMG AS profileImgUrl,
 
+		B.BOOK_IDX AS bookIdx,
 		B.TITLE,
 		B.AUTHOR,
 		B.GENRE,

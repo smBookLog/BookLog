@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.booklog.db.GenreRecommendMapper;
+import com.booklog.db.UserRecommendMapper;
 import com.booklog.model.UserRecommendDTO;
 
-@CrossOrigin(origins = "http://localhost:3001")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-public class GenreRecommendController {
+public class UserRecommendController {
 
 	@Autowired
-	GenreRecommendMapper genreRecommendMapper;
+	UserRecommendMapper userRecommendMapper;
 
     // http://localhost:8082/controller/genre-mixed/user05
     @GetMapping(value = "/genre-mixed/{userId}", produces = "application/json; charset=UTF-8")
@@ -25,11 +25,11 @@ public class GenreRecommendController {
         ArrayList<UserRecommendDTO> finalList = new ArrayList<>();
         
         // 최다 장르
-        String topGenre = genreRecommendMapper.findTopGenre(userId);
+        String topGenre = userRecommendMapper.findTopGenre(userId);
         System.out.println("Top Genre: " + topGenre);
         
         if (topGenre != null) {
-            ArrayList<UserRecommendDTO> topGenreList = genreRecommendMapper.recommendByGenre(topGenre, userId);
+            ArrayList<UserRecommendDTO> topGenreList = userRecommendMapper.recommendByGenre(topGenre, userId);
             
             for (UserRecommendDTO dto : topGenreList) {
                 boolean alreadyAdded = false;
@@ -47,10 +47,10 @@ public class GenreRecommendController {
         System.out.println("최다: " + finalList.toString());
         
         // 최신 장르
-        String latestGenre = genreRecommendMapper.findLatestGenre(userId);
+        String latestGenre = userRecommendMapper.findLatestGenre(userId);
         
         if (latestGenre != null) {
-            ArrayList<UserRecommendDTO> latestGenreList = genreRecommendMapper.recommendByGenre(latestGenre, userId);
+            ArrayList<UserRecommendDTO> latestGenreList = userRecommendMapper.recommendByGenre(latestGenre, userId);
             System.out.println("Latest Genre: " + latestGenre);
             
             for (UserRecommendDTO dto : latestGenreList) {

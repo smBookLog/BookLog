@@ -8,9 +8,10 @@ import org.apache.ibatis.annotations.Param;
 import com.booklog.model.UserRecommendDTO;
 
 @Mapper
-public interface GenreRecommendMapper {
+public interface UserRecommendMapper {
 	
 	String findLatestGenre(String userId);
+	
 	String findTopGenre(String userId);
 	
 	ArrayList<UserRecommendDTO> recommendByGenre(@Param("genre") String genre, @Param("userId") String userId);

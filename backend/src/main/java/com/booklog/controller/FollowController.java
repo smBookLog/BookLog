@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.booklog.db.FollowMapper;
 import com.booklog.model.FollowDTO;
 
-@CrossOrigin(origins = "http://localhost:3001")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class FollowController {
 	

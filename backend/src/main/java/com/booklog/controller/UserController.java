@@ -3,6 +3,7 @@ package com.booklog.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.booklog.db.UserMapper;
 import com.booklog.model.UserDTO;
 
-@CrossOrigin(origins = "http://localhost:3001")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class UserController {
 
@@ -29,9 +30,6 @@ public class UserController {
         if (userMapper.isUserIdExists(user.getUserId()) > 0) {
             return "이미 사용 중인 아이디입니다.";
         }
-        if (userMapper.isNicknameExists(user.getNickname()) > 0) {
-            return "이미 사용 중인 닉네임입니다.";
-        }
         if (userMapper.isEmailExists(user.getEmail()) > 0) {
             return "이미 등록된 이메일입니다.";
         }
@@ -44,12 +42,6 @@ public class UserController {
     @GetMapping(value = "/check/id", produces = "text/plain; charset=UTF-8")
     public String checkUserId(@RequestParam String userId) {
         return userMapper.isUserIdExists(userId) == 0 ? "사용 가능한 아이디입니다." : "이미 사용 중인 아이디입니다.";
-    }
-
-    // 닉네임 중복 확인
-    @GetMapping(value = "/check/nickname", produces = "text/plain; charset=UTF-8")
-    public String checkNickname(@RequestParam String nickname) {
-        return userMapper.isNicknameExists(nickname) == 0 ? "사용 가능한 닉네임입니다." : "이미 사용 중인 닉네임입니다.";
     }
 
     // 이메일 중복 확인
@@ -74,18 +66,19 @@ public class UserController {
     // http://localhost:8082/controller/update
 //    {
 //        "userId": "1",
-//        "nickname": "newNick",
 //        "bio": "new bio",
 //        "userPw": "1234",
 //        "name": "John Doe",
 //        "email": "john@example.com",
 //        "profileImg": "수정할 이미지 url"
 //    }
-    @PutMapping(value = "/update", produces = "text/plain; charset=UTF-8")
-    public String updateUserInfo(@RequestBody UserDTO user) {
-        // 닉네임 중복 검사
-        if (user.getNickname() != null && userMapper.isNicknameExists(user.getNickname()) > 0) {
-            return "이미 사용 중인 닉네임입니다.";
+    @PutMapping(value = "/update/{originalUserId}", produces = "text/plain; charset=UTF-8")
+    public String updateUserInfo(@PathVariable("originalUserId") String originalUserId,
+                                 @RequestBody UserDTO user) {
+        // 아이디 중복 검사 (변경된 경우만 검사)
+        if (user.getUserId() != null && !user.getUserId().equals(originalUserId) &&
+            userMapper.isUserIdExists(user.getUserId()) > 0) {
+            return "이미 사용 중인 아이디입니다.";
         }
 
         // 이메일 중복 검사
@@ -93,9 +86,11 @@ public class UserController {
             return "이미 등록된 이메일입니다.";
         }
 
-        // 수정할 정보 설정
+        user.setOriginalUserId(originalUserId);
+
         int result = userMapper.updateUserInfo(user);
         return result > 0 ? "회원 정보가 수정되었습니다." : "회원 정보 수정에 실패했습니다.";
     }
+
 
 }

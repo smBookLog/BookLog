@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.booklog.db.SearchMapper">
+
+	<!-- 유저 검색 SQL -->
+	<select id="searchUsers"
+		resultType="com.booklog.model.SearchDTO">
+		SELECT * FROM USER WHERE USER_ID LIKE CONCAT('%', #{keyword}, '%')
+	</select>
+
+	<!-- 도서 검색 SQL -->
+	<select id="searchBook" resultType="com.booklog.model.SearchDTO">
+		SELECT * FROM BOOK WHERE ISBN = #{isbn}
+	</select>
+
+	<!-- 도서 삽입 SQL -->
+	<insert id="insertBook"
+		parameterType="com.booklog.model.SearchDTO">
+		INSERT INTO BOOK (ISBN, TITLE, AUTHOR, GENRE, DESCRIPTION, BOOK_IMG)
+		VALUES (#{isbn}, #{title}, #{author}, #{genre}, #{description},
+		#{bookImgUrl})
+	</insert>
+
+
+
+</mapper>
