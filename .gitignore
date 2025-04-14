@@ -1,4 +1,4 @@
 # API 키 파일 무시
 backend/src/main/resources/config.properties
 
-target/
+backend/target/
