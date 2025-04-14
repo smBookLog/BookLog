@@ -1,4 +1,4 @@
-package com.booklog.controller;
+ package com.booklog.controller;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -49,8 +49,8 @@ public class GeminiApiController {
       // 인용구와 prompt 결합
       String prompt = "The following are quotes that the user saved from books they read. Based on these quotes, analyze the user's interests and recommend exactly 5 Korean books that match those themes. "
               + "The response must follow this **exact** format:\n"
-              + "책 제목: , 작가: , ISBN: , 책 소개글: \n"
-              + "List only the book title, author, ISBN and descripion in Korean. Do not explain anything. No numbering. No extra description. Just output in the above format.\n"
+              + "책 제목, 작가, ISBN\n"
+              + "List only the book title, author, and publisher in Korean. Do not explain anything. No numbering. No extra description. Just output in the above format.\n"
               + joinedQuotes;
 
 

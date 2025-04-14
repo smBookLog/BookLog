@@ -2,25 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.booklog.db.SearchMapper">
 
-	<!-- 유저 검색 SQL -->
-	<select id="searchUsers"
+	<select id="findUserById"
 		resultType="com.booklog.model.SearchDTO">
-		SELECT * FROM USER WHERE USER_ID LIKE CONCAT('%', #{keyword}, '%')
+		SELECT USER_ID as userId, NAME as name, EMAIL as email, BIO as bio,
+		PROFILE_IMG as profileImg
+		FROM USER
+		WHERE USER_ID = #{userId}
 	</select>
 
-	<!-- 도서 검색 SQL -->
-	<select id="searchBook" resultType="com.booklog.model.SearchDTO">
-		SELECT * FROM BOOK WHERE ISBN = #{isbn}
+	<select id="findBookByIsbn"
+		resultType="com.booklog.model.SearchDTO">
+		SELECT ISBN as isbn, TITLE as title, AUTHOR as author, GENRE as genre,
+		DESCRIPTION as description, BOOK_IMG as bookImg
+		FROM BOOK
+		WHERE ISBN = #{isbn}
 	</select>
 
-	<!-- 도서 삽입 SQL -->
-	<insert id="insertBook"
-		parameterType="com.booklog.model.SearchDTO">
+	<insert id="insertBook">
 		INSERT INTO BOOK (ISBN, TITLE, AUTHOR, GENRE, DESCRIPTION, BOOK_IMG)
-		VALUES (#{isbn}, #{title}, #{author}, #{genre}, #{description},
-		#{bookImgUrl})
+		VALUES (#{isbn}, #{title}, #{author}, #{genre}, #{description}, #{bookImg})
 	</insert>
-
-
 
 </mapper>

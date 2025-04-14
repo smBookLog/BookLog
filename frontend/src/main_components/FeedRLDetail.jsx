@@ -33,15 +33,15 @@ const FeedRLDetail = () => {
 
                 <div className="post-content">
                     <div className="impression-section">
-                        <h3 className="section-title">💬 인상 깊은 문장</h3>
+                        <h3 className="section-title" style={{fontSize:"15px"}}>💬 인상 깊은 문장</h3>
                         <p className="quote">"죽음은 어둠이 아니라 또 하나의 빛이다."</p>
                         <p className="quote">"지식은 늙지만 지혜는 늙지 않는다."</p>
                     </div>
 
                     <div className="review-section">
-                        <h3 className="section-title">
-                            <span className="highlight-icon">✏️  </span> 독서 감상
-                        </h3>
+                        <h4 className="section-title">
+                            <span className="highlight-icon">✏️ 독서 감상 </span>
+                        </h4>
                         <p className="review-text">
                             이 책은 단순히 한 지식인의 말년을 기록한 책이 아니라,  ‘어떻게 살 것인가'에 대한 깊은 성찰을 담고 있다. 나는 특히 이어령 선생님의 태도에 깊은 감명을 받았다. 그는 생의 마지막 순간까지 '생각하는 인간'으로 살았고, 자신의 말로 세상을 밝히려 했다.
                         </p>
@@ -56,7 +56,7 @@ const FeedRLDetail = () => {
                     <div className="book-info">
                         <img src={bookCover} alt="Book Cover" className="book-cover" />
                         <div className="book-details">
-                            <h4 className="book-title">책 이름</h4>
+                            <h4 className="book-title" style={{fontSize:"15px"}}>책 이름</h4>
                             <p className="book-author">저자 | 2025.03.17</p>
                             <p className="book-description">책 소개</p>
                         </div>
