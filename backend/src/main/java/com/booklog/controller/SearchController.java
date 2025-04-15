@@ -37,7 +37,7 @@ public class SearchController {
 	}
 
 	// 책 검색 (ISBN 기준)
-	// http://localhost:8082/controller/search/book?isbn=9788936433598
+	// http://localhost:8082/controller/search/book?isbn=9788954677158
 	@GetMapping(value = "/search/book", produces = "application/json; charset=UTF-8")
 	public Object searchBook(@RequestParam("isbn") String isbn) {
 		SearchDTO book = mapper.findBookByIsbn(isbn);

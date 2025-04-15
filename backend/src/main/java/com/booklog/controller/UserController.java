@@ -27,10 +27,16 @@ public class UserController {
         if (!user.getUserPw().equals(user.getConfirmPw())) {
         	return "비밀번호가 일치하지 않습니다.";
         }
-        if (userMapper.isUserIdExists(user.getUserId()) > 0) {
+        if (user.getUserId() == null || user.getUserId().trim().isEmpty()) {
+            return "아이디를 입력해주세요.";
+        }
+        else if (userMapper.isUserIdExists(user.getUserId()) > 0) {
             return "이미 사용 중인 아이디입니다.";
         }
-        if (userMapper.isEmailExists(user.getEmail()) > 0) {
+        if (user.getEmail() == null || user.getEmail().trim().isEmpty()) {
+            return "이메일을 입력해주세요.";
+        }
+        else if (userMapper.isEmailExists(user.getEmail()) > 0) {
             return "이미 등록된 이메일입니다.";
         }
 
@@ -63,9 +69,9 @@ public class UserController {
     }
     
     // 개인 정보 및 프로필 수정
-    // http://localhost:8082/controller/update
+    // http://localhost:8082/controller/update/1
 //    {
-//        "userId": "1",
+//        "userId": "2",
 //        "bio": "new bio",
 //        "userPw": "1234",
 //        "name": "John Doe",
@@ -75,10 +81,21 @@ public class UserController {
     @PutMapping(value = "/update/{originalUserId}", produces = "text/plain; charset=UTF-8")
     public String updateUserInfo(@PathVariable("originalUserId") String originalUserId,
                                  @RequestBody UserDTO user) {
-        // 아이디 중복 검사 (변경된 경우만 검사)
-        if (user.getUserId() != null && !user.getUserId().equals(originalUserId) &&
+        
+    	// 아이디 공란
+    	if (user.getUserId() == null || user.getUserId().trim().isEmpty()) {
+    	    return "아이디를 입력해주세요.";
+    	}
+    	
+    	// 아이디 중복 검사 (변경된 경우만 검사)
+        if (!user.getUserId().equals(originalUserId) &&
             userMapper.isUserIdExists(user.getUserId()) > 0) {
             return "이미 사용 중인 아이디입니다.";
+        }
+        
+        // 이메일을 공란
+        if (user.getEmail() == null || user.getEmail().trim().isEmpty()) {
+            return "이메일을 입력해주세요.";
         }
 
         // 이메일 중복 검사
