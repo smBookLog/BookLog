@@ -8,8 +8,8 @@ function UserSelectorBook() {
 
   useEffect(() => {
     // const userId = localStorage.getItem("userId"); // 또는 "user01" 사용 시 "user01"로 변경
-    const userId = "user05"; // 고정 ID
-    
+    const userId = localStorage.getItem("user");
+
     if (!userId) return;
 
     axios.get(`http://localhost:8082/controller/genre-mixed/${userId}`)
@@ -29,10 +29,10 @@ function UserSelectorBook() {
           <div key={index} className="recommended-user">
             <div className="avatar-container">
               {user.profileImg ? (
-                <img 
-                  src={user.profileImg} 
-                  alt={user.userId} 
-                  className="user-avatar" 
+                <img
+                  src={user.profileImg}
+                  alt={user.userId}
+                  className="user-avatar"
                 />
               ) : (
                 <div className="default-avatar">
@@ -50,3 +50,5 @@ function UserSelectorBook() {
 }
 
 export default UserSelectorBook;
+
+

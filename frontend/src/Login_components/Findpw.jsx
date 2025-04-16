@@ -22,8 +22,7 @@ const Findpw = () => {
           <div className="form-group">
             <label>아이디</label>
             <div className="input-with-button">
-              <input type="text" placeholder="6~15자 영문+숫자, 숫자 시작 불가" />
-              <button type="button">중복확인</button>
+              <input type="text" placeholder="아이디를 입력해주세요" />
             </div>
           </div>
 

@@ -1,7 +1,6 @@
 .review-list-wrapper {
   width: 100%;
   min-height: 100vh;
-  /* background-color: #ECECEC; */
   display: flex;
   justify-content: center;
   padding: 20px 0;
@@ -11,12 +10,11 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  /* background-color: #ECECEC; */
 }
 
 .review-items-container {
   width: 100%;
-  max-width: 800px; /* 원래 아이템들의 크기를 유지 */
+  max-width: 800px;
   padding: 10px 16px;
 }
 
@@ -24,7 +22,6 @@
   margin: 20px 0;
 }
 
-/* 모바일 기기를 위한 반응형 */
 @media (max-width: 840px) {
   .review-items-container {
     max-width: 95%;

@@ -1,105 +1,146 @@
-/* 전체 컨테이너 */
+/* 🧾 전체 메시지 컨테이너 */
 .message-container {
-    max-width: 600px;
-    margin: 0 auto;
-    font-family: 'Noto Sans KR', sans-serif;
-    background: #fff;
-    border: 1px solid #ddd;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: 'Noto Sans KR', sans-serif;
+  background: #fff;
+  border: 1px solid #ddd;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 🔝 상단 헤더 영역 */
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid #ddd;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* 📄 메시지 리스트 스크롤 영역 */
+.message-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* 💬 개별 메시지 항목 */
+.message-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.message-item:hover {
+  background-color: #f9f9f9;
+}
+
+/* 🖼️ 프로필 이미지 */
+.profile-img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: #ddd;
+  margin-right: 12px;
+  overflow: hidden;
+}
+
+.profile-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 🅰️ 이미지 없을 때 대체 프로필 이니셜 */
+.default-profile {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: #bbb;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 🧾 메시지 정보 텍스트 */
+.message-info {
+  flex: 1;
+}
+
+.message-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.time {
+  font-size: 12px;
+  color: gray;
+}
+
+.message-bottom .preview {
+  font-size: 14px;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 📦 메시지 없음 또는 에러, 로딩 */
+.no-message,
+.loading,
+.error-message {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+  font-size: 15px;
+}
+
+/* 📱 반응형 모바일 스타일 */
+@media (max-width: 600px) {
+  .message-container {
+    border: none;
   }
-  
-  /* 상단 헤더 */
+
   .message-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 16px;
-    border-bottom: 1px solid #ddd;
-    font-weight: bold;
-    font-size: 18px;
+    font-size: 16px;
+    padding: 12px;
   }
-  
-  /* 메시지 리스트 */
-  .message-list {
-    flex: 1;
-    overflow-y: auto;
-  }
-  
+
   .message-item {
-    display: flex;
-    align-items: flex-start;
-    padding: 16px;
-    border-bottom: 1px solid #eee;
+    padding: 12px;
   }
-  
-  .profile-img {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background-color: #ddd;
-    margin-right: 12px;
-  }
-  
-  .message-info {
-    flex: 1;
-  }
-  
-  .message-top {
-    display: flex;
-    justify-content: space-between;
+
+  .profile-img,
+  .default-profile {
+    width: 36px;
+    height: 36px;
     font-size: 14px;
-    margin-bottom: 6px;
   }
-  
+
   .name {
-    font-weight: 600;
-  }
-  
-  .time {
-    font-size: 12px;
-    color: gray;
-  }
-  
-  .preview {
     font-size: 14px;
-    color: #333;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
-  
-  /* ✅ 반응형 */
-  @media (max-width: 600px) {
-    .message-container {
-      border: none;
-    }
-  
-    .message-header {
-      font-size: 16px;
-      padding: 12px;
-    }
-  
-    .message-item {
-      padding: 12px;
-    }
-  
-    .profile-img {
-      width: 36px;
-      height: 36px;
-    }
-  
-    .name {
-      font-size: 14px;
-    }
-  
-    .time {
-      font-size: 11px;
-    }
-  
-    .preview {
-      font-size: 13px;
-    }
+
+  .time {
+    font-size: 11px;
   }
-  
+
+  .preview {
+    font-size: 13px;
+  }
+}

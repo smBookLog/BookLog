@@ -74,10 +74,22 @@ public class SearchController {
 			newBook.setIsbn(isbn);
 			newBook.setTitle(bookObj.optString("bookname", ""));
 			newBook.setAuthor(bookObj.optString("authors", ""));
-			newBook.setGenre(bookObj.optString("class_nm", ""));
+//			newBook.setGenre(bookObj.optString("class_nm", ""));
 			newBook.setDescription(bookObj.optString("description", ""));
 			newBook.setBookImg(bookObj.optString("bookImageURL", ""));
+			
+			String genreRaw = bookObj.optString("class_nm", "").trim();
+			String genre = "기타";  // 기본값 설정
 
+			if (genreRaw != null && !genreRaw.isEmpty()) {
+			    String[] genreParts = genreRaw.split(">");
+			    if (genreParts.length > 0 && !genreParts[0].trim().isEmpty()) {
+			        genre = genreParts[0].trim();  // 유효한 첫 단어가 있는 경우만 저장
+			    }
+			}
+
+			newBook.setGenre(genre);
+			
 			// DB에 책 정보 저장
 			mapper.insertBook(newBook);
 

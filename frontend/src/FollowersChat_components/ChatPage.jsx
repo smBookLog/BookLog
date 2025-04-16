@@ -2,17 +2,41 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { MdOutlineSend } from "react-icons/md";
 import { IoArrowBack } from "react-icons/io5";
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import '../FollowersChat_style/ChatPage.css';
 
 const ChatPage = () => {
   const { receiverId } = useParams();
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
-  const senderId = 'user01';
+  const [senderId, setSenderId] = useState('');
+  const [receiverProfileImg, setReceiverProfileImg] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const userStr = localStorage.getItem('user');
+    if (!userStr) {
+      alert('로그인이 필요합니다.');
+      navigate('/login');
+      return;
+    }
+
+    try {
+      const user = JSON.parse(userStr);
+      if (!user.userId) {
+        throw new Error('사용자 ID 정보가 없습니다.');
+      }
+      setSenderId(user.userId);
+    } catch (error) {
+      console.error('사용자 정보 파싱 오류:', error);
+      alert('사용자 정보를 가져오는데 문제가 발생했습니다. 다시 로그인해주세요.');
+      navigate('/login');
+    }
+  }, [navigate]);
 
   useEffect(() => {
     const fetchMessages = async () => {
+      if (!senderId) return;
       try {
         const [inboxRes, sentRes] = await Promise.all([
           axios.get(`http://localhost:8082/controller/message/inbox/${senderId}`),
@@ -58,10 +82,30 @@ const ChatPage = () => {
     };
 
     fetchMessages();
+  }, [receiverId, senderId]);
+
+  useEffect(() => {
+    const fetchReceiverInfo = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8082/controller/user/${receiverId}`);
+        if (res.data && res.data.profileImg) {
+          setReceiverProfileImg(res.data.profileImg);
+        } else {
+          setReceiverProfileImg('/default-profile.png');
+        }
+      } catch (err) {
+        console.error('상대방 정보 조회 실패:', err);
+        setReceiverProfileImg('/default-profile.png');
+      }
+    };
+
+    if (receiverId) {
+      fetchReceiverInfo();
+    }
   }, [receiverId]);
 
   const handleSend = async () => {
-    if (input.trim() === '') return;
+    if (input.trim() === '' || !senderId) return;
 
     try {
       await axios.post('http://localhost:8082/controller/message/send', {
@@ -100,7 +144,7 @@ const ChatPage = () => {
         <div className="chat-profile-info">
           <img
             className="chat-profile-image"
-            src="/static/media/profile.6083c57c60f3e626368f.png"
+            src={receiverProfileImg}
             alt="profile"
           />
           <span className="username">{receiverId}</span>

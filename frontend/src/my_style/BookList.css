@@ -117,6 +117,37 @@
   color: #333;
 }
 
+/* 모든 링크의 밑줄 제거 */
+a {
+  text-decoration: none;
+  color: #000000;
+}
+
+a:hover {
+  color: #2e7d32;
+  text-decoration: none;
+}
+
+/* add-button 클래스에 대한 스타일 */
+.add-button {
+  cursor: pointer;
+  color: #333333;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  background-color: #e8f5e9; 
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.add-button:hover {
+  color: #2e7d32;
+  text-decoration: none;
+  background-color: #c8e6c9;
+}
+
 @media (max-width: 480px) {
   .book-list {
     grid-template-columns: repeat(2, 1fr);

@@ -4,17 +4,20 @@ import '../BookDetail_style/bookdetail.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import defaultImg from '../etc_assets/bookinformation.png';
+
 import { IoIosAdd } from 'react-icons/io';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
-import { differenceInDays } from 'date-fns';
 import { RiStickyNoteAddLine } from "react-icons/ri";
 import { MdDeleteOutline } from "react-icons/md";
+
+import { differenceInDays } from 'date-fns';
+
 import Header_main from '../header_components/Header_main';
 
 const Bookdetail = () => {
     const [rating, setRating] = useState(5);
     const [genre, setGenre] = useState('전체');
-    const [readingStatus, setReadingStatus] = useState('FINISHED'); // 오타 수정: FINSI -> FINISHED
+    const [readingStatus, setReadingStatus] = useState('FINISHED');
     const [startDate, setStartDate] = useState(new Date('2024-03-02'));
     const [endDate, setEndDate] = useState(null);
     const [quotes, setQuotes] = useState([]);
@@ -25,6 +28,7 @@ const Bookdetail = () => {
     const [showTagForm, setShowTagForm] = useState(false);
     const [newTag, setNewTag] = useState('');
     const [bookIdx, setBookIdx] = useState(null);
+    const [userId, setUserId] = useState('');
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -35,9 +39,35 @@ const Bookdetail = () => {
     const [bookAuthor, setBookAuthor] = useState('');
     const [bookImage, setBookImage] = useState(defaultImg);
 
+    // 컴포넌트 마운트 시 로그인 정보 확인
     useEffect(() => {
-        if (logIdx) {
-            // 백엔드 API 경로에 맞게 수정
+        // localStorage에서 로그인한 사용자 정보 가져오기
+        const userStr = localStorage.getItem('user');
+
+        if (!userStr) {
+            // 로그인 정보가 없으면 로그인 페이지로 리다이렉트
+            alert('로그인이 필요합니다.');
+            navigate('/login');
+            return;
+        }
+
+        try {
+            const user = JSON.parse(userStr);
+            if (!user.userId) {
+                throw new Error('사용자 ID 정보가 없습니다.');
+            }
+            setUserId(user.userId);
+            console.log("로그인 사용자 ID:", user.userId);
+        } catch (error) {
+            console.error('사용자 정보 파싱 오류:', error);
+            alert('사용자 정보를 가져오는데 문제가 발생했습니다. 다시 로그인해주세요.');
+            navigate('/login');
+        }
+    }, [navigate]);
+
+    useEffect(() => {
+        // userId가 설정되고 logIdx가 있을 때만 데이터 로드
+        if (userId && logIdx) {
             fetch(`http://localhost:8082/controller/feed/${logIdx}`)
                 .then(res => {
                     if (!res.ok) {
@@ -49,13 +79,20 @@ const Bookdetail = () => {
                     console.log("서버에서 받은 데이터:", data);
                     if (data && data.length > 0) {
                         const d = data[0];
+                        // 현재 로그인한 사용자의 독서 기록인지 확인
+                        if (d.userId && d.userId !== userId) {
+                            alert("접근 권한이 없는 독서 기록입니다.");
+                            navigate('/');
+                            return;
+                        }
+
                         setReadingStatus(d.status || 'FINISHED');
                         setStartDate(d.startDate ? new Date(d.startDate) : new Date());
                         setEndDate(d.endDate ? new Date(d.endDate) : null);
                         setRating(d.rating || 5);
                         setThoughts(d.content || '');
                         setQuotes(d.quotes || []);
-                        setTags(d.tags || []);  // 태그 데이터도 설정
+                        setTags(d.tags || []);
                         setBookTitle(d.title || '제목 없음');
                         setBookAuthor(d.author || '저자 미상');
                         setBookImage(d.bookImgUrl || defaultImg);
@@ -68,14 +105,13 @@ const Bookdetail = () => {
                     alert("데이터를 불러오는데 실패했습니다.");
                 });
         }
-    }, [logIdx]);
+    }, [logIdx, userId, navigate]);
 
     useEffect(() => {
         if (!logIdx && location.state) {
             console.log("검색에서 넘어온 데이터:", location.state);
             const { title, author, imageUrl, bookIdx: bookId } = location.state || {};
-            
-            // location.state가 undefined일 수 있으므로 안전하게 처리
+
             setBookTitle(title || '제목 없음');
             setBookAuthor(author || '저자 미상');
             setBookImage(imageUrl || defaultImg);
@@ -101,7 +137,7 @@ const Bookdetail = () => {
 
     const toggleQuoteForm = () => {
         setShowQuoteForm(!showQuoteForm);
-        if (showQuoteForm) setNewQuote(''); 
+        if (showQuoteForm) setNewQuote('');
     };
 
     const handleAddQuote = () => {
@@ -134,6 +170,13 @@ const Bookdetail = () => {
     };
 
     const handleSubmit = async () => {
+        // 로그인 확인
+        if (!userId) {
+            alert("로그인이 필요합니다.");
+            navigate('/login');
+            return;
+        }
+
         // 필수 값 확인
         if (!bookIdx) {
             alert("책 정보가 유효하지 않습니다.");
@@ -142,7 +185,7 @@ const Bookdetail = () => {
 
         const logData = {
             logIdx: logIdx ? parseInt(logIdx) : undefined,
-            userId: "user01",
+            userId: userId,  // 로그인한 사용자 ID 사용
             bookIdx: parseInt(bookIdx),
             status: readingStatus || "FINISHED",
             startDate: startDate?.toISOString().split("T")[0],
@@ -174,15 +217,54 @@ const Bookdetail = () => {
             const result = await response.text();
             console.log("서버 응답:", result);
             alert(logIdx ? "수정 완료!" : "등록 완료!");
-            // 성공 후 이동 경로 설정 (선택사항)
-            // navigate('/MyBooks'); 
+            navigate('/booklist');  // 성공 후 내 서재로 이동
         } catch (error) {
             console.error("저장 중 오류:", error);
             alert(logIdx ? "수정 실패!" : "등록 실패!");
         }
     };
 
-    // bookIdx와 logIdx 둘 다 없고 location.state도 없는 경우에만 null 반환
+    // 삭제 기능 추가
+    const handleDelete = async () => {
+        // 로그인 확인
+        if (!userId) {
+            alert("로그인이 필요합니다.");
+            navigate('/login');
+            return;
+        }
+
+        // logIdx가 없으면 삭제할 수 없음
+        if (!logIdx) {
+            alert("아직 저장되지 않은 독서 기록은 삭제할 수 없습니다.");
+            return;
+        }
+
+        // 사용자에게 삭제 확인
+        if (!window.confirm("정말로 이 독서 기록을 삭제하시겠습니까?")) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:8082/controller/log/delete/${logIdx}`, {
+                method: "DELETE",
+            });
+
+            if (!response.ok) {
+                throw new Error('서버 응답 오류: ' + response.status);
+            }
+
+            alert("삭제 완료!");
+            navigate('/booklist');  // 성공 후 내 서재로 이동
+        } catch (error) {
+            console.error("삭제 중 오류:", error);
+            alert("삭제 실패!");
+        }
+    };
+
+    // userId가 없는 경우 렌더링하지 않음
+    if (!userId) return null;
+
+    // bookIdx와 logIdx 둘 다 없고 location.state도 없는 경우에도 null 반환
     if (!bookIdx && !logIdx && !location.state) return null;
 
     return (
@@ -192,9 +274,16 @@ const Bookdetail = () => {
                 <div className="content">
                     <div className="section-title">
                         <h2>독서 기록</h2>
-                        <button className="edit-button" onClick={handleSubmit}>
-                            {logIdx ? '수정' : '등록'}
-                        </button>
+                        <div className="button-group">
+                            <button className="edit-button" onClick={handleSubmit}>
+                                {logIdx ? '수정' : '등록'}
+                            </button>
+                            {logIdx && (
+                                <button className="delete-button" onClick={handleDelete}>
+                                    삭제
+                                </button>
+                            )}
+                        </div>
                     </div>
 
                     <div className="book-info">
@@ -206,14 +295,7 @@ const Bookdetail = () => {
 
                             <div className="category-row underline">
                                 <span className="category-label">장르</span>
-                                <select value={genre} onChange={e => setGenre(e.target.value)}>
-                                    <option value="소설">소설</option>
-                                    <option value="인문">인문</option>
-                                    <option value="자기계발">자기계발</option>
-                                    <option value="시/에세이">시/에세이</option>
-                                    <option value="역사">역사</option>
-                                    <option value="과학">과학</option>
-                                </select>
+                                <span>{genre}</span>
                             </div>
 
                             <div className="category-row underline">

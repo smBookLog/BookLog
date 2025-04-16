@@ -22,12 +22,8 @@ const BookItem = ({ book }) => {
             alt={book.title}
             className="book-img"
           />
-          <div className="book-info">
             <h4>{book.title}</h4>
-            <p className="author">{book.author}</p>
-            <p className="rating">{'⭐'.repeat(book.rating || 0)}</p>
-            <p className="status">{getStatusLabel(book.status)}</p>
-          </div>
+            <h4 className="author" style={{textAlign: "center"}}>{book.author}</h4>
         </div>
       );
     };

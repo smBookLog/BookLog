@@ -3,11 +3,12 @@ import section from '../my_style/BookSection.css'
 import { useNavigate } from 'react-router-dom';
 
 const BookSection = () => {
+    const [userId, setUserId] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('전체');
-    const [readingStatus, setReadingStatus] = useState('독서중'); // 예: '독서중'을 기본값으로
+    const [readingStatus, setReadingStatus] = useState('독서중');
     const [books, setBooks] = useState([]);
+    const [genres, setGenres] = useState(['전체']);
     const navigate = useNavigate();
-    const userId = 'user01'; // 로그인 연동된 경우 여기에 로그인된 userId 사용
 
     const statusMap = {
         '독서중': 'READING',
@@ -15,20 +16,44 @@ const BookSection = () => {
         '독서예정': 'NOT_STARTED'
     };
 
-
+    // 사용자 정보 가져오기
     useEffect(() => {
+        const userInfo = localStorage.getItem('user');
+        if (userInfo) {
+            const user = JSON.parse(userInfo);
+            setUserId(user.userId);
+        } else {
+            console.error('로그인 정보를 찾을 수 없습니다.');
+            // 로그인 정보가 없을 경우 처리 (예: 로그인 페이지로 리다이렉트)
+            // navigate('/login');
+        }
+    }, []);
+
+    // 책 데이터 가져오기
+    useEffect(() => {
+        if (!userId) return; // userId가 없으면 API 호출하지 않음
+
         const fetchBooks = async () => {
             try {
                 const response = await fetch(`http://localhost:8082/controller/${userId}/${statusMap[readingStatus]}`);
                 const data = await response.json();
-                setBooks(data); // 받아온 데이터로 상태 업데이트
+                setBooks(data);
+
+                // 사용자가 가진 장르 추출 (중복 제거)
+                const userGenres = ['전체', ...new Set(data.map(book => book.genre).filter(Boolean))];
+                setGenres(userGenres);
+                
+                // 만약 현재 선택된 장르가 사용자 장르에 없으면 '전체'로 리셋
+                if (!userGenres.includes(selectedCategory)) {
+                    setSelectedCategory('전체');
+                }
             } catch (error) {
                 console.error('책 불러오기 실패:', error);
             }
         };
 
         fetchBooks();
-    }, [readingStatus, selectedCategory]);
+    }, [userId, readingStatus]);
 
     // 클릭한 버튼의 상태를 업데이트하는 함수
     const handleStatusChange = (status) => {
@@ -37,7 +62,12 @@ const BookSection = () => {
 
     const booklist = () => {
         navigate('/booklist');
-      };
+    };
+
+    // 로그인 정보가 없거나 로딩 중일 때 표시할 내용
+    if (!userId) {
+        return <div className="book-section">로그인 정보를 불러오는 중...</div>;
+    }
 
     return (
         <div className="book-section">
@@ -61,7 +91,6 @@ const BookSection = () => {
                 <button onClick={booklist} className="view-all-button">
                     전체 보기
                 </button>
-
             </div>
 
             <div className="genre-filter-container">
@@ -73,34 +102,43 @@ const BookSection = () => {
                             value={selectedCategory}
                             onChange={(e) => setSelectedCategory(e.target.value)}
                         >
-                            <option>전체</option>
-                            <option>소설/스릴러</option>
-                            <option>자기계발</option>
-                            <option>인문</option>
-                            <option>프로그래밍</option>
+                            {genres.map((genre) => (
+                                <option key={genre} value={genre}>
+                                    {genre}
+                                </option>
+                            ))}
                         </select>
                     </span>
                 </h4>
             </div>
 
             <div className="book-grid">
-                {books
-                    .filter(book => selectedCategory === '전체' || book.genre === selectedCategory)
-                    .map((book) => (
-                        <div key={book.logIdx} className="book-item">
-                            <div className="book-cover">
-                                <img src={book.bookImgUrl} alt={book.title} style={{ width: '100%', height: '150px', objectFit: 'cover' }} />
+                {books.length > 0 ? (
+                    books
+                        .filter(book => selectedCategory === '전체' || book.genre === selectedCategory)
+                        .map((book) => (
+                            <div key={book.logIdx} className="book-item">
+                                <div className="Section-book-cover">
+                                    <img 
+                                        src={book.bookImgUrl} 
+                                        alt={book.title} 
+                                        style={{ width: '100%', height: '150px', objectFit: 'cover' }} 
+                                    />
+                                </div>
+                                <div className="book-info">
+                                    <h4 className="book-title">{book.title}</h4>
+                                    <p className="book-rating">★ {book.rating}</p>
+                                </div>
                             </div>
-                            <div className="book-info">
-                                <h4 className="book-title">{book.title}</h4>
-                                <p className="book-rating">★ {book.rating}</p>
-                            </div>
-                        </div>
-                    ))}
+                        ))
+                ) : (
+                    <div className="no-books-message">
+                        {readingStatus}인 책이 없습니다.
+                    </div>
+                )}
             </div>
         </div>
     );
-
 }
 
 export default BookSection;

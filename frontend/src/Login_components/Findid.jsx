@@ -29,7 +29,7 @@ const Findid = () => {
                   </select>
     
                 </div>
-                <div style={{ marginTop: '30px'}}>
+                <div style={{ marginTop: '0px'}}>
                   {/* 버튼 */}
                   <button type="button" className="verify-btn">메일 인증 받기</button>
                   <button 

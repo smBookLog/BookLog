@@ -4,43 +4,83 @@ import BookItem from './BookItem';
 import '../my_style/BookList.css';
 import { LuBookPlus } from "react-icons/lu";
 import TabBar from './TabBar';
-import { Link } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
+import '../BookDetail_style/bookdetail.css';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const BookList = () => {
-  const userId = 'user01';
+  const [userId, setUserId] = useState('');
   const [status, setStatus] = useState('READING');
   const [books, setBooks] = useState([]);
   const [isSelectOpen, setIsSelectOpen] = useState(false);
   const [selectedGenre, setSelectedGenre] = useState('전체');
+  const [genres, setGenres] = useState(['전체']);
+  const navigate = useNavigate();
 
-  const genres = ['전체', '소설', '시/에세이', '경제/경영', '자기계발', '역사', '과학', '예술', '기타'];
+  // 로그인 정보 확인
+  useEffect(() => {
+    const userStr = localStorage.getItem('user');
+
+    if (!userStr) {
+      alert('로그인이 필요합니다.');
+      navigate('/login');
+      return;
+    }
+
+    try {
+      const user = JSON.parse(userStr);
+      if (!user.userId) {
+        throw new Error('사용자 ID 정보가 없습니다.');
+      }
+      setUserId(user.userId);
+      console.log("로그인 사용자 ID:", user.userId);
+    } catch (error) {
+      console.error('사용자 정보 파싱 오류:', error);
+      alert('사용자 정보를 가져오는데 문제가 발생했습니다. 다시 로그인해주세요.');
+      navigate('/login');
+    }
+  }, [navigate]);
 
   const handleGenreSelect = (genre) => {
     setSelectedGenre(genre);
     setIsSelectOpen(false);
   };
 
+  // userId가 설정된 후에만 데이터 로드
   useEffect(() => {
+    if (!userId) return;
+
+    console.log("API 호출 중:", userId, status);
+
     axios.get(`http://localhost:8082/controller/${userId}/${status}`)
       .then(response => {
-        setBooks(response.data);
+        console.log("API 응답:", response.data);
+        const fetchedBooks = response.data;
+        setBooks(fetchedBooks);
+
+        // 장르 목록 동적으로 추출 (중복 제거, 빈 값 제거)
+        const uniqueGenres = Array.from(
+          new Set(
+            fetchedBooks
+              .map(book => book.genre)
+              .filter(genre => genre && genre.trim() !== '')
+          )
+        );
+        setGenres(['전체', ...uniqueGenres]);
       })
       .catch(error => {
         console.error('API 호출 에러:', error);
       });
   }, [userId, status]);
 
-  const handleDelete = (logIdx) => {
-    if (window.confirm('정말 삭제하시겠습니까?')) {
-      axios.delete(`http://localhost:8082/controller/log/delete/${logIdx}`)
-        .then(() => {
-          setBooks(prev => prev.filter(book => book.logIdx !== logIdx));
-        })
-        .catch(error => {
-          console.error('삭제 실패:', error);
-        });
-    }
-  };
+  // 선택된 장르에 따라 책 필터링
+  const filteredBooks = selectedGenre === '전체'
+    ? books
+    : books.filter(book => book.genre === selectedGenre);
+
+  // userId가 없으면 렌더링하지 않음
+  if (!userId) return null;
 
   // 바깥쪽 페이지 전체 배경 연회색
   const pageStyle = {
@@ -68,11 +108,23 @@ const BookList = () => {
     width: '100%',
   };
 
+  // 상단 필터 스타일
+  const topFilterStyle = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '15px 0',
+    borderBottom: '1px solid #eaeaea',
+    marginBottom: '20px',
+  };
+
   return (
     <div style={pageStyle}>
       <div style={wrapperStyle}>
         <TabBar onStatusChange={setStatus} />
-        <div className="book-list-header">
+        
+        {/* 상단에 장르 필터와 추가 버튼 배치 */}
+        <div style={topFilterStyle}>
           <div className="genre-select-group">
             <span className="genre-label">장르</span>
             <div className="genre-select-container">
@@ -98,24 +150,23 @@ const BookList = () => {
             </div>
           </div>
 
-          <a href="/bookdetail" className="add-button">추가<LuBookPlus /></a>
+          <a href="/search" className="add-button">추가<LuBookPlus /></a>
         </div>
 
-        <div style={bookListStyle}>
-          {books.length === 0 ? (
-            <p>도서가 없습니다.</p>
-          ) : (
-            books.map(book => (
-              <div key={book.logIdx} className="book-item-with-actions">
-                <Link to={`/bookdetail?logIdx=${book.logIdx}`}>
-                  <BookItem book={book} />
-                </Link>
-                <button className="delete-button" onClick={() => handleDelete(book.logIdx)}>
-                  삭제
-                </button>
-              </div>
-            ))
-          )}
+        <div className="book-info-container-new"> {/* 메인 css */}
+          <div style={bookListStyle}>
+            {filteredBooks.length === 0 ? (
+              <p>도서가 없습니다.</p>
+            ) : (
+              filteredBooks.map(book => (
+                <div key={book.logIdx} className="book-item-with-actions">
+                  <Link to={`/bookdetail?logIdx=${book.logIdx}`}>
+                    <BookItem book={book} />
+                  </Link>
+                </div>
+              ))
+            )}
+          </div>
         </div>
       </div>
     </div>

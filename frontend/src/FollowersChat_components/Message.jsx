@@ -1,43 +1,56 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../FollowersChat_style/Message.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import profileImg from '../etc_assets/profile.png';
 
 const Message = () => {
   const [activeTab, setActiveTab] = useState('followers');
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
-  const userId = 'user03'; // 로그인 유저 ID라고 가정
+  const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`http://localhost:8082/controller/following/${userId}`)
-      .then(res => setFollowers(res.data))
-      .catch(err => console.error('팔로워 불러오기 실패', err));
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      const parsedUser = JSON.parse(userData);
+      setCurrentUser(parsedUser);
+    } else {
+      alert('로그인이 필요합니다.');
+      navigate('/login');
+      return;
+    }
+  }, [navigate]);
 
-    axios.get(`http://localhost:8082/controller/followers/${userId}`)
-      .then(res => setFollowing(res.data))
-      .catch(err => console.error('팔로잉 불러오기 실패', err));
-  }, [userId]);
+  useEffect(() => {
+    if (currentUser && currentUser.userId) {
+      const fetchUserInfoList = async (userIds) => {
+        const promises = userIds.map(id =>
+          axios.get(`http://localhost:8082/controller/user/${id}`)
+            .then(res => ({
+              userId: id,
+              nickname: res.data.nickname || id,
+              profileImg: res.data.profileImg || null
+            }))
+            .catch(() => ({
+              userId: id,
+              nickname: id,
+              profileImg: null
+            }))
+        );
+        return Promise.all(promises);
+      };
 
-  const handleMessageClick = (receiverName) => {
-    const content = prompt(`${receiverName}님에게 보낼 메시지를 입력하세요:`);
-    if (!content) return;
+      axios.get(`http://localhost:8082/controller/following/${currentUser.userId}`)
+        .then(res => fetchUserInfoList(res.data).then(setFollowers))
+        .catch(err => console.error('팔로워 불러오기 실패', err));
 
-    axios.post('http://localhost:8082/controller/message/send', {
-      senderId: userId,
-      receiverId: receiverName,
-      content: content
-    })
-      .then(() => {
-        alert('메시지 전송 완료!');
-        navigate(`/message/conversation/${userId}/${receiverName}`);
-      })
-      .catch(err => {
-        console.error('메시지 전송 실패:', err);
-        alert('메시지 전송 실패');
-      });
-  };
+      axios.get(`http://localhost:8082/controller/followers/${currentUser.userId}`)
+        .then(res => fetchUserInfoList(res.data).then(setFollowing))
+        .catch(err => console.error('팔로잉 불러오기 실패', err));
+    }
+  }, [currentUser]);
 
   const userList = activeTab === 'followers' ? followers : following;
 
@@ -64,15 +77,40 @@ const Message = () => {
       </div>
 
       <div className="user-list">
-        {userList.map((name, idx) => (
-          <div key={idx} className="user-card">
-            <div className="user-info">
-              <div className="avatar" />
-              <span>{name}</span>
+        {userList.length > 0 ? (
+          userList.map((user, idx) => (
+            <div key={idx} className="user-card">
+              <div className="user-info">
+                <div className="avatar">
+                  {user.profileImg ? (
+                    <img
+                      src={
+                        user.profileImg.startsWith('http')
+                          ? user.profileImg
+                          : `http://localhost:8082/${user.profileImg}`
+                      }
+                      alt="프로필"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = profileImg;
+                      }}
+                    />
+                  ) : (
+                    <img src={profileImg} alt="기본 프로필" />
+                  )}
+                </div>
+                <span>{user.nickname}</span>
+              </div>
+              <Link to={`/chat/${user.userId}`} className="message-btn">
+                Message
+              </Link>
             </div>
-            <button className="message-btn" onClick={() => handleMessageClick(name)}>Message</button>
+          ))
+        ) : (
+          <div className="empty-message">
+            {activeTab === 'followers' ? '팔로워' : '팔로잉'} 목록이 비어있습니다.
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

@@ -101,7 +101,7 @@ const Login = () => {
             value={id}
             onChange={(e) => setId(e.target.value)}
             onKeyPress={handleKeyPress}
-            style={{ width: '372px' }}
+            // style={{ width: '372px' }}
           />
           <input
             type="password"
@@ -109,7 +109,7 @@ const Login = () => {
             value={pw}
             onChange={(e) => setPw(e.target.value)}
             onKeyPress={handleKeyPress}
-            style={{ width: '372px' }}
+            // style={{ width: '372px' }}
           />
         </div>
 

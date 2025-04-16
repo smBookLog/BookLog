@@ -7,15 +7,16 @@
 		resultType="string">
 		SELECT Q.CONTENT
 		FROM QUOTE Q
-		JOIN (
+		WHERE Q.USER_ID = #{userId}
+		AND Q.BOOK_IDX = (
 		SELECT BOOK_IDX
 		FROM QUOTE
 		WHERE USER_ID = #{userId}
 		ORDER BY QUOTE_IDX DESC
 		LIMIT 1
-		) AS LATEST_BOOK ON Q.BOOK_IDX = LATEST_BOOK.BOOK_IDX
-		WHERE Q.USER_ID = #{userId}
+		)
 		ORDER BY Q.QUOTE_IDX DESC
 	</select>
+
 
 </mapper>
