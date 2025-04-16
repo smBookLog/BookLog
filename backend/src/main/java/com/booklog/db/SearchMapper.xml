@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.booklog.db.SearchMapper">
+
+	<!-- 유저 ID로 유저 검색 -->
+	<select id="findUserById"
+		resultType="com.booklog.model.SearchDTO">
+		SELECT USER_ID as userId, NAME as name, EMAIL as email, BIO
+		as bio,
+		PROFILE_IMG as profileImg
+		FROM USER
+		WHERE USER_ID = #{userId}
+	</select>
+
+	<!-- ISBN으로 책 검색 -->
+	<select id="findBookByIsbn"
+		resultType="com.booklog.model.SearchDTO">
+		SELECT ISBN as isbn, TITLE as title, AUTHOR as author,
+		GENRE as genre,
+		DESCRIPTION as description, BOOK_IMG as bookImg
+		FROM
+		BOOK
+		WHERE ISBN = #{isbn}
+	</select>
+
+	<!-- 책 추가 -->
+	<insert id="insertBook">
+		INSERT INTO BOOK (ISBN, TITLE, AUTHOR, GENRE,
+		DESCRIPTION, BOOK_IMG)
+		VALUES (#{isbn}, #{title}, #{author}, #{genre},
+		#{description}, #{bookImg})
+	</insert>
+
+	<!-- 제목 또는 저자로 책 검색 -->
+	<select id="findBooksByKeyword" parameterType="string"
+		resultType="com.booklog.model.SearchDTO">
+		SELECT
+		ISBN AS isbn,
+		TITLE AS title,
+		AUTHOR AS author,
+		GENRE AS genre,
+		DESCRIPTION AS description,
+		BOOK_IMG AS bookImg
+		FROM BOOK
+		WHERE
+		REPLACE(TITLE, ' ', '') LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%')
+		OR REPLACE(AUTHOR, ' ', '') LIKE CONCAT('%', REPLACE(#{keyword}, ' ',
+		''), '%')
+	</select>
+
+
+</mapper>
