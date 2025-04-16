@@ -1,75 +1,91 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import '../main_style/ReviewList.css';
-import img from '../etc_assets/sum.png';
 import Reviewltem from './Reviewltem';
 import BookRecommendation from './BookRecommendation';
 import UserSector from './UserSelectorBook';
 
-const reviews = [
-    {
-      id: 1,
-      username: 'sftu7',
-      rating: 4,
-      content: '이 책은 당신과 작사이자의 관계를 다루며 책이라는데, 마음에 잘 깊이 파고들며 인간 심리를 탐구한다고 하는 책입니다 단락이거든요 근데 정말 공감되고 감성이 잘 드러나는 부분들이 많아...',
-      bookTitle: '책 이름',
-      date: '2023.03.17',
-      bookAuthor: '저자',
-      likes: 3,
-      comments: 2
-    },
-    {
-      id: 2,
-      username: 'wlqrkhrtlvek',
-      rating: 4,
-      content: '이 책은 당신과 작사이자의 관계를 다루며 책이라는데, 마음에 잘 깊이 파고들며 인간 심리를 탐구한다고 하는 책입니다 단락이거든요 근데 정말 공감되고 감성이 잘 드러나는 부분들이 많아...',
-      bookTitle: '책 이름',
-      date: '2023.03.17',
-      bookAuthor: '저자',
-      likes: 3,
-      comments: 2
-    },
-    {
-      id: 3,
-      username: '책먹는여우',
-      rating: 4,
-      content: '이 책은 당신과 작사이자의 관계를 다루며 책이라는데, 마음에 잘 깊이 파고들며 인간 심리를 탐구한다고 하는 책입니다 단락이거든요 근데 정말 공감되고 감성이 잘 드러나는 부분들이 많아...',
-      bookTitle: '책 이름',
-      date: '2023.03.17',
-      bookAuthor: '저자',
-      likes: 3,
-      comments: 2
-    }
-  ];
+function ReviewList() {
+  const [reviews, setReviews] = useState([]);
 
-  
-  function ReviewList() {
-    return (
-      <div className="review-list-wrapper">
-        <div className="review-list-container">
-          <div className="review-items-container">
-            {reviews.map((review) => (
-              <Reviewltem
-                key={review.id}
-                username={review.username}
-                rating={review.rating}
-                content={review.content}
-                bookTitle={review.bookTitle}
-                author={review.bookAuthor}
-                publishDate={review.date}
-                initialLikes={review.likes}
-                commentCount={review.comments}
-              />
-            ))}
-            
-            <div className="recommendation-section">
-              <BookRecommendation />
-            </div>
-            
-            <UserSector />
-          </div>
+  useEffect(() => {
+    axios.get('http://localhost:8082/controller/user01/FINISHED')
+      .then((res) => {
+        setReviews(res.data);
+      })
+      .catch((err) => {
+        console.error("리뷰 데이터 불러오기 실패:", err);
+      });
+  }, []);
+
+  return (
+    <div className="review-list-wrapper">
+      <div className="review-list-container">
+        <div className="review-items-container">
+          {reviews.length > 0 ? (
+            <>
+              {/* 리뷰 1~5 */}
+              {reviews.slice(0, 5).map((review) => (
+                <Reviewltem
+                  key={review.logIdx}
+                  username={review.userId}
+                  rating={review.rating}
+                  content={review.content}
+                  bookTitle={review.title}
+                  author={review.author}
+                  publishDate={review.endDate || review.startDate}
+                  initialLikes={review.likeCount || 0}
+                  commentCount={(review.comments && review.comments.length) || 0}
+                />
+              ))}
+
+              {/* <UserSector /> 출력 */}
+              {reviews.length > 5 && <UserSector />}
+
+              {/* 리뷰 6~10 */}
+              {reviews.slice(5, 10).map((review) => (
+                <Reviewltem
+                  key={review.logIdx}
+                  username={review.userId}
+                  rating={review.rating}
+                  content={review.content}
+                  bookTitle={review.title}
+                  author={review.author}
+                  publishDate={review.endDate || review.startDate}
+                  initialLikes={review.likeCount || 0}
+                  commentCount={(review.comments && review.comments.length) || 0}
+                />
+              ))}
+
+              {/* <BookRecommendation /> 출력 */}
+              {reviews.length > 10 && (
+                <div className="recommendation-section">
+                  <BookRecommendation />
+                </div>
+              )}
+
+              {/* 리뷰 11번 이후 나머지 */}
+              {reviews.slice(10).map((review) => (
+                <Reviewltem
+                  key={review.logIdx}
+                  username={review.userId}
+                  rating={review.rating}
+                  content={review.content}
+                  bookTitle={review.title}
+                  author={review.author}
+                  publishDate={review.endDate || review.startDate}
+                  initialLikes={review.likeCount || 0}
+                  commentCount={(review.comments && review.comments.length) || 0}
+                />
+              ))}
+            </>
+          ) : (
+            <div>기록이 없습니다.</div>
+          )}
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
 
-export default ReviewList
+export default ReviewList;

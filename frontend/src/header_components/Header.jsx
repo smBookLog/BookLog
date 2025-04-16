@@ -8,7 +8,7 @@ const Header = () => {
     const headerStyle = {
         display: 'flex',
         alignItems: 'center',
-        padding: '20px',
+        padding: '5px',
         justifyContent: 'space-between'
     };
 
@@ -30,8 +30,9 @@ const Header = () => {
                     <RiArrowLeftSLine size={35} /> 
                 </Link>
                 <div style={headerStyle_loge}>
-                    <Link to="/headermain">
-                        <img src={loge} style={{width: '150px', height: 'auto'}}/>
+
+                    <Link to="/main">
+                        <img src={loge} style={{width: '10rem', height: 'auto'}}/>=
                     </Link>
                 </div>
             </div>

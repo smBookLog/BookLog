@@ -86,7 +86,8 @@ function App() {
           </div>
         }></Route>
 
-        {/* FeedRLDetail */}
+        {/* 필드리딩디테일 */}
+
         <Route path='/FeedRLDetail' element={
           <div className="app-container">
             <FeedRLDetail />
