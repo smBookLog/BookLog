@@ -67,10 +67,11 @@ const BookRecommendation = () => {
 
             return (
               <div key={book.isbn || index} className="recommended-book">
-                <img src={img} alt="책 이미지" className="book-cover1" />
-                <div className="book-info">
+                <img src={img} alt="책 이미지" className="book-cover1" style={{width:'100px', height:'150px'}}/>
+                <div className="book-info" style={{width:'100px', height:'200px'}}>
                   <div className="book-title">{book.title}</div>
-                  <div className="book-meta">{book.author} / ISBN: {book.isbn}</div>
+                  <div className="book-meta">{book.author}</div> 
+                  <div className="book-meta1"> ISBN: {book.isbn}</div>
                   <div className="book-desc" style={{fontSize:'12px'}}>
                     {/* 왼쪽 정렬 */}
                     {visibleText}

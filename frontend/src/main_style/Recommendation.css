@@ -41,9 +41,11 @@
   padding: 16px;
   border-radius: 12px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  height: 240px;
 }
 
-.book-cover1 {
+.book-cover {
   width: 100px;
   height: 150px;
   border-radius: 6px;
@@ -64,17 +66,24 @@
   padding-right: 10px;
 
 
-  height: 175px;
+  height: 250px;
+  /* height: auto; 높이를 자동으로 조정하여 내용에 맞게 만들기 */
 }
 
 .book-title {
   font-size: 12px;
   font-weight: bold;
-  margin-bottom: 4px;
+  margin-bottom: -20px;
   color: #222;
 }
 
 .book-meta {
+  font-size: 9px;
+  color: #555;
+  margin-bottom: -20px;
+  white-space: nowrap;
+}
+.book-meta1 {
   font-size: 9px;
   color: #555;
   margin-bottom: 0px;
@@ -105,4 +114,8 @@
 .user-name {
   font-size: 10px;
   font-weight: 500;
+}
+
+.book-desc {
+  text-align: left;
 }

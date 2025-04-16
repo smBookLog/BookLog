@@ -1,15 +1,23 @@
 import React, { useState } from "react";
+import axios from "axios";
 import editprofile from "../myprofile_style/EditProfile.css";
 import image from "../etc_assets/profile.png"
-import Header_mypage from "../header_components/Header_mypage";
-import { useNavigate } from "react-router-dom";
+import Header from "../header_components/Header";
+import { useParams } from 'react-router-dom';
 
 function EditProfile() {
-    const [nickname, setNickname] = useState("박하얀하얀123");
-    const navigate = useNavigate();
-    const handleLogout = () => {
-        localStorage.removeItem("userId"); // 저장된 로그인 정보 삭제
-        navigate("/"); // 로그인 페이지로 이동
+    const [name, setUserId] = useState("");
+    const [email, setEmail] = useState("EchoRider");
+    const [emailDomain, setEmailDomain] = useState("naver.com");
+
+    const { userId } = useParams();
+
+    const handleCheckUserId = () => {
+        alert("사용 가능한 아이디입니다."); // 실제 서버 검증 연결 가능
+    };
+
+    const handleCheckEmail = () => {
+        alert("사용 가능한 이메일입니다."); // 실제 서버 검증 연결 가능
     };
 
     return (
@@ -41,25 +49,27 @@ function EditProfile() {
                 {/* 성명 */}
                 <form className="form-section">
                     <div className="form-group">
-                        <label>성명</label>
-                        <div className="readonly">
-                            <input style={{ width: '375px' }} type="text" placeholder="박수아"/>
+                        <label>아이디</label>
+                        <div className="inline-field">
+                            <input type="text" value={userId} placeholder="아이디" />
+                            <button type="button" className="input-with-button"
+                                onClick={handleCheckUserId}>중복 확인</button>
                         </div>
                     </div>
 
                     {/* 비밀번호 */}
                     <div className="form-group">
                         <label>비밀번호</label>
-                        <input style={{ width: '375px' }} type="password" placeholder="8~16자리, 숫자, 특수문자 모두 포함 가능" />
+                        <input type="password" placeholder="8~16자리, 숫자, 특수문자 모두 포함 가능" />
                     </div>
 
                     {/* 비밀번호 확인 */}
                     <div className="form-group">
                         <label>비밀번호 확인</label>
-                        <input style={{ width: '375px' }} type="password" placeholder="8~16자리, 숫자, 특수문자 모두 포함 가능" />
+                        <input type="password" placeholder="8~16자리, 숫자, 특수문자 모두 포함 가능" />
                     </div>
 
-                    {/* 닉네임 */}
+                    {/* 닉네임
                     <div className="form-group">
                         <label>닉네임</label>
                         <div className="inline-field">
@@ -73,23 +83,26 @@ function EditProfile() {
                                 중복 확인
                             </button>
                         </div>
-                    </div>
+                    </div> */}
 
                     {/* 이메일 */}
                     <div className="form-group">
                         <label>이메일</label>
                         <div className="inline-field">
-                            <input type="text" defaultValue="EchoRider" />
+                            <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="이메일" />
                             <span>@</span>
-                            <select>
-                                <option>naver.com</option>
-                                <option>gmail.com</option>
-                                <option>daum.net</option>
+                            <select value={emailDomain}
+                                onChange={(e) => setEmailDomain(e.target.value)}>
+                                <option value="naver.com">naver.com</option>
+                                <option value="gmail.com">gmail.com</option>
+                                <option value="daum.net">daum.net</option>
                             </select>
+                            <button type="button" className="input-with-button"
+                                onClick={handleCheckEmail}>중복 확인</button>
                         </div>
                     </div>
 
-                    {/* 관심분야 */}
+                    {/* 관심분야
                     <div className="form-group">
                         <label>관심 분야(최대 5개)</label>
                         <div className="tag-box">
@@ -98,12 +111,12 @@ function EditProfile() {
                             <span className="tag yellow">자기계발</span>
                             <button className="add-tag">＋</button>
                         </div>
-                    </div>
+                    </div> */}
 
                     {/* 소개글 */}
                     <div className="form-group">
                         <label>소개</label>
-                        <textarea style={{ width: '380px' }} placeholder="수정할 소개글을 입력해주세요." />
+                        <textarea placeholder="수정할 소개글을 입력해주세요." />
                     </div>
 
                     {/* 버튼 */}
