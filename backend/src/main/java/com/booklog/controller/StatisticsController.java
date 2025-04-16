@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.booklog.db.StatisticsMapper;
 import com.booklog.model.StatisticsDTO;
 
-@CrossOrigin(origins = "http://localhost:3001")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class StatisticsController {
 	

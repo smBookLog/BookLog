@@ -1,26 +1,43 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import section from '../my_style/BookSection.css'
 import { useNavigate } from 'react-router-dom';
 
 const BookSection = () => {
     const [selectedCategory, setSelectedCategory] = useState('전체');
     const [readingStatus, setReadingStatus] = useState('독서중'); // 예: '독서중'을 기본값으로
-    // 도서 데이터
-    const books = Array.from({ length: 7 }, (_, i) => ({
-        id: i + 1,
-        title: '작품명',
-        rating: '★★★★☆'
-    }));
+    const [books, setBooks] = useState([]);
+    const navigate = useNavigate();
+    const userId = 'user01'; // 로그인 연동된 경우 여기에 로그인된 userId 사용
+
+    const statusMap = {
+        '독서중': 'READING',
+        '독서완료': 'FINISHED',
+        '독서예정': 'NOT_STARTED'
+    };
+
+
+    useEffect(() => {
+        const fetchBooks = async () => {
+            try {
+                const response = await fetch(`http://localhost:8082/controller/${userId}/${statusMap[readingStatus]}`);
+                const data = await response.json();
+                setBooks(data); // 받아온 데이터로 상태 업데이트
+            } catch (error) {
+                console.error('책 불러오기 실패:', error);
+            }
+        };
+
+        fetchBooks();
+    }, [readingStatus, selectedCategory]);
 
     // 클릭한 버튼의 상태를 업데이트하는 함수
     const handleStatusChange = (status) => {
         setReadingStatus(status);
     };
-    const navigate = useNavigate();
 
-    const booklist = () =>{
+    const booklist = () => {
         navigate('/booklist');
-    }
+      };
 
     return (
         <div className="book-section">
@@ -29,31 +46,22 @@ const BookSection = () => {
                     독서 목록
                     <span className="filter-container">
                         <div className="reading-status-buttons">
-                            <button
-                                className={`view-button ${readingStatus === '독서중' ? 'active' : ''}`}
-                                onClick={() => handleStatusChange('독서중')}
-                            >
-                                독서중
-                            </button>
-                            <button
-                                className={`view-button ${readingStatus === '독서완료' ? 'active' : ''}`}
-                                onClick={() => handleStatusChange('독서완료')}
-                            >
-                                독서완료
-                            </button>
-                            <button
-                                className={`view-button ${readingStatus === '독서예정' ? 'active' : ''}`}
-                                onClick={() => handleStatusChange('독서예정')}
-                            >
-                                독서예정
-                            </button>
+                            {['독서중', '독서완료', '독서예정'].map((status) => (
+                                <button
+                                    key={status}
+                                    className={`view-button ${readingStatus === status ? 'active' : ''}`}
+                                    onClick={() => handleStatusChange(status)}
+                                >
+                                    {status}
+                                </button>
+                            ))}
                         </div>
                     </span>
                 </h3>
                 <button onClick={booklist} className="view-all-button">
                     전체 보기
                 </button>
-                
+
             </div>
 
             <div className="genre-filter-container">
@@ -69,30 +77,30 @@ const BookSection = () => {
                             <option>소설/스릴러</option>
                             <option>자기계발</option>
                             <option>인문</option>
+                            <option>프로그래밍</option>
                         </select>
                     </span>
                 </h4>
             </div>
 
             <div className="book-grid">
-                {books.map((book) => (
-                    <div key={book.id} className="book-item">
-                        <div className="book-cover">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                            </svg>
+                {books
+                    .filter(book => selectedCategory === '전체' || book.genre === selectedCategory)
+                    .map((book) => (
+                        <div key={book.logIdx} className="book-item">
+                            <div className="book-cover">
+                                <img src={book.bookImgUrl} alt={book.title} style={{ width: '100%', height: '150px', objectFit: 'cover' }} />
+                            </div>
+                            <div className="book-info">
+                                <h4 className="book-title">{book.title}</h4>
+                                <p className="book-rating">★ {book.rating}</p>
+                            </div>
                         </div>
-                        <div className="book-info">
-                            <h4 className="book-title">{book.title}</h4>
-                            <p className="book-rating">{book.rating}</p>
-                        </div>
-                    </div>
-                ))}
+                    ))}
             </div>
         </div>
     );
 
 }
 
-export default BookSection
+export default BookSection;

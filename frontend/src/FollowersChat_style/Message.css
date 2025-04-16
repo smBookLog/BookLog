@@ -1,0 +1,104 @@
+.new-message-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 16px;
+    font-family: sans-serif;
+  }
+  
+  .top-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .back-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .tabs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px; /* 간격 추가 */
+    margin: 16px 0;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .tab {
+    padding: 8px 16px;
+    cursor: pointer;
+    position: relative;
+    font-weight: bold;
+    color: #666;
+  }
+  
+  .tab.active {
+    color: #000;
+    border-bottom: 3px solid #000;
+  }
+  
+  .count {
+    margin-left: 6px;
+    color: #888;
+  }
+  
+  .user-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0; /* ✅ 박스 간 간격 제거 */
+  }
+  
+  .user-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee; /* ✅ 밑줄 구분만 */
+    background-color: transparent; /* ✅ 배경 제거 */
+    border-radius: 0; /* ✅ 둥근 테두리 제거 */
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #ddd;
+    border-radius: 50%;
+  }
+  
+  .message-btn {
+    background-color: #00c851;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  /* ✅ 반응형 수정: 한 줄 정렬 유지 */
+  @media (max-width: 480px) {
+    .tabs {
+      flex-direction: row;  /* ✅ 세로 정렬 → 가로 정렬 유지 */
+      gap: 24px;
+    }
+  
+    .user-card {
+      flex-direction: row;  /* ✅ 세로 쪼개짐 방지 */
+      justify-content: space-between;
+      align-items: center;
+    }
+  
+    .message-btn {
+      align-self: auto;
+    }
+  }
+  

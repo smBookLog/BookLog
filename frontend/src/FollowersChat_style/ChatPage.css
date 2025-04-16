@@ -1,116 +1,158 @@
 .chat-container {
-    max-width: 500px;
-    margin: 0 auto;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    font-family: sans-serif;
-    border: 1px solid #ddd;
-  }
-  
-  .chat-header {
-    display: flex;
-    align-items: center;
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-    font-weight: bold;
-  }
-  
-  .back-button {
-    margin-right: 10px;
-    cursor: pointer;
-  }
-  
-  .username {
-    font-size: 16px;
-  }
-  
-  .chat-body {
-    flex: 1;
-    padding: 10px;
-    overflow-y: auto;
-    background-color: #f9f9f9;
-  }
-  
-  .chat-time {
-    text-align: center;
-    font-size: 12px;
-    color: #aaa;
-    margin: 10px 0;
-  }
-  
-  .chat-bubble {
-    max-width: 70%;
-    padding: 10px;
-    border-radius: 15px;
-    margin: 6px 0;
-    font-size: 14px;
-    line-height: 1.4;
-  }
-  
-  .theirs {
-    background-color: #eee;
-    align-self: flex-start;
-  }
-  
-  .mine {
-    background-color: #d2f5c4;
-    align-self: flex-end;
-    margin-left: auto;
-  }
-  
-  .chat-input {
-    display: flex;
-    padding: 10px;
-    border-top: 1px solid #ddd;
-    background-color: #fff;
-  }
-  
-  .chat-input input {
-    flex: 1;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    padding: 10px;
-    outline: none;
-  }
-  
-  .chat-input button {
-    margin-left: 8px;
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-  }
+  max-width: 500px;
+  margin: 0 auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+  border: 1px solid #ddd;
+}
 
-  .btn-group {
-    display: flex;
-    gap: 6px;
-  }
-  
-  .follow-btn {
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
-  .unfollow-btn {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
-  .dm-btn {
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
+.chat-header {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  font-weight: bold;
+}
+
+.chat-profile-info {
+  display: flex;
+  align-items: center;
+}
+
+.chat-profile-image {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 8px;
+  object-fit: cover;
+}
+
+.back-button {
+  margin-right: 10px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.username {
+  font-size: 16px;
+}
+
+.chat-body {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+}
+
+/* ✅ 시간 표시 스타일 정리 */
+.chat-time {
+  text-align: center;
+  font-size: 12px;
+  color: #aaa;
+  margin: 16px 0 6px;
+}
+
+/* ✅ 메시지 하나를 감싸는 wrapper */
+.chat-message-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 6px;
+}
+
+/* 말풍선 스타일 */
+.chat-bubble {
+  max-width: 70%;
+  padding: 10px;
+  border-radius: 15px;
+  font-size: 14px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* 상대방 메시지 */
+.theirs {
+  background-color: #eee;
+  align-self: flex-start;
+}
+
+/* 내 메시지 */
+.mine {
+  background-color: #d2f5c4;
+  align-self: flex-end;
+  margin-left: auto;
+}
+
+.chat-input {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background-color: #fff;
+}
+
+.chat-input input {
+  flex: 1;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 20px;
+  font-size: 14px;
+  outline: none;
+  background-color: #fff;
+  color: #000;
+  box-shadow: 0 0 0 1px #ccc inset;
+}
+
+.chat-input button {
+  width: 36px;
+  height: 36px;
+  margin-left: 10px;
+  border: none;
+  background-color: #4caf50;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.chat-input button:hover {
+  background-color: #45a049;
+}
+
+/* 추가 버튼들 (팔로우 등) */
+.btn-group {
+  display: flex;
+  gap: 6px;
+}
+
+.follow-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.unfollow-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.dm-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}

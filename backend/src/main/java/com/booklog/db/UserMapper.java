@@ -13,7 +13,6 @@ public interface UserMapper {
 	
 	// 회원가입 관련 중복 체크
 	int isUserIdExists(String userId);
-	int isNicknameExists(String nickname);
 	int isEmailExists(String email);
 	
 	// 로그인용
@@ -21,5 +20,7 @@ public interface UserMapper {
 	
 	// 개인 정보 및 프로필 수정
 	int updateUserInfo(UserDTO user);
-
+	
+	// 사용자 ID로 사용자 정보 조회
+    UserDTO getUserById(String userId);
 }

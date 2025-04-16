@@ -14,6 +14,7 @@
 		RL.RATING,
 		RL.CONTENT,
 
+		B.BOOK_IDX AS bookIdx,
 		B.TITLE,
 		B.AUTHOR,
 		B.GENRE,
@@ -53,7 +54,7 @@
 	</select>
 
 	<!-- 피드에서 독서 기록 조회 -->
-	<select id="findLogs" parameterType="map"
+	<select id="findLogs" parameterType="int"
 		resultType="com.booklog.model.ReadingLogDTO">
 		SELECT
 		RL.LOG_IDX AS logIdx,
@@ -64,6 +65,7 @@
 		U.USER_ID AS userId,
 		U.PROFILE_IMG AS profileImgUrl,
 
+		B.BOOK_IDX AS bookIdx,
 		B.TITLE,
 		B.AUTHOR,
 		B.GENRE,
@@ -75,9 +77,7 @@
 		JOIN USER U ON
 		RL.USER_ID = U.USER_ID
 
-		WHERE
-		RL.USER_ID = #{userId}
-		AND RL.LOG_IDX = #{logIdx}
+		WHERE RL.LOG_IDX = #{logIdx}
 	</select>
 
 	<!-- 독서 기록에 달린 댓글 조회 -->

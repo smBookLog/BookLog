@@ -30,7 +30,7 @@ const Header = () => {
                     <RiArrowLeftSLine size={35} /> 
                 </Link>
                 <div style={headerStyle_loge}>
-                    <Link to="/headermain">
+                    <Link to="/main">
                         <img src={loge} style={{width: '150px', height: 'auto'}}/>
                     </Link>
                 </div>

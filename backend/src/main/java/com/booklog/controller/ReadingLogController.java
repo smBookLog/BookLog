@@ -16,7 +16,7 @@ import com.booklog.db.ReadingLogMapper;
 import com.booklog.model.CommentDTO;
 import com.booklog.model.ReadingLogDTO;
 
-@CrossOrigin(origins = "http://localhost:3001")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class ReadingLogController {
 
@@ -42,10 +42,10 @@ public class ReadingLogController {
 	}
 
 	// 피드용 독서 기록 조회
-	// http://localhost:8082/controller/feed/user01/39
-	@GetMapping(value = "/feed/{userId}/{logIdx}")
-	public ArrayList<ReadingLogDTO> feedLogList(@PathVariable String userId, @PathVariable int logIdx) {
-		ArrayList<ReadingLogDTO> logs = readingLogMapper.findLogs(userId, logIdx);
+	// http://localhost:8082/controller/feed/39
+	@GetMapping(value = "/feed/{logIdx}")
+	public ArrayList<ReadingLogDTO> feedLogList(@PathVariable int logIdx) {
+		ArrayList<ReadingLogDTO> logs = readingLogMapper.findLogs(logIdx);
 
 		for (ReadingLogDTO log : logs) {
 			logIdx = log.getLogIdx();
