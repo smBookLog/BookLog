@@ -7,6 +7,11 @@
     background-color: #fff;
   }
   
+  .resetpw-box {
+    width: 100%;
+    max-width: 350px;
+  }
+
   .form-group {
     margin-bottom: 16px;
   }
@@ -40,7 +45,7 @@
     background-color: #146c2d;
     color: white;
     border: none;
-    padding: 10px 12px;
+    padding: 10px 8px;
     border-radius: 4px;
     cursor: pointer;
     white-space: nowrap;

@@ -44,7 +44,7 @@ const Login = () => {
     <div className="container">
       <div className="login-box">
         <div className="logo-section">
-          <img src={image} alt="logo" className="logo" />
+          <img style={{marginTop:'2rem'}} src={image} alt="logo" className="logo" />
         </div>
 
         <div className="input-section">
@@ -53,14 +53,14 @@ const Login = () => {
             placeholder="ID"
             value={id}
             onChange={(e) => setId(e.target.value)}
-            style={{ width: '372px' }}
+            // style={{ width: '372px' }}
           />
           <input
             type="password"
             placeholder="PW"
             value={pw}
             onChange={(e) => setPw(e.target.value)}
-            style={{ width: '372px' }}
+            // style={{ width: '372px' }}
           />
         </div>
 
