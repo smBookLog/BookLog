@@ -30,7 +30,7 @@ const Header = () => {
     return (
         <header className="header">
             <div className="header-top">
-                <img className="logo" src={logo} alt="BookLog 로고" />
+                <img className="logo" src={logo} alt="BookLog 로고"/>
 
                 <nav className="nav-menu pc-nav">
                     <Link to="/main">메인</Link>

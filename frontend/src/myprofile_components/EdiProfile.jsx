@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import editprofile from "../myprofile_style/EditProfile.css";
 import image from "../etc_assets/profile.png"
-import Header from "../header_components/Header";
+import Header_mypage from "../header_components/Header_mypage";
 import { useParams } from 'react-router-dom';
 
 function EditProfile() {
@@ -11,6 +11,12 @@ function EditProfile() {
     const [emailDomain, setEmailDomain] = useState("naver.com");
 
     const { userId } = useParams();
+
+    const handleLogout = () => {
+        localStorage.removeItem("userId"); // 예: 로그인 정보 제거
+        window.location.href = "/login";   // 로그인 페이지로 이동
+    };
+    
 
     const handleCheckUserId = () => {
         alert("사용 가능한 아이디입니다."); // 실제 서버 검증 연결 가능
