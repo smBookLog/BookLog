@@ -94,17 +94,12 @@
   .more-button-new {
     background: none;
     border: none;
-    color: #999;
     cursor: pointer;
     padding: 0;
     margin-top: 5px;
     font-size: 14px;
   }
-  
-  .more-button-new:hover {
-    color: lightcoral;
-  }
-  
+ 
   /* 책 정보 새 스타일 */
   .book-info-container-new {
     display: flex;

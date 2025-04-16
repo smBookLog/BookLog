@@ -94,7 +94,6 @@ public class GeminiApiController {
                String author = split[1].trim();
 
                // 4. 도서 검색 API 호출
-               String apiKey = "[발급받은키]"; // 여기에 본인의 API 키 삽입
                String searchUrl = "http://data4library.kr/api/srchBooks?authKey=" + apiKey +
                                   "&keyword=" + URLEncoder.encode(title + " " + author, "UTF-8") +
                                   "&format=json";

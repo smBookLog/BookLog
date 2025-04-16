@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import editprofile from "../myprofile_style/EditProfile.css";
 import image from "../etc_assets/profile.png";
-import Header from "../header_components/Header";
+import Header_mypage from "../header_components/Header_mypage";
 
 function EditProfile() {
     // 디버깅 로그 추가
@@ -244,8 +244,9 @@ function EditProfile() {
         <div>
             <header className="edit-header">
                 <div className="header-container">
-                    <Header />
+                    <Header_mypage />
                     <button className="logout-btn" onClick={handleLogout}>로그아웃</button>
+
                 </div>
             </header>
 

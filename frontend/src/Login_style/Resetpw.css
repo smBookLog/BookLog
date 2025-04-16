@@ -9,7 +9,7 @@
   
   .resetpw-box {
     width: 100%;
-    max-width: 420px;
+    max-width: 350px;
   }
   
   .title {
@@ -58,6 +58,7 @@
     border: none;
     border-radius: 4px;
     margin-bottom: 10px;
+    margin-top: 20px;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.2s ease, transform 0.1s ease;

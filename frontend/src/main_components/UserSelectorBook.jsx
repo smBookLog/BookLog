@@ -1,84 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import '../main_style/UserSelector.css';
+import { RiAccountCircleFill } from "react-icons/ri";
 
-const recommendedUsers = [
-    {
-      id: 1,
-      username: '책읽는워니123',
-      profileImage: null,
-      isFollowing: true
-    },
-    {
-      id: 2,
-      username: '김나은',
-      profileImage: null,
-      isFollowing: false
-    },
-    {
-      id: 3,
-      username: 'asdf',
-      profileImage: null,
-      isFollowing: false
-    },
-    {
-      id: 4,
-      username: '박수안',
-      profileImage: null,
-      isFollowing: false
-    },
-    {
-      id: 5,
-      username: '책읽는워니123',
-      profileImage: null,
-      isFollowing: true
-    },
-    {
-      id: 6,
-      username: '김나은',
-      profileImage: null,
-      isFollowing: false
-    },
-    {
-      id: 7,
-      username: 'asdf',
-      profileImage: null,
-      isFollowing: false
-    },
-    {
-      id: 8,
-      username: '박수안',
-      profileImage: null,
-      isFollowing: false
-    }
-  ];
-  
-  function UserSelectorBook() {
-    return (
-      <div className="user-recommendation-container">
-        <h3 className="recommendation-title">박수아님과 취향이 비슷한 유저들💕</h3>
-        <div className="user-list">
-          {recommendedUsers.map(user => (
-            <div key={user.id} className="recommended-user">
-              <div className="avatar-container">
-                {user.profileImage ? (
-                  <img 
-                    src={user.profileImage} 
-                    alt={user.username} 
-                    className="user-avatar" 
-                  />
-                ) : (
-                  <div className="default-avatar">
-                    <span className="avatar-icon">👤</span>
-                  </div>
-                )}
-              </div>
-              <div className="user-name">{user.username}</div>
-              <button className="follow-btn">팔로우</button>
+function UserSelectorBook() {
+  const [recommendedUsers, setRecommendedUsers] = useState([]);
+
+  useEffect(() => {
+    // const userId = localStorage.getItem("userId"); // 또는 "user01" 사용 시 "user01"로 변경
+    const userId = "user05"; // 고정 ID
+    
+    if (!userId) return;
+
+    axios.get(`http://localhost:8082/controller/genre-mixed/${userId}`)
+      .then(res => {
+        setRecommendedUsers(res.data);
+      })
+      .catch(err => {
+        console.error("추천 유저 불러오기 실패:", err);
+      });
+  }, []);
+
+  return (
+    <div className="user-recommendation-container">
+      <h3 className="recommendation-title">회원님과 취향이 비슷한 유저들💕</h3>
+      <div className="user-list">
+        {recommendedUsers.map((user, index) => (
+          <div key={index} className="recommended-user">
+            <div className="avatar-container">
+              {user.profileImg ? (
+                <img 
+                  src={user.profileImg} 
+                  alt={user.userId} 
+                  className="user-avatar" 
+                />
+              ) : (
+                <div className="default-avatar">
+                  <span className="avatar-icon"><RiAccountCircleFill /></span>
+                </div>
+              )}
             </div>
-          ))}
-        </div>
+            <div className="user-name">{user.userId}</div>
+            <button className="follow-btn">팔로우</button>
+          </div>
+        ))}
       </div>
-    );
-  }
+    </div>
+  );
+}
 
-export default UserSelectorBook
+export default UserSelectorBook;

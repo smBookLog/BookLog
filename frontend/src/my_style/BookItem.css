@@ -5,7 +5,7 @@
   }
   
   .book-cover {
-    position: relative;
+    /* position: relative; */
     width: 100%;
     aspect-ratio: 3/4;
     margin-bottom: 8px;
