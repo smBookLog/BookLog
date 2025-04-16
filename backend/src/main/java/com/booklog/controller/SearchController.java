@@ -1,5 +1,7 @@
 package com.booklog.controller;
 
+import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +39,7 @@ public class SearchController {
 	}
 
 	// 책 검색 (ISBN 기준)
-	// http://localhost:8082/controller/search/book?isbn=9788936433598
+	// http://localhost:8082/controller/search/book?isbn=9788954677158
 	@GetMapping(value = "/search/book", produces = "application/json; charset=UTF-8")
 	public Object searchBook(@RequestParam("isbn") String isbn) {
 		SearchDTO book = mapper.findBookByIsbn(isbn);
@@ -85,4 +87,17 @@ public class SearchController {
 			return new JSONObject().put("message", "책 정보를 찾을 수 없습니다").toString();
 		}
 	}
+	
+	// 제목 또는 저자 이름으로 책 검색
+	// http://localhost:8082/controller/search/book/keyword?keyword=데미안
+	@GetMapping(value = "/search/book/keyword", produces = "application/json; charset=UTF-8")
+	public Object searchBooksByKeyword(@RequestParam("keyword") String keyword) {
+	    ArrayList<SearchDTO> books = mapper.findBooksByKeyword(keyword);
+
+	    if (books != null && !books.isEmpty())
+	        return books;
+	    else
+	        return new JSONObject().put("message", "검색 결과가 없습니다").toString();
+	}
+
 }

@@ -37,7 +37,7 @@ DELETE FROM QUOTE
 WHERE QUOTE_IDX = 26;
 
 DELETE FROM USER
-WHERE USER_ID = 'user05' OR USER_ID = 'user04';
+WHERE USER_ID = '';
 
 ALTER TABLE READING_LOG DROP CHECK CK_RATING;
 
@@ -181,3 +181,15 @@ SELECT FOLLOWING_ID FROM FOLLOW WHERE FOLLOWER_ID = 'user05'
 GROUP BY RL.USER_ID
 ORDER BY genreCount DESC
 LIMIT 5;
+
+-- USER_ID가 'user01'인 독서 기록에 책을 추가하는 쿼리
+INSERT INTO `READING_LOG` (`USER_ID`, `BOOK_IDX`, `STATUS`)
+VALUES
+  ('user01', 58, 'NOT_STARTED'),  -- 책 58번, 상태: 시작하지 않음
+  ('user01', 59, 'READING'),      -- 책 59번, 상태: 읽고 있음
+  ('user01', 60, 'FINISHED'),     -- 책 60번, 상태: 완료됨
+  ('user01', 61, 'NOT_STARTED'),  -- 책 61번, 상태: 시작하지 않음
+  ('user01', 62, 'READING'),      -- 책 62번, 상태: 읽고 있음
+  ('user01', 63, 'FINISHED'),     -- 책 63번, 상태: 완료됨
+  ('user01', 64, 'NOT_STARTED');  -- 책 64번, 상태: 시작하지 않음
+

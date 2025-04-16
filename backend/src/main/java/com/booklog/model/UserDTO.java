@@ -1,7 +1,7 @@
 package com.booklog.model;
 
-import lombok.Data;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserDTO {
 	
-	private String originalUserId; 
     private String userId;
+    private String newUserId; 
     private String name;
     private String userPw;
     private String confirmPw;

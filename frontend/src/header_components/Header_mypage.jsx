@@ -26,13 +26,12 @@ const Header = () => {
     return (
         <header style={headerStyle_1}>
             <div style={headerStyle}>
-                <Link to="/main" className='custom-link'>
+                <Link to="/mypage" className='custom-link'>
                     <RiArrowLeftSLine size={35} /> 
                 </Link>
                 <div style={headerStyle_loge}>
-
                     <Link to="/main">
-                        <img src={loge} style={{width: '10rem', height: 'auto'}}/>=
+                        <img src={loge} style={{width: '10rem', height: 'auto'}}/>
                     </Link>
                 </div>
             </div>

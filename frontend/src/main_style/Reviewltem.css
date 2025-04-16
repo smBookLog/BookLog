@@ -1,454 +1,449 @@
 .review-wrapper {
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  margin: 15px auto;
-  overflow: hidden;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  width: 100%;
-}
-.review-wrapper {
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  margin: 15px auto;
-  overflow: hidden;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  width: 100%;
-}
-
-.review-item-container {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-}
-
-/* 새로운 헤더 스타일 */
-.review-header-new {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-}
-
-.user-avatar-new {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-right: 12px;
-}
-
-.user-avatar-new img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.username-new {
-  font-weight: bold;
-  font-size: 16px;
-  white-space: nowrap;
-}
-
-.rating-new {
-  display: flex;
-  /* align-items: right; */
-}
-
-.rating-number {
-  font-size: 18px;
-  font-weight: bold;
-  margin-right: 8px;
-}
-
-.star {
-  color: #e0e0e0;
-  font-size: 18px;
-}
-
-.star.filled {
-  color: #ffca28;
-}
-
-/* 리뷰 본문 새 스타일 */
-.review-content-new {
-  margin-bottom: 15px;
-  line-height: 1.5;
-  font-size: 14px;
-}
-
-.review-content-new p {
-  margin: 0;
-  word-break: break-word;
-}
-
-.more-button-new {
-  background: none;
-  border: none;
-  color: #999;
-  cursor: pointer;
-  padding: 0;
-  margin-top: 5px;
-  font-size: 14px;
-}
-
-.more-button-new:hover {
-  color: lightcoral;
-}
-
-/* 책 정보 새 스타일 */
-.book-info-container-new {
-  display: flex;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 15px;
-}
-
-.book-cover-new {
-  width: 80px;
-  height: 110px;
-  margin-right: 15px;
-  border-radius: 4px;
-  overflow: hidden;
-  background-color: #e0e0e0;
-}
-
-.book-cover-new img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.book-details-new {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.book-title-new {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 4px;
-}
-
-.book-author-new {
-  font-size: 14px;
-  color: #555;
-}
-
-.book-meta-new {
-  font-size: 13px;
-  color: #666;
-}
-
-.book-description-new {
-  margin-top: 5px;
-}
-
-/* 하단 푸터 새 스타일 */
-.review-footer-new {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.actions-new {
-  display: flex;
-  align-items: center;
-}
-
-.like-button-new, .comment-button-new {
-  display: flex;
-  align-items: center;
-  background: none;
-  border: none;
-  cursor: pointer;
-  margin-right: 15px;
-  color: #666;
-  font-size: 14px;
-  transition: all 0.2s ease;
-}
-
-.like-button-new {
-  padding: 0;
-}
-
-.liked-icon {
-  color: lightcoral;
-}
-
-.like-button-new:hover, .comment-button-new:hover {
-  transform: scale(1.05);
-}
-
-.like-count-new, .comment-count-new {
-  margin-left: 5px;
-}
-
-.comment-icon-new {
-  font-size: 16px;
-}
-
-.review-date-new {
-  color: #999;
-  font-size: 14px;
-}
-
-/* 반응형 디자인 */
-@media (max-width: 768px) {
-  .book-info-container-new {
-    flex-direction: column;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    margin: 15px auto;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    width: 100%;
+  }
+  .review-wrapper {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    margin: 15px auto;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    width: 100%;
   }
   
-  .book-cover-new {
-    width: 60px;
-    height: 90px;
-    margin-bottom: 10px;
+  .review-item-container {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
   }
-}
-
-@media (max-width: 480px) {
+  
+  /* 새로운 헤더 스타일 */
   .review-header-new {
-    flex-direction: column;
-    align-items: flex-start;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .header-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-avatar-new {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 12px;
+  }
+  
+  .user-avatar-new img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .username-new {
+    font-weight: bold;
+    font-size: 16px;
+    white-space: nowrap;
   }
   
   .rating-new {
-    margin-top: 8px;
-    margin-left: 52px;
+    display: flex;
+    align-items: center;
   }
-}
-.review-item-container {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-}
-
-/* 새로운 헤더 스타일 */
-.review-header-new {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-}
-
-.user-avatar-new {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-right: 12px;
-}
-
-.user-avatar-new img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.username-new {
-  font-weight: bold;
-  font-size: 16px;
-  white-space: nowrap;
-}
-
-.rating-new {
-  display: flex;
-  align-items: center;
-}
-
-.rating-number {
-  font-size: 18px;
-  font-weight: bold;
-  margin-right: 8px;
-}
-
-.star {
-  color: #e0e0e0;
-  font-size: 18px;
-}
-
-.star.filled {
-  color: #ffca28;
-}
-
-/* 리뷰 본문 새 스타일 */
-.review-content-new {
-  margin-bottom: 15px;
-  line-height: 1.5;
-  font-size: 14px;
-}
-
-.review-content-new p {
-  margin: 0;
-  word-break: break-word;
-}
-
-.more-button-new {
-  background: none;
-  border: none;
-  color: #999;
-  cursor: pointer;
-  padding: 0;
-  margin-top: 5px;
-  font-size: 14px;
-}
-
-.more-button-new:hover {
-  color: lightcoral;
-}
-
-/* 책 정보 새 스타일 */
-.book-info-container-new {
-  display: flex;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 15px;
-}
-
-.book-cover-new {
-  width: 80px;
-  height: 110px;
-  margin-right: 15px;
-  border-radius: 4px;
-  overflow: hidden;
-  background-color: #e0e0e0;
-}
-
-.book-cover-new img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.book-details-new {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
-.book-title-new {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 4px;
-}
-
-.book-author-new {
-  font-size: 14px;
-  color: #555;
-}
-
-.book-meta-new {
-  font-size: 13px;
-  color: #666;
-}
-
-.book-description-new {
-  margin-top: 5px;
-}
-
-/* 하단 푸터 새 스타일 */
-.review-footer-new {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.actions-new {
-  display: flex;
-  align-items: center;
-}
-
-.like-button-new, .comment-button-new {
-  display: flex;
-  align-items: center;
-  background: none;
-  border: none;
-  cursor: pointer;
-  margin-right: 15px;
-  color: #666;
-  font-size: 14px;
-  transition: all 0.2s ease;
-}
-
-.like-button-new {
-  padding: 0;
-}
-
-.liked-icon {
-  color: lightcoral;
-}
-
-.like-button-new:hover, .comment-button-new:hover {
-  transform: scale(1.05);
-}
-
-.like-count-new, .comment-count-new {
-  margin-left: 5px;
-}
-
-.comment-icon-new {
-  font-size: 16px;
-}
-
-.review-date-new {
-  color: #999;
-  font-size: 14px;
-}
-
-.custom-link {
-  color: black; /* 원하는 색상 */
-  text-decoration: none; /* 밑줄 제거 */
-  transition: color 0.3s; /* 부드러운 전환 효과 */
-}
-
-.custom-link:hover {
-  color: rgb(102, 102, 102); /* 마우스 올렸을 때 색상 */
-  font-weight: 500;
-}
-
-
-/* 반응형 디자인 */
-@media (max-width: 768px) {
+  
+  .rating-number {
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 8px;
+  }
+  
+  .star {
+    color: #e0e0e0;
+    font-size: 18px;
+  }
+  
+  .star.filled {
+    color: #ffca28;
+  }
+  
+  /* 리뷰 본문 새 스타일 */
+  .review-content-new {
+    margin-bottom: 15px;
+    line-height: 1.5;
+    font-size: 14px;
+  }
+  
+  .review-content-new p {
+    margin: 0;
+    word-break: break-word;
+  }
+  
+  .more-button-new {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 5px;
+    font-size: 14px;
+  }
+ 
+  /* 책 정보 새 스타일 */
   .book-info-container-new {
-    flex-direction: column;
+    display: flex;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
   }
   
   .book-cover-new {
-    width: 60px;
-    height: 90px;
-    margin-bottom: 10px;
+    width: 80px;
+    height: 110px;
+    margin-right: 15px;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: #e0e0e0;
   }
-}
-
-@media (max-width: 480px) {
-  .review-header-new {
+  
+  .book-cover-new img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .book-details-new {
+    flex: 1;
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    justify-content: space-between;
+  }
+  
+  .book-title-new {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+  
+  .book-author-new {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .book-meta-new {
+    font-size: 13px;
+    color: #666;
+  }
+  
+  .book-description-new {
+    margin-top: 5px;
+  }
+  
+  /* 하단 푸터 새 스타일 */
+  .review-footer-new {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .actions-new {
+    display: flex;
+    align-items: center;
+  }
+  
+  .like-button-new, .comment-button-new {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 15px;
+    color: #666;
+    font-size: 14px;
+    transition: all 0.2s ease;
+  }
+  
+  .like-button-new {
+    padding: 0;
+  }
+  
+  .liked-icon {
+    color: lightcoral;
+  }
+  
+  .like-button-new:hover, .comment-button-new:hover {
+    transform: scale(1.05);
+  }
+  
+  .like-count-new, .comment-count-new {
+    margin-left: 5px;
+  }
+  
+  .comment-icon-new {
+    font-size: 16px;
+  }
+  
+  .review-date-new {
+    color: #999;
+    font-size: 14px;
+  }
+  
+  /* 반응형 디자인 */
+  @media (max-width: 768px) {
+    .book-info-container-new {
+      flex-direction: column;
+    }
+    
+    .book-cover-new {
+      width: 60px;
+      height: 90px;
+      margin-bottom: 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .review-header-new {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .rating-new {
+      margin-top: 8px;
+      margin-left: 52px;
+    }
+  }
+  .review-item-container {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  }
+  
+  /* 새로운 헤더 스타일 */
+  .review-header-new {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .header-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-avatar-new {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 12px;
+  }
+  
+  .user-avatar-new img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .username-new {
+    font-weight: bold;
+    font-size: 16px;
+    white-space: nowrap;
   }
   
   .rating-new {
-    margin-top: 8px;
-    margin-left: 52px;
+    display: flex;
+    align-items: center;
   }
-}
+  
+  .rating-number {
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 8px;
+  }
+  
+  .star {
+    color: #e0e0e0;
+    font-size: 18px;
+  }
+  
+  .star.filled {
+    color: #ffca28;
+  }
+  
+  /* 리뷰 본문 새 스타일 */
+  .review-content-new {
+    margin-bottom: 15px;
+    line-height: 1.5;
+    font-size: 14px;
+  }
+  
+  .review-content-new p {
+    margin: 0;
+    word-break: break-word;
+  }
+  
+  .more-button-new {
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 5px;
+    font-size: 14px;
+  }
+  
+  .more-button-new:hover {
+    color: lightcoral;
+  }
+  
+  /* 책 정보 새 스타일 */
+  .book-info-container-new {
+    display: flex;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .book-cover-new {
+    width: 80px;
+    height: 110px;
+    margin-right: 15px;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: #e0e0e0;
+  }
+  
+  .book-cover-new img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .book-details-new {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  
+  .book-title-new {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+  
+  .book-author-new {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .book-meta-new {
+    font-size: 13px;
+    color: #666;
+  }
+  
+  .book-description-new {
+    margin-top: 5px;
+  }
+  
+  /* 하단 푸터 새 스타일 */
+  .review-footer-new {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .actions-new {
+    display: flex;
+    align-items: center;
+  }
+  
+  .like-button-new, .comment-button-new {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 15px;
+    color: #666;
+    font-size: 14px;
+    transition: all 0.2s ease;
+  }
+  
+  .like-button-new {
+    padding: 0;
+  }
+  
+  .liked-icon {
+    color: lightcoral;
+  }
+  
+  .like-button-new:hover, .comment-button-new:hover {
+    transform: scale(1.05);
+  }
+  
+  .like-count-new, .comment-count-new {
+    margin-left: 5px;
+  }
+  
+  .comment-icon-new {
+    font-size: 16px;
+  }
+  
+  .review-date-new {
+    color: #999;
+    font-size: 14px;
+  }
+  
+  .custom-link {
+    color: black; /* 원하는 색상 */
+    text-decoration: none; /* 밑줄 제거 */
+    transition: color 0.3s; /* 부드러운 전환 효과 */
+  }
+  
+  .custom-link:hover {
+    color: rgb(102, 102, 102); /* 마우스 올렸을 때 색상 */
+    font-weight: 500;
+  }
 
+
+  /* 반응형 디자인 */
+  @media (max-width: 768px) {
+    .book-info-container-new {
+      flex-direction: column;
+    }
+    
+    .book-cover-new {
+      width: 60px;
+      height: 90px;
+      margin-bottom: 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .review-header-new {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .rating-new {
+      margin-top: 8px;
+      margin-left: 52px;
+    }
+  }
+  

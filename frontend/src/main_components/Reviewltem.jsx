@@ -63,9 +63,11 @@ const Reviewltem = ({
 
                 {/* 리뷰 본문 */}
                 <div className="review-content-new">
-                    <p>{content}</p>
-                    <Link to='/FeedRLDetail'>
+                    <Link to='/FeedRLDetail' className='custom-link'>
+                    <p>{content}
                         <button className="more-button-new">...더보기</button>
+                    </p>
+
                     </Link>
                 </div>
 
@@ -106,7 +108,8 @@ const Reviewltem = ({
                             className="comment-button-new"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <span className="comment-icon"><LuMessageSquareMore /></span>
+                            <span><LuMessageSquareMore /></span>
+
                             <span className="comment-count-new">{commentCount}</span>
                         </a>
                     </div>

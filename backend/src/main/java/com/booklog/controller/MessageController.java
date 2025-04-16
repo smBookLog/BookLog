@@ -46,5 +46,15 @@ public class MessageController {
 	public ArrayList<MessageDTO> getSentMessages(@PathVariable String userId) {
 	    return messageMapper.selectSent(userId);
 	}
+	
+	// 전체 메시지 목록
+	// http://localhost:8082/controller/message/all/user01
+	@GetMapping(value = "/message/all/{userId}")
+	public ArrayList<MessageDTO> getAllMessages(@PathVariable String userId) {
+	    ArrayList<MessageDTO> inbox = messageMapper.selectInbox(userId);
+	    ArrayList<MessageDTO> sent = messageMapper.selectSent(userId);
+	    inbox.addAll(sent); // 받은 + 보낸 메시지 합치기
+	    return inbox;
+	}
 
 }

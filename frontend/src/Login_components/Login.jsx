@@ -31,6 +31,7 @@ const Login = () => {
           alert(msg);
         } else {
           alert(msg);
+          localStorage.setItem("userId", id); // 로그인 성공 시 userId 저장
           navigate('/main');
         }
       })

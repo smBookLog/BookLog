@@ -8,6 +8,8 @@ const FollowersPage = () => {
   //   following: ['UserA', 'UserB', 'UserC'],
   // };
   const userId = 'user03';
+  // const userId = localStorage.getItem("userId");
+
   const [activeTab, setActiveTab] = useState('followers');
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
@@ -73,17 +75,21 @@ const FollowersPage = () => {
         </div>
       </header>
 
-      <ul className="user-list">
+
+      <ul className="user-list" style={{flexDirection: 'column',display: 'flex', flexWrap: 'nowrap'}}>
+
         {userList.length === 0 ? (
           <li className="no-data">표시할 사용자가 없습니다.</li>
         ) : (
           userList.map((name, idx) => (
-            <li key={idx} className="user-item">
+            <li key={idx} className="user-item" style={{display: 'flex', flexDirection:'row', flexWrap:'nowrap'}}>
+
               <div className="avatar" />
               <span className="username">{name}</span>
               {activeTab === 'followers' ? (
                 following.includes(name) ? (
-                  <button className="unfollow-btn" onClick={() => handleUnfollow(name)}>
+                  <button style={{backgroundColor: 'gray'}} className="unfollow-btn" onClick={() => handleUnfollow(name)}>
+
                     언팔로우
                   </button>
                 ) : (
@@ -94,7 +100,8 @@ const FollowersPage = () => {
               ) : (
                 <div className="btn-group">
                   <button className="dm-btn">메시지</button>
-                  <button className="unfollow-btn" onClick={() => handleUnfollow(name)}>
+                  <button style={{backgroundColor: 'gray'}} className="unfollow-btn" onClick={() => handleUnfollow(name)}>
+
                     언팔로우
                   </button>
                 </div>

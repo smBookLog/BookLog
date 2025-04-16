@@ -3,6 +3,8 @@
     margin: 0 auto;
     padding: 20px;
     font-family: sans-serif;
+    flex-direction: column;
+
   }
   
   header h1 {
@@ -43,6 +45,7 @@
     justify-content: space-between;
     padding: 12px 0;
     border-bottom: 1px solid #eee;
+    flex-direction: column;
   }
   
   .avatar {

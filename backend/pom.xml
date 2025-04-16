@@ -39,7 +39,6 @@
 			<version>2.18.3</version>
 		</dependency>
 
-
 		<!-- 파일 업로드를 위한 Cos.jar 라이브러리 -->
 		<!-- https://mvnrepository.com/artifact/servlets.com/cos -->
 		<dependency>

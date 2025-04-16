@@ -1,17 +1,25 @@
 import React, { useState } from "react";
 import editprofile from "../myprofile_style/EditProfile.css";
 import image from "../etc_assets/profile.png"
-import Header from "../header_components/Header";
+import Header_mypage from "../header_components/Header_mypage";
+import { useNavigate } from "react-router-dom";
 
 function EditProfile() {
     const [nickname, setNickname] = useState("박하얀하얀123");
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        localStorage.removeItem("userId"); // 저장된 로그인 정보 삭제
+        navigate("/"); // 로그인 페이지로 이동
+    };
+
     return (
         <div>
             {/* 상단 헤더 */}
             <header className="edit-header">
                 <div className="header-container">
-                    <Header />
-                    <button className="logout-btn">로그아웃</button>
+                    <Header_mypage />
+                    <button className="logout-btn" onClick={handleLogout}>로그아웃</button>
+
                 </div>
             </header>
 

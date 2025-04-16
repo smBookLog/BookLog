@@ -21,7 +21,7 @@ public interface ReadingLogMapper {
 	ArrayList<String> findQuotesByLogIdx(int logIdx);
 
 	// 피드용 독서 기록 조회
-	ArrayList<ReadingLogDTO> findLogs(@Param("userId") String userId, @Param("logIdx") int logIdx);
+	ArrayList<ReadingLogDTO> findLogs(@Param("logIdx") int logIdx);
 
 	// 댓글 조회 
 	ArrayList<CommentDTO> findCommentsByLogIdx(int logIdx);

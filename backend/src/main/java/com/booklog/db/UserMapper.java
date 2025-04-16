@@ -20,5 +20,7 @@ public interface UserMapper {
 	
 	// 개인 정보 및 프로필 수정
 	int updateUserInfo(UserDTO user);
-
+	
+	// 사용자 ID로 사용자 정보 조회
+    UserDTO getUserById(String userId);
 }
