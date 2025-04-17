@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.booklog.db.FeedMapper">
 
+<<<<<<< HEAD
 	<!-- 독서 기록 조회 -->
 	<select id="findLogs" parameterType="map"
 		resultType="com.booklog.model.ReadingLogDTO">
@@ -10,10 +11,21 @@
 		RL.RATING,
 		RL.CONTENT,
 		RL.CREATED_AT AS createdAt,
+=======
+   <!-- 독서 기록 조회 -->
+   <select id="findLogs" parameterType="map"
+      resultType="com.booklog.model.ReadingLogDTO">
+      SELECT
+      RL.LOG_IDX AS logIdx,
+      RL.RATING,
+      RL.CONTENT,
+      RL.CREATED_AT AS createdAt,
+>>>>>>> 44045676bc2ca2b3ba84b5d14c27742e80aaac7f
 
-		U.USER_ID AS userId,
-		U.PROFILE_IMG AS profileImgUrl,
+      U.USER_ID AS userId,
+      U.PROFILE_IMG AS profileImgUrl,
 
+<<<<<<< HEAD
 		B.BOOK_IDX AS
 		bookIdx,
 		B.TITLE,
@@ -22,14 +34,25 @@
 		B.DESCRIPTION,
 		B.BOOK_IMG AS
 		bookImgUrl,
+=======
+      B.BOOK_IDX AS
+      bookIdx,
+      B.TITLE,
+      B.AUTHOR,
+      B.GENRE,
+      B.DESCRIPTION,
+      B.BOOK_IMG AS
+      bookImgUrl,
+>>>>>>> 44045676bc2ca2b3ba84b5d14c27742e80aaac7f
 
-		IFNULL(C.COMMENT_COUNT, 0) AS commentCount,
-		IFNULL(L.LIKE_COUNT, 0) AS likeCount
+      IFNULL(C.COMMENT_COUNT, 0) AS commentCount,
+      IFNULL(L.LIKE_COUNT, 0) AS likeCount
 
-		FROM READING_LOG RL
-		JOIN BOOK B ON RL.BOOK_IDX = B.BOOK_IDX
-		JOIN USER U ON RL.USER_ID = U.USER_ID
+      FROM READING_LOG RL
+      JOIN BOOK B ON RL.BOOK_IDX = B.BOOK_IDX
+      JOIN USER U ON RL.USER_ID = U.USER_ID
 
+<<<<<<< HEAD
 		LEFT JOIN (
 		SELECT LOG_IDX, COUNT(*) AS COMMENT_COUNT
 		FROM COMMENT
@@ -37,70 +60,123 @@
 		IS_DELETED = 0
 		GROUP BY LOG_IDX
 		) C ON RL.LOG_IDX = C.LOG_IDX
+=======
+      LEFT JOIN (
+      SELECT LOG_IDX, COUNT(*) AS COMMENT_COUNT
+      FROM COMMENT
+      WHERE
+      IS_DELETED = 0
+      GROUP BY LOG_IDX
+      ) C ON RL.LOG_IDX = C.LOG_IDX
+>>>>>>> 44045676bc2ca2b3ba84b5d14c27742e80aaac7f
 
-		LEFT JOIN (
-		SELECT LOG_IDX, COUNT(*) AS LIKE_COUNT
-		FROM READING_LOG_LIKE
-		GROUP BY LOG_IDX
-		) L ON RL.LOG_IDX = L.LOG_IDX
+      LEFT JOIN (
+      SELECT LOG_IDX, COUNT(*) AS LIKE_COUNT
+      FROM READING_LOG_LIKE
+      GROUP BY LOG_IDX
+      ) L ON RL.LOG_IDX = L.LOG_IDX
 
+<<<<<<< HEAD
 		WHERE RL.USER_ID != #{userId}
 		AND RL.CONTENT IS NOT NULL
 		AND RL.CONTENT != ''
 		ORDER BY RL.CREATED_AT DESC
 		LIMIT 5 OFFSET #{logIdx}
 	</select>
+=======
+      WHERE RL.USER_ID != #{userId}
+      AND RL.CONTENT IS NOT NULL
+      AND RL.CONTENT != ''
+      ORDER BY RL.CREATED_AT DESC
+      LIMIT 5 OFFSET #{logIdx}
+   </select>
+>>>>>>> 44045676bc2ca2b3ba84b5d14c27742e80aaac7f
 
-	<!-- 최다로 읽은 장르 1개 -->
-	<select id="findTopGenre" resultType="string">
-		SELECT B.GENRE
-		FROM
-		READING_LOG RL
-		JOIN BOOK B ON RL.BOOK_IDX = B.BOOK_IDX
-		WHERE RL.USER_ID
-		= #{userId}
-		GROUP BY B.GENRE
-		ORDER BY COUNT(*) DESC
-		LIMIT 1
-	</select>
+   <!-- 최다로 읽은 장르 1개 -->
+   <select id="findTopGenre" resultType="string">
+      SELECT B.GENRE
+      FROM
+      READING_LOG RL
+      JOIN BOOK B ON RL.BOOK_IDX = B.BOOK_IDX
+      WHERE RL.USER_ID
+      = #{userId}
+      GROUP BY B.GENRE
+      ORDER BY COUNT(*) DESC
+      LIMIT 1
+   </select>
 
-	<!-- 가장 최근에 읽은 책의 장르 1개 -->
-	<select id="findLatestGenre" resultType="string">
-		SELECT B.GENRE
-		FROM
-		READING_LOG RL
-		JOIN BOOK B ON RL.BOOK_IDX = B.BOOK_IDX
-		WHERE RL.USER_ID
-		= #{userId}
-		ORDER BY RL.CREATED_AT DESC
-		LIMIT 1
-	</select>
+   <!-- 가장 최근에 읽은 책의 장르 1개 -->
+   <select id="findLatestGenre" resultType="string">
+      SELECT B.GENRE
+      FROM
+      READING_LOG RL
+      JOIN BOOK B ON RL.BOOK_IDX = B.BOOK_IDX
+      WHERE RL.USER_ID
+      = #{userId}
+      ORDER BY RL.CREATED_AT DESC
+      LIMIT 1
+   </select>
 
-	<!-- 해당 장르를 자주 읽은 유저 추천 (자신과 팔로우한 유저 제외) -->
-	<select id="recommendByGenre" parameterType="map"
-		resultType="com.booklog.model.UserRecommendDTO">
-		SELECT
-		RL.USER_ID AS userId,
-		B.GENRE AS genre,
-		COUNT(*) AS
-		genreCount,
-		U.PROFILE_IMG AS profileImg
-		FROM READING_LOG RL
-		JOIN BOOK B
-		ON RL.BOOK_IDX = B.BOOK_IDX
-		JOIN USER U ON RL.USER_ID = U.USER_ID
-		WHERE
-		B.GENRE = #{genre}
-		AND RL.USER_ID != #{userId}
-		AND RL.USER_ID NOT IN (
-		SELECT FOLLOWING_ID FROM FOLLOW WHERE FOLLOWER_ID = #{userId}
-		)
-		GROUP BY
-		RL.USER_ID
-		ORDER BY genreCount DESC
-		LIMIT 5
-	</select>
+   <!-- 해당 장르를 자주 읽은 유저 추천 (자신과 팔로우한 유저 제외) -->
+   <select id="recommendByGenre" parameterType="map"
+      resultType="com.booklog.model.UserRecommendDTO">
+      SELECT
+      RL.USER_ID AS userId,
+      B.GENRE AS genre,
+      COUNT(*) AS
+      genreCount,
+      U.PROFILE_IMG AS profileImg
+      FROM READING_LOG RL
+      JOIN BOOK B
+      ON RL.BOOK_IDX = B.BOOK_IDX
+      JOIN USER U ON RL.USER_ID = U.USER_ID
+      WHERE
+      B.GENRE = #{genre}
+      AND RL.USER_ID != #{userId}
+      AND RL.USER_ID NOT IN (
+      SELECT FOLLOWING_ID FROM FOLLOW WHERE FOLLOWER_ID = #{userId}
+      )
+      GROUP BY
+      RL.USER_ID
+      ORDER BY genreCount DESC
+      LIMIT 5
+   </select>
 
+   <!-- 인용구 조회 -->
+   <select id="findQuotesByUserId" parameterType="String"
+      resultType="string">
+      SELECT Q.CONTENT
+      FROM QUOTE Q
+      JOIN (
+      SELECT BOOK_IDX
+      FROM QUOTE
+      WHERE USER_ID = #{userId}
+      ORDER BY QUOTE_IDX DESC
+      LIMIT 1
+      ) AS
+      LATEST_BOOK ON Q.BOOK_IDX = LATEST_BOOK.BOOK_IDX
+      WHERE Q.USER_ID =
+      #{userId}
+      ORDER BY Q.QUOTE_IDX DESC
+   </select>
+
+   <!-- 댓글 목록을 logIdx 리스트로 가져오는 쿼리 -->
+   <select id="findCommentsByLogIdx" parameterType="int"
+      resultType="com.booklog.model.CommentDTO">
+      SELECT
+      COMMENT_IDX AS commentIdx,
+      USER_ID AS userId,
+      CONTENT,
+      PARENT_IDX AS parentIdx,
+      CREATED_AT
+      AS createdAt,
+      IS_DELETED AS isDeleted
+      FROM COMMENT
+      WHERE LOG_IDX = #{logIdx}
+      ORDER BY CREATED_AT ASC
+   </select>
+
+<<<<<<< HEAD
 	<!-- 인용구 조회 -->
 	<select id="findQuotesByUserId" parameterType="String"
 		resultType="string">
@@ -135,4 +211,6 @@
 		ORDER BY CREATED_AT ASC
 	</select>
 
+=======
+>>>>>>> 44045676bc2ca2b3ba84b5d14c27742e80aaac7f
 </mapper>

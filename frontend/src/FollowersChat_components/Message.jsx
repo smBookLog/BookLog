@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../FollowersChat_style/Message.css';
 import { useNavigate, Link } from 'react-router-dom';
-import profileImg from '../etc_assets/profile.png';
+import profileImg from '../etc_assets/profile_1.png';
 
 const Message = () => {
   const [activeTab, setActiveTab] = useState('followers');

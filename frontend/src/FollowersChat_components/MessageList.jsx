@@ -3,7 +3,7 @@ import '../FollowersChat_style/MessageList.css';
 import { FiEdit2 } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';
 import { Link, useNavigate } from 'react-router-dom';
-import profileImg from '../etc_assets/profile.png';
+import profileImg from '../etc_assets/profile_1.png';
 
 const MessageList = () => {
   const [groupedMessages, setGroupedMessages] = useState([]);

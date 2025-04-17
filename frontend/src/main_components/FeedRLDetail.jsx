@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../header_components/Header';
-import defaultUserImage from '../etc_assets/sum.png';
+import defaultUserImage from'../etc_assets/profile_1.png';
 import defaultBookCover from '../etc_assets/bookinformation.png';
 import { HiArrowNarrowUp } from "react-icons/hi";
 import '../main_style/FeedRLDetail.css';

@@ -25,10 +25,12 @@
   overflow-x: auto;
   gap: 16px;
   padding-bottom: 10px;
-  scrollbar-width: thin;
-  scrollbar-color: #ccc transparent;
-  margin-left: 20px;
-  margin-right: 20px;
+  scrollbar-width: auto;
+  /* Firefox */
+
+  margin: 0 16px;
+  padding: 20px;
+  border-radius: 12px;
 }
 
 .user-list-horizontal::-webkit-scrollbar {
@@ -68,6 +70,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  margin-right: 0px;
+
 }
 
 .default-avatar,
