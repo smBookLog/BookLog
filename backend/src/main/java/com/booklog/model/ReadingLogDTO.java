@@ -31,4 +31,6 @@ public class ReadingLogDTO {
    private ArrayList<String> tags;
    private ArrayList<String> quotes;
    private ArrayList<CommentDTO> comments;
+   private int commentCount;
+
 }

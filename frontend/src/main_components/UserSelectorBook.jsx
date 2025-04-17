@@ -7,19 +7,25 @@ function UserSelectorBook() {
   const [recommendedUsers, setRecommendedUsers] = useState([]);
 
   useEffect(() => {
-    // const userId = localStorage.getItem("userId"); // 또는 "user01" 사용 시 "user01"로 변경
-    const userId = localStorage.getItem("user");
-
+    const userInfo = JSON.parse(localStorage.getItem("user"));
+    const userId = userInfo?.userId;
+  
     if (!userId) return;
-
-    axios.get(`http://localhost:8082/controller/genre-mixed/${userId}`)
+  
+    axios.get(`http://localhost:8082/controller/main/${userId}`)
       .then(res => {
-        setRecommendedUsers(res.data);
+        const feedData = res.data;
+        const userSection = feedData.find(item => item.type === "recommend_user");
+  
+        if (userSection && Array.isArray(userSection.data)) {
+          setRecommendedUsers(userSection.data);
+        }
       })
       .catch(err => {
         console.error("추천 유저 불러오기 실패:", err);
       });
   }, []);
+  
 
   return (
     <div className="user-recommendation-container">

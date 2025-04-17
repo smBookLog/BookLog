@@ -22,7 +22,7 @@ import MessageList from './FollowersChat_components/MessageList'; // 채팅
 import Message from './FollowersChat_components/Message';
 import ChatPage from './FollowersChat_components/ChatPage';
 import Bookdetail from './BookDetail_components/Bookdetail'; // 독서 기록
-import TabBar from './my_components/TabBar'; // 독서 목록
+// import TabBar from './my_components/TabBar'; // 독서 목록
 import BookList from './my_components/BookList';
 import ReviewList from './main_components/ReviewList';
 
@@ -88,14 +88,14 @@ function App() {
 
         {/* 필드리딩디테일 */}
 
-        <Route path='/FeedRLDetail' element={
+        <Route path='/FeedRLDetail/:idx' element={
           <div className="app-container">
             <FeedRLDetail />
           </div>
         } />
 
         {/* 책 정보 */}
-        <Route path='/information' element={<Information></Information>}></Route>
+        <Route path='/information/:idx' element={<Information></Information>}></Route>
         {/* 독서 목록 */}
         <Route
           path='/booklist'

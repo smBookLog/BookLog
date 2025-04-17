@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../main_style/ReviewItem.css';
 import defaultUserImage from '../etc_assets/sum.png';
 import defaultBookCover from '../etc_assets/bookinformation.png';
@@ -6,6 +6,7 @@ import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
 import { LuMessageSquareMore } from "react-icons/lu";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const ReviewItem = ({ review }) => {
     const {
@@ -27,10 +28,6 @@ const ReviewItem = ({ review }) => {
     const [isLiked, setIsLiked] = useState(false);
     const navigate = useNavigate();
 
-    const handleLike = () => {
-        setLikes(prev => isLiked ? prev - 1 : prev + 1);
-        setIsLiked(!isLiked);
-    };
     // 책 리뷰 이동
     const handleReviewClick = () => {
         navigate(`/FeedRLDetail/${isbn}`);
@@ -38,15 +35,45 @@ const ReviewItem = ({ review }) => {
     // 책 정보 이동
     const handleBookClick = () => {
         navigate(`/information/${isbn}`, {
-          state: {
-            bookIdx,
-            title,
-            author,
-            imageUrl: bookImgUrl
-          }
+            state: {
+                bookIdx,
+                title,
+                author,
+                imageUrl: bookImgUrl
+            }
         });
-      };
-      
+    };
+    useEffect(() => {
+        // 초기 좋아요 수 로딩
+        axios.get(`http://localhost:8082/controller/${review.logIdx}/likes`)
+            .then(res => setLikes(res.data))
+            .catch(err => console.error(err));
+    }, [review.logIdx]);
+    const handleLike = async () => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (!user) {
+            alert("로그인 후 이용해주세요");
+            return;
+        }
+
+        const likeData = {
+            logIdx: review.logIdx,
+            userId: user.userId
+        };
+
+        try {
+            if (isLiked) {
+                await axios.delete("http://localhost:8082/controller/dislike", { data: likeData });
+                setLikes(prev => prev - 1);
+            } else {
+                await axios.post("http://localhost:8082/controller/like", likeData);
+                setLikes(prev => prev + 1);
+            }
+            setIsLiked(!isLiked);
+        } catch (error) {
+            console.error("좋아요 처리 중 오류 발생:", error);
+        }
+    };
 
     return (
         <div className="review-wrapper">

@@ -59,4 +59,8 @@ public interface ReadingLogMapper {
 	// 좋아요 수 조회
 	int countLikes(@Param("logIdx") int logIdx);
 	
+	// 독서 기록 중복 확인
+	ReadingLogDTO findLogByUserIdAndBookIdx(@Param("userId") String userId, @Param("bookIdx") int bookIdx);
+
+	
 }

@@ -164,7 +164,7 @@ const FollowersPage = () => {
                 )
               ) : (
                 <div className="btn-group">
-                  <button className="dm-btn">메시지</button>
+                  {/* <button className="dm-btn">메시지</button> */}
                   <button
                     style={{ backgroundColor: 'gray' }}
                     className="unfollow-btn"

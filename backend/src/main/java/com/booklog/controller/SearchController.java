@@ -1,6 +1,7 @@
 package com.booklog.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -42,63 +43,60 @@ public class SearchController {
 	// http://localhost:8082/controller/search/book?isbn=9788954677158
 	@GetMapping(value = "/search/book", produces = "application/json; charset=UTF-8")
 	public Object searchBook(@RequestParam("isbn") String isbn) {
-		SearchDTO book = mapper.findBookByIsbn(isbn);
-		if (book != null)
-			return book;
+	    SearchDTO book = mapper.findBookByIsbn(isbn);
+	    if (book != null)
+	        return book;
 
-		// 없으면 외부 API 호출
-		String url = "https://data4library.kr/api/srchDtlList?authKey=" + API_KEY + "&isbn13=" + isbn + "&format=json";
+	    String url = "https://data4library.kr/api/srchDtlList?authKey=" + API_KEY + "&isbn13=" + isbn + "&format=json";
+	    RestTemplate rest = new RestTemplate();
+	    String response = rest.getForObject(url, String.class);
 
-		RestTemplate rest = new RestTemplate();
-		String response = rest.getForObject(url, String.class);
+	    try {
+	        JSONObject json = new JSONObject(response);
+	        JSONObject responseObj = json.getJSONObject("response");
 
-		try {
-			System.out.println("API 응답: " + response); // 응답 구조 확인
+	        if (!responseObj.has("detail")) {
+	            return new JSONObject().put("message", "책 정보를 찾을 수 없습니다").toString();
+	        }
 
-			JSONObject json = new JSONObject(response);
-			JSONObject responseObj = json.getJSONObject("response");
+	        JSONArray detailArray = responseObj.getJSONArray("detail");
+	        if (detailArray.isEmpty()) {
+	            return new JSONObject().put("message", "책 정보를 찾을 수 없습니다").toString();
+	        }
 
-			// detail 키가 있는지 확인
-			if (!responseObj.has("detail")) {
-				return new JSONObject().put("message", "책 정보를 찾을 수 없습니다").toString();
-			}
+	        JSONObject bookObj = detailArray.getJSONObject(0).getJSONObject("book");
 
-			JSONArray detailArray = responseObj.getJSONArray("detail");
-			if (detailArray.isEmpty()) {
-				return new JSONObject().put("message", "책 정보를 찾을 수 없습니다").toString();
-			}
+	        SearchDTO newBook = new SearchDTO();
+	        newBook.setIsbn(isbn);
+	        newBook.setTitle(bookObj.optString("bookname", ""));
+	        newBook.setAuthor(bookObj.optString("authors", ""));
+	        newBook.setDescription(bookObj.optString("description", ""));
+	        newBook.setBookImg(bookObj.optString("bookImageURL", ""));
 
-			JSONObject bookObj = detailArray.getJSONObject(0).getJSONObject("book"); // "book" 객체 가져오기
+	        String genreRaw = bookObj.optString("class_nm", "").trim();
+	        String genre = "기타";
+	        if (!genreRaw.isEmpty()) {
+	            String[] genreParts = genreRaw.split(">");
+	            if (genreParts.length > 0 && !genreParts[0].trim().isEmpty()) {
+	                genre = genreParts[0].trim();
+	            }
+	        }
+	        newBook.setGenre(genre);
 
-			SearchDTO newBook = new SearchDTO();
-			newBook.setIsbn(isbn);
-			newBook.setTitle(bookObj.optString("bookname", ""));
-			newBook.setAuthor(bookObj.optString("authors", ""));
-//			newBook.setGenre(bookObj.optString("class_nm", ""));
-			newBook.setDescription(bookObj.optString("description", ""));
-			newBook.setBookImg(bookObj.optString("bookImageURL", ""));
-			
-			String genreRaw = bookObj.optString("class_nm", "").trim();
-			String genre = "기타";  // 기본값 설정
+	        // DB에 저장
+	        mapper.insertBook(newBook);
 
-			if (genreRaw != null && !genreRaw.isEmpty()) {
-			    String[] genreParts = genreRaw.split(">");
-			    if (genreParts.length > 0 && !genreParts[0].trim().isEmpty()) {
-			        genre = genreParts[0].trim();  // 유효한 첫 단어가 있는 경우만 저장
-			    }
-			}
+	        // 새로 insert된 bookIdx 조회 후 세팅
+	        Integer bookIdx = mapper.findBookIdxByIsbn(isbn);
+	        newBook.setBookIdx(bookIdx);
 
-			newBook.setGenre(genre);
-			
-			// DB에 책 정보 저장
-			mapper.insertBook(newBook);
-
-			return newBook;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new JSONObject().put("message", "책 정보를 찾을 수 없습니다").toString();
-		}
+	        return newBook;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return new JSONObject().put("message", "책 정보를 찾을 수 없습니다").toString();
+	    }
 	}
+
 	
 	// 제목 또는 저자 이름으로 책 검색
 	// http://localhost:8082/controller/search/book/keyword?keyword=데미안
@@ -111,5 +109,47 @@ public class SearchController {
 	    else
 	        return new JSONObject().put("message", "검색 결과가 없습니다").toString();
 	}
+	// 유저 전체 목록 반환
+   // http://localhost:8082/controller/search/users
+   @GetMapping(value = "/search/users", produces = "application/json; charset=UTF-8")
+   public Object getAllUsersFull() {
+      List<SearchDTO> users = mapper.findAllUsers();
+      return users;
+   }
+
+   // 책 전체 목록 반환
+   // http://localhost:8082/controller/search/books
+   @GetMapping(value = "/search/books", produces = "application/json; charset=UTF-8")
+   public Object getAllBooksFull() {
+      List<SearchDTO> books = mapper.findAllBooks();
+      return books;
+   }
+
+   // 유저 최대 5개 반환
+   // http://localhost:8082/controller/search/all/users
+   @GetMapping(value = "/search/all/users", produces = "application/json; charset=UTF-8")
+   public Object getLimitedUsers() {
+      List<SearchDTO> users = mapper.findAllUsers();
+      return users.size() > 5 ? users.subList(0, 5) : users;
+   }
+
+   // 책 최대 5개 반환
+   // http://localhost:8082/controller/search/all/books
+   @GetMapping(value = "/search/all/books", produces = "application/json; charset=UTF-8")
+   public Object getLimitedBooks() {
+      List<SearchDTO> books = mapper.findAllBooks();
+      return books.size() > 5 ? books.subList(0, 5) : books;
+   }
+   
+   // 유저 검색 소문자 가능
+   @GetMapping(value = "/search/user/keyword", produces = "application/json; charset=UTF-8")
+   public Object searchUsersByKeyword(@RequestParam("keyword") String keyword) {
+       List<SearchDTO> users = mapper.findUsersByKeyword(keyword);
+       if (users != null && !users.isEmpty())
+           return users;
+       else
+           return new JSONObject().put("message", "검색 결과가 없습니다").toString();
+   }
+
 
 }

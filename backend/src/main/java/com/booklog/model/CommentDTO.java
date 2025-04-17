@@ -8,10 +8,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentDTO {
-   private int commentIdx;
-   private String userId;
-   private String content;
-   private Integer parentIdx;
-   private String createdAt;
-   private int isDeleted;
+
+	private int commentIdx;
+	private String userId;
+	private String content;
+	private Integer parentIdx;
+	private String createdAt;
+	private int isDeleted;
+
+	private int logIdx;
+
 }

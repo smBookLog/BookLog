@@ -14,39 +14,66 @@
 
 	<!-- ISBN으로 책 검색 -->
 	<select id="findBookByIsbn"
-		resultType="com.booklog.model.SearchDTO">
-		SELECT ISBN as isbn, TITLE as title, AUTHOR as author,
-		GENRE as genre,
-		DESCRIPTION as description, BOOK_IMG as bookImg
-		FROM
-		BOOK
-		WHERE ISBN = #{isbn}
+	    resultType="com.booklog.model.SearchDTO">
+	    SELECT 
+	        BOOK_IDX,
+	        ISBN as isbn,
+	        TITLE as title,
+	        AUTHOR as author,
+	        GENRE as genre,
+	        DESCRIPTION as description,
+	        BOOK_IMG as bookImg
+	    FROM BOOK
+	    WHERE ISBN = #{isbn}
 	</select>
+
 
 	<!-- 책 추가 -->
 	<insert id="insertBook">
-		INSERT INTO BOOK (ISBN, TITLE, AUTHOR, GENRE,
-		DESCRIPTION, BOOK_IMG)
-		VALUES (#{isbn}, #{title}, #{author}, #{genre},
-		#{description}, #{bookImg})
+	    INSERT INTO BOOK (ISBN, TITLE, AUTHOR, GENRE, DESCRIPTION, BOOK_IMG)
+	    VALUES (#{isbn}, #{title}, #{author}, #{genre}, #{description}, #{bookImg})
 	</insert>
 
 	<!-- 제목 또는 저자로 책 검색 -->
 	<select id="findBooksByKeyword" parameterType="string"
-		resultType="com.booklog.model.SearchDTO">
-		SELECT
-		ISBN AS isbn,
-		TITLE AS title,
-		AUTHOR AS author,
-		GENRE AS genre,
-		DESCRIPTION AS description,
-		BOOK_IMG AS bookImg
-		FROM BOOK
-		WHERE
-		REPLACE(TITLE, ' ', '') LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%')
-		OR REPLACE(AUTHOR, ' ', '') LIKE CONCAT('%', REPLACE(#{keyword}, ' ',
-		''), '%')
+	        resultType="com.booklog.model.SearchDTO">
+	    SELECT
+	        BOOK_IDX AS bookIdx,
+	        ISBN AS isbn,
+	        TITLE AS title,
+	        AUTHOR AS author,
+	        GENRE AS genre,
+	        DESCRIPTION AS description,
+	        BOOK_IMG AS bookImg
+	    FROM BOOK
+	    WHERE
+	        REPLACE(TITLE, ' ', '') LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%')
+	        OR REPLACE(AUTHOR, ' ', '') LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%')
 	</select>
 
+	
+	<!-- 유저, 책 전체 목록 -->
+	<select id="findAllUsers" resultType="com.booklog.model.SearchDTO">
+	    SELECT USER_ID as userId, NAME as name, EMAIL as email, PROFILE_IMG as profileImg
+	    FROM USER
+	</select>
+	
+	<select id="findAllBooks" resultType="com.booklog.model.SearchDTO">
+	    SELECT ISBN as isbn, TITLE as title, AUTHOR as author, GENRE as genre, DESCRIPTION as description, BOOK_IMG as bookImg
+	    FROM BOOK
+	</select>
+	
+	<!-- 유저 검색 대소문자 무관하게 -->
+	<select id="findUsersByKeyword" resultType="com.booklog.model.SearchDTO">
+	    SELECT BOOK_IDX AS bookIdx, USER_ID AS userId, NAME AS name, EMAIL AS email, PROFILE_IMG AS profileImg
+	    FROM USER
+	    WHERE LOWER(USER_ID) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+	       OR LOWER(NAME) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+	</select>
 
+	<select id="findBookIdxByIsbn" parameterType="String" resultType="Integer">
+	  SELECT BOOK_IDX FROM BOOK WHERE ISBN = #{isbn}
+	</select>
+	
+	
 </mapper>

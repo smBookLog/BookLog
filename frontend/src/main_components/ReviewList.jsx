@@ -6,12 +6,14 @@ import ReviewItem from './ReviewItem';
 import BookRecommendation from './BookRecommendation';
 import UserSector from './UserSelectorBook';
 
+
 function ReviewList() {
   const [feedItems, setFeedItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const navigate = useNavigate();
+  const [recommendation, setRecommendation] = useState(null);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -58,7 +60,10 @@ function ReviewList() {
         {/* 책 추천 */}
         {logs.length > 10 && (
           <div className="recommendation-section">
-            <BookRecommendation recommendation={logs[10]} />
+            <BookRecommendation
+              recommendation={logs[10]}
+              onRequestNewRecommendation={getNewRecommendation}
+            />
           </div>
         )}
 
@@ -68,6 +73,22 @@ function ReviewList() {
         ))}
       </div>
     );
+  };
+  const getNewRecommendation = async () => {
+    if (!userInfo) return;
+
+    const userId = userInfo.userId || userInfo.id || '';
+    try {
+      const res = await fetch(`http://localhost:8082/controller/recommend/${userId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      const data = await res.text();
+      setRecommendation(data);
+    } catch (error) {
+      console.error("추천 실패:", error);
+    }
   };
 
   const renderFeedItem = (item, index) => {
@@ -83,7 +104,10 @@ function ReviewList() {
       case 'recommend_text':
         return (
           <div key={`book-${index}`} className="recommendation-section">
-            <BookRecommendation recommendation={item.data} />
+            <BookRecommendation
+              recommendation={recommendation || item.data}
+              onRequestNewRecommendation={getNewRecommendation}
+            />
           </div>
         );
       default:

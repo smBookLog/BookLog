@@ -32,7 +32,7 @@ const Header = () => {
                 <div style={headerStyle_loge}>
 
                     <Link to="/main">
-                        <img src={loge} style={{width: '10rem', height: 'auto'}}/>=
+                        <img src={loge} style={{width: '10rem', height: 'auto'}}/>
                     </Link>
                 </div>
             </div>

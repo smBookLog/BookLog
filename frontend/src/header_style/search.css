@@ -3,6 +3,7 @@
   font-family: sans-serif;
   max-width: 1024px;
   align-items: center;
+  margin: 0 auto;
 }
 
 .search-top {
@@ -88,8 +89,6 @@
 
 
 
-
-
 .user-avatar {
   width: 40px;
   height: 40px;
@@ -136,4 +135,13 @@
 .custom-link:hover {
   color: green; /* 마우스 올렸을 때 색상 */
   font-weight: 500;
+}
+
+.book-cover {
+  background-color: #166534;
+  height: 10rem;
+  border-radius: 0.375rem 0.375rem 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

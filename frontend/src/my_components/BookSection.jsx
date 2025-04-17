@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import section from '../my_style/BookSection.css'
 import { useNavigate } from 'react-router-dom';
 
+
 const BookSection = () => {
     const [userId, setUserId] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('전체');
@@ -9,6 +10,7 @@ const BookSection = () => {
     const [books, setBooks] = useState([]);
     const [genres, setGenres] = useState(['전체']);
     const navigate = useNavigate();
+
 
     const statusMap = {
         '독서중': 'READING',
@@ -42,7 +44,7 @@ const BookSection = () => {
                 // 사용자가 가진 장르 추출 (중복 제거)
                 const userGenres = ['전체', ...new Set(data.map(book => book.genre).filter(Boolean))];
                 setGenres(userGenres);
-                
+
                 // 만약 현재 선택된 장르가 사용자 장르에 없으면 '전체'로 리셋
                 if (!userGenres.includes(selectedCategory)) {
                     setSelectedCategory('전체');
@@ -72,7 +74,7 @@ const BookSection = () => {
     return (
         <div className="book-section">
             <div className="book-header">
-                <h3 className="section-title">
+                <h3 className="section-title" style={{ alignItems: 'center', fontSize: '18px', color: 'black' }}>
                     독서 목록
                     <span className="filter-container">
                         <div className="reading-status-buttons">
@@ -88,54 +90,57 @@ const BookSection = () => {
                         </div>
                     </span>
                 </h3>
-                <button onClick={booklist} className="view-all-button">
+            </div>
+
+            <div className="book-info-container-new">  {/* 메인에서 컨테이너 가져옴(메인 css) 시작 */}
+                <div className="genre-filter-container">
+                    <h4 className="genre-title">
+                        장르
+                        <span className="category-filter-container">
+                            <select
+                                className="category-select"
+                                value={selectedCategory}
+                                onChange={(e) => setSelectedCategory(e.target.value)}
+                            >
+                                {genres.map((genre) => (
+                                    <option key={genre} value={genre}>
+                                        {genre}
+                                    </option>
+                                ))}
+                            </select>
+                        </span>
+                        <button onClick={booklist} className="view-all-button" style={{ alignItems: 'end', backgroundColor: '#f5f5f5' }}>
                     전체 보기
-                </button>
-            </div>
+                        </button>
 
-            <div className="genre-filter-container">
-                <h4 className="genre-title">
-                    장르
-                    <span className="category-filter-container">
-                        <select
-                            className="category-select"
-                            value={selectedCategory}
-                            onChange={(e) => setSelectedCategory(e.target.value)}
-                        >
-                            {genres.map((genre) => (
-                                <option key={genre} value={genre}>
-                                    {genre}
-                                </option>
-                            ))}
-                        </select>
-                    </span>
-                </h4>
-            </div>
-
-            <div className="book-grid">
-                {books.length > 0 ? (
-                    books
-                        .filter(book => selectedCategory === '전체' || book.genre === selectedCategory)
-                        .map((book) => (
-                            <div key={book.logIdx} className="book-item">
-                                <div className="Section-book-cover">
-                                    <img 
-                                        src={book.bookImgUrl} 
-                                        alt={book.title} 
-                                        style={{ width: '100%', height: '150px', objectFit: 'cover' }} 
-                                    />
-                                </div>
-                                <div className="book-info">
-                                    <h4 className="book-title">{book.title}</h4>
-                                    <p className="book-rating">★ {book.rating}</p>
-                                </div>
+                    </h4>
+                    <div className="book-grid"> {/* 시작 */}
+                        {books.length > 0 ? (
+                            books
+                                .filter(book => selectedCategory === '전체' || book.genre === selectedCategory)
+                                .map((book) => (
+                                    <div key={book.logIdx} className="book-item">
+                                        <div className="book-cover" style={{ borderRadius: '0px', margin: '0px', maxHeight: '170px', maxWidth:'130px',objectFit: 'cover', backgroundColor: 'transparent' }}>
+                                            <img
+                                                src={book.bookImgUrl}
+                                                alt={book.title}
+                                                style={{ height: '160px', objectFit: 'cover' }}
+                                            />
+                                        </div>
+                                        <div className="book-info" style={{ marginLeft: '0px', marginBottom: '0px', backgroundColor: '#f5f5f5' }}>
+                                            <h4 className="book-title" style={{ marginTop: '10px', alignItems:'center' }}>{book.title}</h4>
+                                            <p className="book-author" style={{ marginLeft: '0px',  marginTop: '-10px' }}>{book.author}</p>
+                                        </div>
+                                    </div>
+                                ))
+                        ) : (
+                            <div className="no-books-message">
+                                {readingStatus}인 책이 없습니다.
                             </div>
-                        ))
-                ) : (
-                    <div className="no-books-message">
-                        {readingStatus}인 책이 없습니다.
-                    </div>
-                )}
+                        )}
+                    </div> {/* 끝 */}
+                </div>
+
             </div>
         </div>
     );

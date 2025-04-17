@@ -17,6 +17,7 @@ public class SearchDTO {
     private String profileImg;
 
     // 책용
+    private int bookIdx;
     private String isbn;
     private String title;
     private String author;

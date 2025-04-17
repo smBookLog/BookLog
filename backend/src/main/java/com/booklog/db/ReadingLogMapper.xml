@@ -184,4 +184,11 @@
 		SELECT COUNT(*) FROM READING_LOG_LIKE
 		WHERE LOG_IDX = #{logIdx}
 	</select>
+	
+	<!-- 중복 저장 확인  -->
+	<select id="findLogByUserIdAndBookIdx" resultType="com.booklog.model.ReadingLogDTO">
+	    SELECT * FROM READING_LOG
+	    WHERE USER_ID = #{userId} AND BOOK_IDX = #{bookIdx}
+	</select>
+	
 </mapper>

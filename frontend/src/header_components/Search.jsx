@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { debounce } from 'lodash';
 import { RiArrowLeftSLine } from "react-icons/ri";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../header_style/search.css';
 import bookinformation from "../etc_assets/bookinformation.png";
+import defaultUserImage from "../etc_assets/sum.png";
 import axios from 'axios';
 
 const Search = () => {
@@ -12,107 +14,226 @@ const Search = () => {
 
     const [accountResults, setAccountResults] = useState([]);
     const [bookResults, setBookResults] = useState([]);
+    const [imgErrors, setImgErrors] = useState([]);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
-        if (searchQuery.trim() === "") {
-            // 전체 유저/책 불러오기
-            axios.get(`http://localhost:8082/controller/search/all/users`)
-                .then(res => {
-                    console.log("전체 유저:", res.data);
-                    setAccountResults(res.data || []);
-                })
-                .catch(() => setAccountResults([]));
+        const delaySearch = debounce(() => {
+            if (searchQuery.trim() === "") {
+                axios.get(`http://localhost:8082/controller/search/all/users`)
+                    .then(res => setAccountResults((res.data || []).slice(0, 5)))
+                    .catch(() => setAccountResults([]));
 
-            axios.get(`http://localhost:8082/controller/search/all/books`)
-                .then(res => {
-                    console.log("전체 책:", res.data);
-                    setBookResults(res.data || []);
-                })
-                .catch(() => setBookResults([]));
-        } else {
-            // 유저 검색
-            axios.get(`http://localhost:8082/controller/search/user?userId=${searchQuery}`)
-                .then(res => {
-                    let data = res.data;
-                    if (typeof data === 'string') {
-                        try {
-                            data = JSON.parse(data);
-                        } catch {
-                            setAccountResults([]);
-                            return;
-                        }
-                    }
-                    if (data && data.userId) {
-                        setAccountResults([data]);
-                    } else {
-                        setAccountResults([]);
-                    }
-                })
-                .catch(() => setAccountResults([]));
-
-            // 책 검색
-            if (/^\d{13}$/.test(searchQuery)) {
-                axios.get(`http://localhost:8082/controller/search/book?isbn=${searchQuery}`)
+                axios.get(`http://localhost:8082/controller/search/all/books`)
                     .then(res => {
-                        let data = res.data;
-                        if (typeof data === 'string') {
-                            try {
-                                data = JSON.parse(data);
-                            } catch {
-                                setBookResults([]);
-                                return;
-                            }
-                        }
-                        if (data && data.isbn) {
-                            setBookResults([data]);
-                        } else {
-                            setBookResults([]);
-                        }
+                        const books = (res.data || []).slice(0, 5);
+                        setBookResults(books);
+                        setImgErrors(Array(books.length).fill(false));
                     })
-                    .catch(() => setBookResults([]));
+                    .catch(() => {
+                        setBookResults([]);
+                        setImgErrors([]);
+                    });
             } else {
-                axios.get(`http://localhost:8082/controller/search/book/title?title=${searchQuery}`)
+                axios.get(`http://localhost:8082/controller/search/user/keyword?keyword=${searchQuery}`)
                     .then(res => {
                         let data = res.data;
                         if (typeof data === 'string') {
                             try {
                                 data = JSON.parse(data);
                             } catch {
-                                setBookResults([]);
+                                setAccountResults([]);
                                 return;
                             }
                         }
-                        if (Array.isArray(data)) {
-                            setBookResults(data);
-                        } else {
-                            setBookResults([]);
-                        }
+                        setAccountResults(Array.isArray(data) ? data : []);
                     })
-                    .catch(() => setBookResults([]));
+                    .catch(() => setAccountResults([]));
+
+                if (/^\d{13}$/.test(searchQuery)) {
+                    axios.get(`http://localhost:8082/controller/search/book?isbn=${searchQuery}`)
+                        .then(res => {
+                            let data = res.data;
+                            if (typeof data === 'string') {
+                                try {
+                                    data = JSON.parse(data);
+                                } catch {
+                                    setBookResults([]);
+                                    setImgErrors([]);
+                                    return;
+                                }
+                            }
+                            const valid = data && data.isbn ? [data] : [];
+                            setBookResults(valid);
+                            setImgErrors(Array(valid.length).fill(false));
+                        })
+                        .catch(() => {
+                            setBookResults([]);
+                            setImgErrors([]);
+                        });
+                } else {
+                    axios.get(`http://localhost:8082/controller/search/book/keyword?keyword=${searchQuery}`)
+                        .then(res => {
+                            let data = res.data;
+                            if (typeof data === 'string') {
+                                try {
+                                    data = JSON.parse(data);
+                                } catch {
+                                    setBookResults([]);
+                                    setImgErrors([]);
+                                    return;
+                                }
+                            }
+                            const valid = Array.isArray(data) ? data : [];
+                            setBookResults(valid);
+                            setImgErrors(Array(valid.length).fill(false));
+                        })
+                        .catch(() => {
+                            setBookResults([]);
+                            setImgErrors([]);
+                        });
+                }
             }
-        }
+        }, 300);
+
+        delaySearch();
+        return () => delaySearch.cancel();
     }, [searchQuery]);
+
+    const getValidImageUrl = (url) => {
+        if (!url || url === "null" || url === "" || url.includes("no_image")) {
+            return bookinformation;
+        }
+        return url.startsWith("http://") ? url.replace("http://", "https://") : url;
+    };
+
+    const handleImgError = (index) => {
+        const updatedErrors = [...imgErrors];
+        updatedErrors[index] = true;
+        setImgErrors(updatedErrors);
+    };
+
+    const handleAccountClick = (userId) => {
+        navigate(`/user/${userId}`);
+    };
 
     const renderAccounts = () =>
         accountResults.map((acc, idx) => (
-            <div key={idx} className="account-item">
-                <div className="account-image default-avatar" />
-                <span>{acc.nickname || acc.userId}</span>
+            <div
+                key={idx}
+                className="account-item"
+                onClick={() => handleAccountClick(acc.userId)}
+                style={{ cursor: 'pointer' }}
+            >
+                <img
+                    src={acc.profileImg || defaultUserImage}
+                    alt="유저 프로필"
+                    className="account-image"
+                />
+                <span>{acc.nickname || acc.name || acc.userId || "이름 없음"}</span>
             </div>
         ));
 
     const renderBooks = () =>
-        bookResults.map((book, idx) => (
-            <div key={idx} className="book-item">
-                <img
-                    src={book.bookImg && book.bookImg !== "null" ? book.bookImg : bookinformation}
-                    alt={book.title}
-                    className="book-image"
-                />
-                <div className="book-title">{book.title}</div>
-                <div className="book-author">{book.author}</div>
-            </div>
-        ));
+        bookResults.map((book, idx) => {
+            const imageUrl = getValidImageUrl(book.bookImg);
+            const isDefault = imgErrors[idx] || !book.bookImg || imageUrl === bookinformation;
+
+            const handleClick = () => {
+                           
+                navigate(`/information/${book.isbn || book.bookIdx}`, {
+                    state: {
+                        bookIdx: book.bookIdx,
+                        title: book.title,
+                        author: book.author,
+                        imageUrl: book.bookImg
+                    }
+                });
+            };
+            
+
+            return (
+                <div
+                    key={idx}
+                    className="book-item"
+                    onClick={handleClick}
+                    style={{
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: 'row',
+                        marginBottom: "16px"
+                    }}
+                >
+                    <div
+                        className="book-cover"
+                        style={{
+                            width: "80px",
+                            height: "110px",
+                            marginRight: "12px",
+                            flexShrink: 0
+                        }}
+                    >
+                        {isDefault ? (
+                            <div
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    backgroundColor: "#ccc",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    fontSize: "12px",
+                                    color: "#555"
+                                }}
+                            >
+                                기본 이미지
+                            </div>
+                        ) : (
+                            <img
+                                src={imageUrl}
+                                alt={book.title}
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "cover"
+                                }}
+                                onError={() => handleImgError(idx)}
+                            />
+                        )}
+                    </div>
+                    <div
+                        className="book-text"
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            textAlign: "left"
+                        }}
+                    >
+                        <div
+                            className="book-title"
+                            style={{
+                                fontWeight: "bold",
+                                fontSize: "16px",
+                                marginBottom: "4px"
+                            }}
+                        >
+                            {book.title}
+                        </div>
+                        <div
+                            className="book-author"
+                            style={{
+                                fontSize: "14px",
+                                color: "#666"
+                            }}
+                        >
+                            {book.author}
+                        </div>
+                    </div>
+                </div>
+            );
+        });
 
     const renderContent = () => {
         const hasAccounts = accountResults.length > 0;
@@ -124,10 +245,8 @@ const Search = () => {
                 <>
                     <h2 className="section-title">계정</h2>
                     {hasAccounts ? renderAccounts() : <div className="no-result">계정이 없습니다.</div>}
-
                     <h2 className="section-title">책</h2>
                     {hasBooks ? renderBooks() : <div className="no-result">책이 없습니다.</div>}
-
                     {showNoResult && !hasAccounts && !hasBooks && (
                         <div className="no-result">‘{searchQuery}’에 대한 검색 결과가 없습니다.</div>
                     )}

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.booklog.db.ReadingLogMapper;
@@ -169,4 +170,11 @@ public class ReadingLogController {
 	    int result = readingLogMapper.deleteQuote(quoteIdx);
 	    return result > 0 ? "삭제되었습니다." : "삭제에 실패했습니다.";
 	}
+	
+	// 중복 저장 확인
+	@GetMapping("/log/check")
+	public boolean checkLogExists(@RequestParam String userId, @RequestParam int bookIdx) {
+	    return readingLogMapper.findLogByUserIdAndBookIdx(userId, bookIdx) != null;
+	}
+
 }
