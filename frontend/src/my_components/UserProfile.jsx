@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../my_style/UserProfile.css';
-import defaultPic from '../etc_assets/profile.png';
+import defaultPic from '../etc_assets/profile_1.png';
 import { AiOutlineComment, AiOutlineUserAdd, AiFillEdit } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import axios from 'axios';

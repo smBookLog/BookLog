@@ -4,7 +4,7 @@ import { RiArrowLeftSLine } from "react-icons/ri";
 import { Link, useNavigate } from 'react-router-dom';
 import '../header_style/search.css';
 import bookinformation from "../etc_assets/bookinformation.png";
-import defaultUserImage from "../etc_assets/sum.png";
+import defaultUserImage from "../etc_assets/profile_1.png";
 import axios from 'axios';
 
 const Search = () => {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import logo from '../header_assets/booklog_2.png';
-import defaultProfileImg from '../etc_assets/profile.png';
+import defaultProfileImg from '../etc_assets/profile_1.png';
 import '../header_style/headermain.css';
 import { AiOutlineSearch } from "react-icons/ai";
 

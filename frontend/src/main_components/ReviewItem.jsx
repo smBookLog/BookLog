@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../main_style/ReviewItem.css';
-import defaultUserImage from '../etc_assets/sum.png';
+import defaultUserImage from '../etc_assets/profile_1.png';
 import defaultBookCover from '../etc_assets/bookinformation.png';
 import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
@@ -83,7 +83,7 @@ const ReviewItem = ({ review }) => {
                     <div className="user-avatar" style={{ width: '50px', height: '50px' }}>
                         <img src={profileImgUrl || defaultUserImage} alt={userId} />
                     </div>
-                    <div className="username">{userId}</div>
+                    <div className="username" style={{marginLeft:'0px'}}>{userId}</div>
                 </div>
 
                 <div className="rating-display">
@@ -100,7 +100,7 @@ const ReviewItem = ({ review }) => {
 
             {/* 리뷰 내용 */}
             <div className="review-content" onClick={handleReviewClick} style={{ cursor: "pointer" }}>
-                <p>{content} <span className="more-link">더보기</span></p>
+                <p>{content} <span className="more-link" >...더보기</span></p>
             </div>
 
             {/* 책 정보 카드 */}
@@ -110,7 +110,7 @@ const ReviewItem = ({ review }) => {
                 style={{
                     display: 'flex',
                     alignItems: 'flex-start',
-                    backgroundColor: '#eeeeee',
+                    backgroundColor: '#f5f5f5',
                     padding: '16px',
                     borderRadius: '20px',
                     marginTop: '16px',

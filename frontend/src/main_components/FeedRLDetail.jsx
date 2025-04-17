@@ -1,8 +1,8 @@
 import React from 'react'
 import booking from '../main_style/FeedRLDetail.css'
-import userAvatar from '../etc_assets/sum.png'
-import commentAvatar from '../etc_assets/sum.png'
-import bookCover from '../etc_assets/sum.png'
+import userAvatar from '../etc_assets/profile_1.png'
+import commentAvatar from '../etc_assets/profile_1.png'
+import bookCover from '../etc_assets/profile_1.png'
 import { HiArrowNarrowUp } from "react-icons/hi";
 import Header from '../header_components/Header'
 
