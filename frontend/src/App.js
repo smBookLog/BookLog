@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 
 import Header_main from './header_components/Header_main'; // 로고 - 메인 - 나의 서재 - 검색 - 내정보
@@ -54,6 +54,9 @@ function App() {
       console.log(res)
       setCk(res.data)
     })
+    .catch(err => {
+      console.error("API 요청 실패:", err);
+    });
 
   return (
     <div>
@@ -87,8 +90,7 @@ function App() {
         }></Route>
 
         {/* 필드리딩디테일 */}
-
-        <Route path='/FeedRLDetail/:idx' element={
+        <Route path='/feed/:logIdx' element={
           <div className="app-container">
             <FeedRLDetail />
           </div>
@@ -117,7 +119,19 @@ function App() {
         } />
 
         {/* 마이페이지 */}
+        {/* 로그인한 사용자의 프로필 */}
+        <Route path="/profile" element={<UserProfile />} />
+
+        {/* 특정 사용자의 프로필 */}
+        <Route path="/profile/:userId" element={<UserProfile />} />
+
+        {/* 기존 마이페이지를 새 URL 구조 리다이렉트로 변경 */}
         <Route path='/mypage' element={
+          <MyPageRedirect />
+        } />
+
+        {/* 새로운 URL 구조의 마이페이지 */}
+        <Route path='/mypage/:userId' element={
           <div className="app-container">
             <Header_main />
             <main className="main-content">
@@ -127,6 +141,7 @@ function App() {
             </main>
           </div>
         } />
+
         {/* 팔로우/팔로잉 */}
         <Route path='/followers' element={<FollowersPage />}></Route>
 
@@ -141,6 +156,18 @@ function App() {
       </Routes>
     </div >
   );
+}
+
+// 리다이렉트를 위한 컴포넌트 추가
+function MyPageRedirect() {
+  const user = JSON.parse(localStorage.getItem("user") || '{"userId": ""}');
+  
+  if (user && user.userId) {
+    return <Navigate to={`/mypage/${user.userId}`} replace />;
+  } else {
+    // 로그인되지 않은 경우 로그인 페이지로 리다이렉트
+    return <Navigate to="/login" replace />;
+  }
 }
 
 export default App;

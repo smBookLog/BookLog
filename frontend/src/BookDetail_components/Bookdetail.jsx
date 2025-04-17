@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, Link, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../BookDetail_style/bookdetail.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -39,13 +39,9 @@ const Bookdetail = () => {
     const [bookAuthor, setBookAuthor] = useState('');
     const [bookImage, setBookImage] = useState(defaultImg);
 
-    // 컴포넌트 마운트 시 로그인 정보 확인
     useEffect(() => {
-        // localStorage에서 로그인한 사용자 정보 가져오기
         const userStr = localStorage.getItem('user');
-
         if (!userStr) {
-            // 로그인 정보가 없으면 로그인 페이지로 리다이렉트
             alert('로그인이 필요합니다.');
             navigate('/login');
             return;
@@ -57,7 +53,6 @@ const Bookdetail = () => {
                 throw new Error('사용자 ID 정보가 없습니다.');
             }
             setUserId(user.userId);
-            console.log("로그인 사용자 ID:", user.userId);
         } catch (error) {
             console.error('사용자 정보 파싱 오류:', error);
             alert('사용자 정보를 가져오는데 문제가 발생했습니다. 다시 로그인해주세요.');
@@ -66,7 +61,6 @@ const Bookdetail = () => {
     }, [navigate]);
 
     useEffect(() => {
-        // userId가 설정되고 logIdx가 있을 때만 데이터 로드
         if (userId && logIdx) {
             fetch(`http://localhost:8082/controller/feed/${logIdx}`)
                 .then(res => {
@@ -76,10 +70,8 @@ const Bookdetail = () => {
                     return res.json();
                 })
                 .then(data => {
-                    console.log("서버에서 받은 데이터:", data);
                     if (data && data.length > 0) {
                         const d = data[0];
-                        // 현재 로그인한 사용자의 독서 기록인지 확인
                         if (d.userId && d.userId !== userId) {
                             alert("접근 권한이 없는 독서 기록입니다.");
                             navigate('/');
@@ -109,9 +101,7 @@ const Bookdetail = () => {
 
     useEffect(() => {
         if (!logIdx && location.state) {
-            console.log("검색에서 넘어온 데이터:", location.state);
             const { title, author, imageUrl, bookIdx: bookId } = location.state || {};
-
             setBookTitle(title || '제목 없음');
             setBookAuthor(author || '저자 미상');
             setBookImage(imageUrl || defaultImg);
@@ -119,18 +109,16 @@ const Bookdetail = () => {
         }
     }, [logIdx, location.state]);
 
-    // bookIdx가 없는 경우 바로 /Search로 이동
     useEffect(() => {
         if (!logIdx && !bookIdx && location.state === undefined) {
-            console.log("책 정보 없음, 검색 페이지로 이동");
             navigate('/Search');
         }
     }, [logIdx, bookIdx, location.state, navigate]);
 
     const renderStars = () => (
         Array.from({ length: 5 }, (_, i) => (
-            <span key={i + 1} className="star" onClick={() => setRating(i + 1)}>
-                {i + 1 <= rating ? <AiFillStar className="filled-star" /> : <AiOutlineStar />}
+            <span key={i + 1} className="star-d" onClick={() => setRating(i + 1)}>
+                {i + 1 <= rating ? <AiFillStar className="filled-star-d" /> : <AiOutlineStar />}
             </span>
         ))
     );
@@ -170,14 +158,12 @@ const Bookdetail = () => {
     };
 
     const handleSubmit = async () => {
-        // 로그인 확인
         if (!userId) {
             alert("로그인이 필요합니다.");
             navigate('/login');
             return;
         }
 
-        // 필수 값 확인
         if (!bookIdx) {
             alert("책 정보가 유효하지 않습니다.");
             return;
@@ -185,7 +171,7 @@ const Bookdetail = () => {
 
         const logData = {
             logIdx: logIdx ? parseInt(logIdx) : undefined,
-            userId: userId,  // 로그인한 사용자 ID 사용
+            userId: userId,
             bookIdx: parseInt(bookIdx),
             status: readingStatus || "FINISHED",
             startDate: startDate?.toISOString().split("T")[0],
@@ -195,8 +181,6 @@ const Bookdetail = () => {
             tags,
             quotes,
         };
-
-        console.log("전송할 데이터:", logData);
 
         const url = logIdx
             ? `http://localhost:8082/controller/log/update`
@@ -214,32 +198,26 @@ const Bookdetail = () => {
                 throw new Error('서버 응답 오류: ' + response.status);
             }
 
-            const result = await response.text();
-            console.log("서버 응답:", result);
             alert(logIdx ? "수정 완료!" : "등록 완료!");
-            navigate('/booklist');  // 성공 후 내 서재로 이동
+            navigate('/booklist');
         } catch (error) {
             console.error("저장 중 오류:", error);
             alert(logIdx ? "수정 실패!" : "등록 실패!");
         }
     };
 
-    // 삭제 기능 추가
     const handleDelete = async () => {
-        // 로그인 확인
         if (!userId) {
             alert("로그인이 필요합니다.");
             navigate('/login');
             return;
         }
 
-        // logIdx가 없으면 삭제할 수 없음
         if (!logIdx) {
             alert("아직 저장되지 않은 독서 기록은 삭제할 수 없습니다.");
             return;
         }
 
-        // 사용자에게 삭제 확인
         if (!window.confirm("정말로 이 독서 기록을 삭제하시겠습니까?")) {
             return;
         }
@@ -254,161 +232,163 @@ const Bookdetail = () => {
             }
 
             alert("삭제 완료!");
-            navigate('/booklist');  // 성공 후 내 서재로 이동
+            navigate('/booklist');
         } catch (error) {
             console.error("삭제 중 오류:", error);
             alert("삭제 실패!");
         }
     };
 
-    // userId가 없는 경우 렌더링하지 않음
     if (!userId) return null;
-
-    // bookIdx와 logIdx 둘 다 없고 location.state도 없는 경우에도 null 반환
     if (!bookIdx && !logIdx && !location.state) return null;
 
     return (
         <div>
             <Header_main />
-            <div className="book-detail-container">
-                <div className="content">
-                    <div className="section-title">
+            <div className="book-detail-container-d">
+                <div className="content-d">
+                    <div className="section-title-d">
                         <h2>독서 기록</h2>
-                        <div className="button-group">
-                            <button className="edit-button" onClick={handleSubmit}>
+                        <div className="button-group-d">
+                            <button className="edit-button-d" onClick={handleSubmit}>
                                 {logIdx ? '수정' : '등록'}
                             </button>
                             {logIdx && (
-                                <button className="delete-button" onClick={handleDelete}>
+                                <button className="delete-button-d" onClick={handleDelete}>
                                     삭제
                                 </button>
                             )}
                         </div>
                     </div>
 
-                    <div className="book-info">
-                        <div className="book-cover">
-                            <img src={bookImage} alt="도서 표지" className="cover-image" />
-                        </div>
-                        <div className="book-details">
-                            <h3>{bookTitle || '제목 없음'} | {bookAuthor || '저자 미상'}</h3>
-
-                            <div className="category-row underline">
-                                <span className="category-label">장르</span>
-                                <span>{genre}</span>
+                    <div className="book-info-section-d">
+                        <div className="book-info-d">
+                            <div className="detail-book-cover-d">
+                                <img src={bookImage} alt="도서 표지" className="detail-cover-image-d" />
                             </div>
+                            <div className="detail-book-info-d">
+                                <div className="book-header-d">
+                                    <h3>{bookTitle || '제목 없음'} | {bookAuthor || '저자 미상'}</h3>
+                                    <div className="category-row-d underline-d">
+                                        <span className="category-label-d">장르</span>
+                                        <span>{genre}</span>
+                                    </div>
+                                </div>
 
-                            <div className="category-row underline">
-                                <span className="category-label">독서상태</span>
-                                <select value={readingStatus} onChange={e => setReadingStatus(e.target.value)}>
-                                    <option value="NOT_STARTED">독서예정</option>
-                                    <option value="READING">독서중</option>
-                                    <option value="FINISHED">독서완료</option>
-                                </select>
-                            </div>
+                                <div className="reading-details-d">
+                                    <div className="category-row-d underline-d">
+                                        <span className="category-label-d">독서상태</span>
+                                        <select value={readingStatus} onChange={e => setReadingStatus(e.target.value)}>
+                                            <option value="NOT_STARTED">독서예정</option>
+                                            <option value="READING">독서중</option>
+                                            <option value="FINISHED">독서완료</option>
+                                        </select>
+                                    </div>
 
-                            <div className="category-row underline">
-                                <span className="category-label">나의 평점</span>
-                                <span className="category-value star-rating">
-                                    {renderStars()}
-                                </span>
-                            </div>
-
-                            <div className="category-row underline">
-                                <span className="category-label">독서 기간</span>
-                                <div className="date-display-line">
-                                    <DatePicker
-                                        selected={startDate}
-                                        onChange={(date) => setStartDate(date)}
-                                        dateFormat="yyyy-MM-dd"
-                                        placeholderText="시작 날짜"
-                                        className="date-input"
-                                    />
-                                    <span>부터</span>
-                                    <DatePicker
-                                        selected={endDate}
-                                        onChange={(date) => setEndDate(date)}
-                                        dateFormat="yyyy-MM-dd"
-                                        placeholderText="종료 날짜"
-                                        className="date-input"
-                                        minDate={startDate}
-                                    />
-                                    <span>까지</span>
-                                    {startDate && endDate && (
-                                        <span className="read-summary">
-                                            {differenceInDays(endDate, startDate)}일간 독서
+                                    <div className="category-row-d underline-d">
+                                        <span className="category-label-d">나의 평점</span>
+                                        <span className="category-value-d star-rating-d">
+                                            {renderStars()}
                                         </span>
+                                    </div>
+
+                                    <div className="category-row-d underline-d">
+                                        <span className="category-label-d">독서 기간</span>
+                                        <div className="date-display-line-d">
+                                            <DatePicker
+                                                selected={startDate}
+                                                onChange={(date) => setStartDate(date)}
+                                                dateFormat="yyyy-MM-dd"
+                                                placeholderText="시작 날짜"
+                                                className="date-input-d"
+                                            />
+                                            <span>부터</span>
+                                            <DatePicker
+                                                selected={endDate}
+                                                onChange={(date) => setEndDate(date)}
+                                                dateFormat="yyyy-MM-dd"
+                                                placeholderText="종료 날짜"
+                                                className="date-input-d"
+                                                minDate={startDate}
+                                            />
+                                            <span>까지</span>
+                                            {startDate && endDate && (
+                                                <span className="read-summary-d">
+                                                    {differenceInDays(endDate, startDate)}일간 독서
+                                                </span>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <div className="category-row-d tags-d underline-d">
+                                        <span className="category-label-d">태그</span>
+                                        <div className="tag-container-d">
+                                            {tags.map((tag, index) => (
+                                                <div key={index} className="tag-item-d">
+                                                    <span className="tag-d">{tag}</span>
+                                                    <span className="tag-delete-d" onClick={() => handleDeleteTag(index)}>×</span>
+                                                </div>
+                                            ))}
+                                            <button className="add-tag-d" onClick={toggleTagForm}>
+                                                <IoIosAdd />
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {showTagForm && (
+                                        <div className="tag-form-d">
+                                            <input
+                                                type="text"
+                                                className="tag-input-d"
+                                                placeholder="새 태그 입력..."
+                                                value={newTag}
+                                                onChange={(e) => setNewTag(e.target.value)}
+                                                onKeyDown={(e) => e.key === 'Enter' && handleAddTag()}
+                                            />
+                                            <button className="add-quote-button-d" onClick={handleAddTag}>
+                                                추가하기 <RiStickyNoteAddLine />
+                                            </button>
+                                        </div>
                                     )}
                                 </div>
                             </div>
-
-                            <div className="category-row tags underline">
-                                <span className="category-label">태그</span>
-                                <div className="tag-container">
-                                    {tags.map((tag, index) => (
-                                        <div key={index} className="tag-item">
-                                            <span className="tag">{tag}</span>
-                                            <span className="tag-delete" onClick={() => handleDeleteTag(index)}>×</span>
-                                        </div>
-                                    ))}
-                                    <button className="add-tag" onClick={toggleTagForm}>
-                                        <IoIosAdd />
-                                    </button>
-                                </div>
-                            </div>
-
-                            {showTagForm && (
-                                <div className="tag-form">
-                                    <input
-                                        type="text"
-                                        className="tag-input"
-                                        placeholder="새 태그 입력..."
-                                        value={newTag}
-                                        onChange={(e) => setNewTag(e.target.value)}
-                                        onKeyDown={(e) => e.key === 'Enter' && handleAddTag()}
-                                    />
-                                    <button className="add-quote-button" onClick={handleAddTag}>
-                                        추가하기 <RiStickyNoteAddLine />
-                                    </button>
-                                </div>
-                            )}
                         </div>
                     </div>
 
-                    <div className="quotes-section">
+                    <div className="quotes-section-d">
                         <h3>감명 깊었던 부분 기억하기</h3>
-                        <div className="quotes-content">
+                        <div className="quotes-content-d">
                             {quotes.map((quote, index) => (
-                                <div key={index} className="quote-bubble">
+                                <div key={index} className="quote-bubble-d">
                                     <span>{quote}</span>
-                                    <MdDeleteOutline className="delete-icon" onClick={() => handleDeleteQuote(index)} />
+                                    <MdDeleteOutline className="delete-icon-d" onClick={() => handleDeleteQuote(index)} />
                                 </div>
                             ))}
                         </div>
 
                         {showQuoteForm && (
-                            <div className="quote-form">
+                            <div className="quote-form-d">
                                 <textarea
-                                    className="quote-input"
+                                    className="quote-input-d"
                                     placeholder="감명 깊었던 문장을 입력하세요..."
                                     value={newQuote}
                                     onChange={(e) => setNewQuote(e.target.value)}
                                 />
-                                <button className="quote-form-button save" onClick={handleAddQuote}>저장</button>
-                                <button className="quote-form-button cancel" onClick={toggleQuoteForm}>취소</button>
+                                <button className="quote-form-button-d save-d" onClick={handleAddQuote}>저장</button>
+                                <button className="quote-form-button-d cancel-d" onClick={toggleQuoteForm}>취소</button>
                             </div>
                         )}
 
-                        <button className="add-quote-button" onClick={toggleQuoteForm}>
+                        <button className="add-quote-button-d" onClick={toggleQuoteForm}>
                             <span>{showQuoteForm ? '취소' : '추가하기'}</span>
-                            <RiStickyNoteAddLine className="add-icon" />
+                            <RiStickyNoteAddLine className="add-icon-d" />
                         </button>
                     </div>
 
-                    <div className="thoughts-section">
+                    <div className="thoughts-section-d">
                         <h3>감상평을 남겨보세요!</h3>
                         <textarea
-                            className="thoughts-input"
+                            className="thoughts-input-d"
                             placeholder="이 책에 대한 나의 생각을 적어보세요..."
                             value={thoughts}
                             onChange={(e) => setThoughts(e.target.value)}
@@ -421,3 +401,4 @@ const Bookdetail = () => {
 };
 
 export default Bookdetail;
+

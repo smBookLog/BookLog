@@ -7,6 +7,7 @@ function BookRecommendation({ recommendation, onRequestNewRecommendation }) {
     : [];
 
   return (
+    <div className="book-recommendation-container">
     <div className="book-recommendation">
       <div className="recommendation-header">
         <h3>AI 맞춤 책 추천 💕</h3>
@@ -30,6 +31,7 @@ function BookRecommendation({ recommendation, onRequestNewRecommendation }) {
         </button>
       </div>
     </div>
+  </div>
   );
 }
 

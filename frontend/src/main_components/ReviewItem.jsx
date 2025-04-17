@@ -30,18 +30,29 @@ const ReviewItem = ({ review }) => {
 
     // 책 리뷰 이동
     const handleReviewClick = () => {
-        navigate(`/FeedRLDetail/${isbn}`);
+        navigate(`/feed/${review.logIdx}`, {
+            state: {
+                bookTitle: bookTitle || title,
+                bookAuthor: bookAuthor || author,
+                bookImgUrl: bookImgUrl
+            }
+        });
+
     };
     // 책 정보 이동
     const handleBookClick = () => {
         navigate(`/information/${isbn}`, {
             state: {
                 bookIdx,
-                title,
-                author,
-                imageUrl: bookImgUrl
+                title: bookTitle || title,
+                author: bookAuthor || author,
+                imageUrl: bookImgUrl,
+                genre: review.genre,
+                description: review.description
             }
         });
+
+
     };
     useEffect(() => {
         // 초기 좋아요 수 로딩
@@ -49,6 +60,8 @@ const ReviewItem = ({ review }) => {
             .then(res => setLikes(res.data))
             .catch(err => console.error(err));
     }, [review.logIdx]);
+
+
     const handleLike = async () => {
         const user = JSON.parse(localStorage.getItem("user"));
         if (!user) {
@@ -128,7 +141,6 @@ const ReviewItem = ({ review }) => {
                             width: '90px',
                             height: 'auto',
                             objectFit: 'cover',
-                            borderRadius: '8px',
                             flexShrink: 0
                         }}
                     />
@@ -147,11 +159,12 @@ const ReviewItem = ({ review }) => {
                         {title}
                     </div>
                     <div style={{ fontSize: '0.95rem', color: '#555' }}>
-                        {author} | {new Date(createdAt).toLocaleDateString('ko-KR')}
+                        {author}
                     </div>
                     <div style={{ fontSize: '0.9rem', color: '#999', marginTop: '8px' }}>
-                        책 소개
+                        {review.description || "책 소개가 없습니다."}
                     </div>
+
                 </div>
             </div>
 

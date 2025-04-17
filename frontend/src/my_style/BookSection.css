@@ -256,7 +256,7 @@ justify-content: center;
 color: white;
 }
 
-.book-info {
+.books-info {
 /* border: 1px solid #e5e7eb; */
 border-top: none;
 padding: 0.5rem;
@@ -268,13 +268,14 @@ align-items: center
 
 }
 
-.book-title {
+.books-title {
 font-weight: 500;
 font-size: 0.875rem;
 padding-top: 0px;
+
 }
 
-.book-author {
+.books-author {
 font-size: 0.75rem;
 color: #4b5563;
 margin: 0.25rem 0 0;
@@ -305,7 +306,7 @@ margin: 0.25rem 0 0;
   color: white;
 }
 
-.book-info {
+.books-info {
   /* border: 1px solid #e5e7eb; */
   border-top: none;
   padding: 0.5rem;
@@ -313,13 +314,15 @@ margin: 0.25rem 0 0;
 
 }
 
-.book-title {
+.books-title {
   font-weight: 500;
   font-size: 0.875rem;
   padding-top: 0px;
+  margin-bottom: 10px;
+  display: flex;
 }
 
-.book-author {
+.books-author {
   font-size: 0.75rem;
   color: #4b5563;
   margin: 0.25rem 0 0;

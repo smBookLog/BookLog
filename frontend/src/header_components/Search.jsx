@@ -18,89 +18,7 @@ const Search = () => {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const delaySearch = debounce(() => {
-            if (searchQuery.trim() === "") {
-                axios.get(`http://localhost:8082/controller/search/all/users`)
-                    .then(res => setAccountResults((res.data || []).slice(0, 5)))
-                    .catch(() => setAccountResults([]));
-
-                axios.get(`http://localhost:8082/controller/search/all/books`)
-                    .then(res => {
-                        const books = (res.data || []).slice(0, 5);
-                        setBookResults(books);
-                        setImgErrors(Array(books.length).fill(false));
-                    })
-                    .catch(() => {
-                        setBookResults([]);
-                        setImgErrors([]);
-                    });
-            } else {
-                axios.get(`http://localhost:8082/controller/search/user/keyword?keyword=${searchQuery}`)
-                    .then(res => {
-                        let data = res.data;
-                        if (typeof data === 'string') {
-                            try {
-                                data = JSON.parse(data);
-                            } catch {
-                                setAccountResults([]);
-                                return;
-                            }
-                        }
-                        setAccountResults(Array.isArray(data) ? data : []);
-                    })
-                    .catch(() => setAccountResults([]));
-
-                if (/^\d{13}$/.test(searchQuery)) {
-                    axios.get(`http://localhost:8082/controller/search/book?isbn=${searchQuery}`)
-                        .then(res => {
-                            let data = res.data;
-                            if (typeof data === 'string') {
-                                try {
-                                    data = JSON.parse(data);
-                                } catch {
-                                    setBookResults([]);
-                                    setImgErrors([]);
-                                    return;
-                                }
-                            }
-                            const valid = data && data.isbn ? [data] : [];
-                            setBookResults(valid);
-                            setImgErrors(Array(valid.length).fill(false));
-                        })
-                        .catch(() => {
-                            setBookResults([]);
-                            setImgErrors([]);
-                        });
-                } else {
-                    axios.get(`http://localhost:8082/controller/search/book/keyword?keyword=${searchQuery}`)
-                        .then(res => {
-                            let data = res.data;
-                            if (typeof data === 'string') {
-                                try {
-                                    data = JSON.parse(data);
-                                } catch {
-                                    setBookResults([]);
-                                    setImgErrors([]);
-                                    return;
-                                }
-                            }
-                            const valid = Array.isArray(data) ? data : [];
-                            setBookResults(valid);
-                            setImgErrors(Array(valid.length).fill(false));
-                        })
-                        .catch(() => {
-                            setBookResults([]);
-                            setImgErrors([]);
-                        });
-                }
-            }
-        }, 300);
-
-        delaySearch();
-        return () => delaySearch.cancel();
-    }, [searchQuery]);
-
+    // 이미지 URL 보정
     const getValidImageUrl = (url) => {
         if (!url || url === "null" || url === "" || url.includes("no_image")) {
             return bookinformation;
@@ -113,6 +31,76 @@ const Search = () => {
         updatedErrors[index] = true;
         setImgErrors(updatedErrors);
     };
+
+    const fetchUsers = async () => {
+        try {
+            const res = await axios.get(`http://localhost:8082/controller/search/user/keyword?keyword=${searchQuery}`);
+            let data = res.data;
+            if (typeof data === 'string') data = JSON.parse(data);
+            setAccountResults(Array.isArray(data) ? data : []);
+        } catch {
+            setAccountResults([]);
+        }
+    };
+
+    const fetchBooksByIsbn = async () => {
+        try {
+            const res = await axios.get(`http://localhost:8082/controller/search/book?isbn=${searchQuery}`);
+            let data = res.data;
+            if (typeof data === 'string') data = JSON.parse(data);
+            const valid = data && data.isbn ? [data] : [];
+            setBookResults(valid);
+            setImgErrors(Array(valid.length).fill(false));
+        } catch {
+            setBookResults([]);
+            setImgErrors([]);
+        }
+    };
+
+    const fetchBooksByKeyword = async () => {
+        try {
+            const res = await axios.get(`http://localhost:8082/controller/search/book/keyword?keyword=${searchQuery}`);
+            let data = res.data;
+            if (typeof data === 'string') data = JSON.parse(data);
+            const valid = Array.isArray(data) ? data : [];
+            setBookResults(valid);
+            setImgErrors(Array(valid.length).fill(false));
+        } catch {
+            setBookResults([]);
+            setImgErrors([]);
+        }
+    };
+
+    const fetchDefaultResults = () => {
+        axios.get(`http://localhost:8082/controller/search/all/users`)
+            .then(res => setAccountResults((res.data || []).slice(0, 5)))
+            .catch(() => setAccountResults([]));
+
+        axios.get(`http://localhost:8082/controller/search/all/books`)
+            .then(res => {
+                const books = (res.data || []).slice(0, 5);
+                setBookResults(books);
+                setImgErrors(Array(books.length).fill(false));
+            })
+            .catch(() => {
+                setBookResults([]);
+                setImgErrors([]);
+            });
+    };
+
+    useEffect(() => {
+        const delaySearch = debounce(() => {
+            if (searchQuery.trim() === "") {
+                fetchDefaultResults();
+            } else {
+                fetchUsers();
+                /^\d{13}$/.test(searchQuery) ? fetchBooksByIsbn() : fetchBooksByKeyword();
+            }
+        }, 300);
+
+        delaySearch();
+        return () => delaySearch.cancel();
+    }, [searchQuery]);
 
     const handleAccountClick = (userId) => {
         navigate(`/user/${userId}`);
@@ -141,8 +129,7 @@ const Search = () => {
             const isDefault = imgErrors[idx] || !book.bookImg || imageUrl === bookinformation;
 
             const handleClick = () => {
-                           
-                navigate(`/information/${book.isbn || book.bookIdx}`, {
+                navigate(`/information/${book.isbn}`, {
                     state: {
                         bookIdx: book.bookIdx,
                         title: book.title,
@@ -151,7 +138,6 @@ const Search = () => {
                     }
                 });
             };
-            
 
             return (
                 <div
@@ -203,31 +189,11 @@ const Search = () => {
                             />
                         )}
                     </div>
-                    <div
-                        className="book-text"
-                        style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            textAlign: "left"
-                        }}
-                    >
-                        <div
-                            className="book-title"
-                            style={{
-                                fontWeight: "bold",
-                                fontSize: "16px",
-                                marginBottom: "4px"
-                            }}
-                        >
+                    <div className="book-text" style={{ display: "flex", flexDirection: "column", textAlign: "left" }}>
+                        <div className="book-title" style={{ fontWeight: "bold", fontSize: "16px", marginBottom: "4px" }}>
                             {book.title}
                         </div>
-                        <div
-                            className="book-author"
-                            style={{
-                                fontSize: "14px",
-                                color: "#666"
-                            }}
-                        >
+                        <div className="book-author" style={{ fontSize: "14px", color: "#666" }}>
                             {book.author}
                         </div>
                     </div>

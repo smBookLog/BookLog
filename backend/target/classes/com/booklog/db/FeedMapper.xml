@@ -2,8 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.booklog.db.FeedMapper">
 
-<select id="findLogs" parameterType="map"
-	resultType="com.booklog.model.ReadingLogDTO">
+	<!-- 독서 기록 조회 -->
+	<select id="findLogs" parameterType="map"
+		resultType="com.booklog.model.ReadingLogDTO">
 		SELECT
 		RL.LOG_IDX AS logIdx,
 		RL.RATING,
@@ -13,12 +14,14 @@
 		U.USER_ID AS userId,
 		U.PROFILE_IMG AS profileImgUrl,
 
-		B.BOOK_IDX AS bookIdx,
+		B.BOOK_IDX AS
+		bookIdx,
 		B.TITLE,
 		B.AUTHOR,
 		B.GENRE,
 		B.DESCRIPTION,
-		B.BOOK_IMG AS bookImgUrl,
+		B.BOOK_IMG AS
+		bookImgUrl,
 
 		IFNULL(C.COMMENT_COUNT, 0) AS commentCount,
 		IFNULL(L.LIKE_COUNT, 0) AS likeCount
@@ -30,7 +33,8 @@
 		LEFT JOIN (
 		SELECT LOG_IDX, COUNT(*) AS COMMENT_COUNT
 		FROM COMMENT
-		WHERE IS_DELETED = 0
+		WHERE
+		IS_DELETED = 0
 		GROUP BY LOG_IDX
 		) C ON RL.LOG_IDX = C.LOG_IDX
 
@@ -41,6 +45,8 @@
 		) L ON RL.LOG_IDX = L.LOG_IDX
 
 		WHERE RL.USER_ID != #{userId}
+		AND RL.CONTENT IS NOT NULL
+		AND RL.CONTENT != ''
 		ORDER BY RL.CREATED_AT DESC
 		LIMIT 5 OFFSET #{logIdx}
 	</select>
@@ -112,7 +118,7 @@
 		#{userId}
 		ORDER BY Q.QUOTE_IDX DESC
 	</select>
-	
+
 	<!-- 댓글 목록을 logIdx 리스트로 가져오는 쿼리 -->
 	<select id="findCommentsByLogIdx" parameterType="int"
 		resultType="com.booklog.model.CommentDTO">
@@ -128,5 +134,5 @@
 		WHERE LOG_IDX = #{logIdx}
 		ORDER BY CREATED_AT ASC
 	</select>
-	
+
 </mapper>

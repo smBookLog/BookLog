@@ -8,8 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const Information = () => {
   const { isbn } = useParams();
-  const [book, setBook] = useState(null);
-  const location = useLocation();
+  // const [book, setBook] = useState(null);
   const [statusOpen, setStatusOpen] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState("독서추가하기");
   const dropdownRef = useRef(null);
@@ -27,12 +26,23 @@ const Information = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
-    if (location.state) {
-      const { bookIdx, title, author, imageUrl } = location.state;
-      setBook({ bookIdx, title, author, genre: null, bookImg: imageUrl, description: null });
-    }
-  }, [location.state]);
+  const location = useLocation();
+  const initialBook = location.state || {};
+
+  const [book, setBook] = useState({
+    bookIdx: initialBook.bookIdx || null,
+    title: initialBook.title || "",       // 여기에 아무것도 안 넘어오면 여기서도 비어버림
+    author: initialBook.author || "",
+    bookImg: initialBook.imageUrl,
+    genre: initialBook.genre,
+    description: initialBook.description
+  });
+  // useEffect(() => {
+  //   if (location.state) {
+  //     const { bookIdx, title, author, imageUrl } = location.state;
+  //     setBook({ bookIdx, title, author, genre: null, bookImg: imageUrl, description: null });
+  //   }
+  // }, [location.state]);
 
   useEffect(() => {
     axios.get(`http://localhost:8082/controller/search/book?isbn=${isbn}`)
@@ -151,21 +161,23 @@ const Information = () => {
       <Header />
       <div className="information-container" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         <br /><br />
-        <div className="book-info" style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', height: '500px', gap: isMobile ? '5px' : '12px' }}>
+        <div className="book-info" style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', height: '500px', gap: isMobile ? '5px' : '12px'}}>
           <img
             className="book-cover"
             src={getImageUrl(book.bookImg)}
-            style={{ width: isMobile ? '250px' : '280px', height: isMobile ? '320px' : '400px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #ddd', margin: '0px 20px 0px 25px' }}
+            style={{objectFit: 'cover', borderRadius: '0px', border: '1px solid #ddd', margin: '0px 20px 0px 25px' }}
             alt={book.title}
           />
           <br />
-          <div className="book-meta" style={{ display: 'flex', flexDirection: 'column', alignItems: isMobile ? 'center' : 'flex-start', gap: '1px', fontSize: isMobile ? '14px' : '16px' }}>
-            <p><strong>제목: </strong> {book.title}</p>
-            <p><strong>저자: </strong> {book.author}</p>
-            <p><strong>장르: </strong> {book.genre || "정보 없음"}</p>
+          <div>
+          <div className="book-meta" style={{ display: 'flex', flexDirection: 'column', alignItems: isMobile ? 'flex-start' : 'flex-start', gap: '1px', fontSize: isMobile ? '14px' : '16px' , paddingLeft:'50PX', paddingRight:'50PX'}}>
+            <div style={{alignItems:"flex-start", marginBottom:'15px'}}><span><strong>제목 </strong></span> <span style={{marginLeft:'20px'}}>{book.title}</span></div>
+            <div style={{alignItems:"flex-start", marginBottom:'15px'}}><span><strong>저자 </strong></span> <span>{book.author}</span></div>
+            <div style={{alignItems:"flex-start"}}><span><strong>장르 </strong></span> <span>{book.genre || "정보 없음"}</span></div>
             <br />
+            </div>
             <div className="dropdown-wrapper" ref={dropdownRef}>
-              <button className="add-button" onClick={toggleDropdown} disabled={added}>
+              <button className="add-button" style={{display: isMobile ? 'center' : 'flex-start'}} onClick={toggleDropdown} disabled={added}>
                 {added ? '추가 완료' : selectedStatus}
               </button>
               {statusOpen && !added && (

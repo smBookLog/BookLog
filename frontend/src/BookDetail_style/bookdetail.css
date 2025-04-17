@@ -11,7 +11,7 @@ body {
     color: #333;
 }
 
-.book-detail-container {
+.book-detail-container-d {
     max-width: 768px;
     margin: 0 auto;
     background-color: #fff;
@@ -19,7 +19,7 @@ body {
 }
 
 /* 헤더 스타일 */
-.header {
+.header-d {
     display: flex;
     align-items: center;
     padding: 15px;
@@ -30,7 +30,7 @@ body {
     z-index: 100;
 }
 
-.back-button {
+.back-button-d {
     background: none;
     border: none;
     font-size: 20px;
@@ -41,7 +41,7 @@ body {
     padding: 5px;
 }
 
-.title {
+.title-d {
     flex-grow: 1;
     text-align: center;
     color: #4CAF50;
@@ -49,43 +49,41 @@ body {
     font-weight: bold;
 }
 
-.underline {
+.underline-d {
     border-bottom: 1px solid #ddd;
     padding-bottom: 6px;
     margin-bottom: 10px;
-    width: fit-content;  /* 라벨 내용만큼만 너비 설정 */
-    width: 100%;               /* 또는 원하는 최대 너비 지정 */
-    max-width: 550px;          /* 적당한 최대 길이 지정 (원하는 만큼 조정 가능) */
+    width: 100%;
+    max-width: 550px;
 }
 
 /* 컨텐츠 스타일 */
-.content {
+.content-d {
     padding: 15px;
 }
 
-.section-title {
+.section-title-d {
     display: grid;
-    grid-template-columns: 1fr auto 1fr; /* 왼쪽-제목-오른쪽 버튼 */
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     margin-bottom: 20px;
     position: relative;
-  }
-  
-  .section-title h2 {
-    grid-column: 2; /* 가운데 칸에 위치 */
+}
+
+.section-title-d h2 {
+    grid-column: 2;
     font-size: 28px;
     font-weight: 700;
     text-align: center;
-  }
+}
 
-/* 버튼 그룹 스타일링 */
-.button-group {
+/* 버튼 그룹 */
+.button-group-d {
     display: flex;
     gap: 10px;
-  }
-  
-  /* 삭제 버튼 스타일링 */
-  .delete-button {
+}
+
+.delete-button-d {
     background-color: #e74c3c;
     color: white;
     border: none;
@@ -94,14 +92,13 @@ body {
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s;
-  }
-  
-  .delete-button:hover {
+}
+
+.delete-button-d:hover {
     background-color: #c0392b;
-  }
-  
-/* 기존 수정 버튼 스타일 업데이트 (필요한 경우) */
-.edit-button {
+}
+
+.edit-button-d {
     background-color: #3498db;
     color: white;
     border: none;
@@ -110,73 +107,82 @@ body {
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s;
-  }
-  
-  .edit-button:hover {
+}
+
+.edit-button-d:hover {
     background-color: #2980b9;
-  }
+}
 
-.book-info {
+/* 책 정보 */
+.book-info-section-d {
+    background-color: #F5F5F5;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.book-info-d {
     display: flex;
-    margin-bottom: 25px;
     gap: 20px;
+    align-items: flex-start;
 }
 
-.book-cover {
-    width: 150px;       /* 원하는 가로 */
-    height: 230px;      /* 원하는 세로 */
-    overflow: hidden;   /* 이미지 넘칠 경우 자르기 (선택사항) */
+.detail-book-cover-d {
+    width: 150px;
+    height: 230px;
+    overflow: hidden;
+    flex-shrink: 0;
 }
 
-.cover-image {
-    width: 100%;
-    height: 100%;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    object-fit: cover;  /* 이미지 비율 무시하고 영역에 꽉 채움 */
+.detail-cover-image-d {
+    width: 160px;
+    height: auto;
 }
 
-.book-details {
+.detail-book-info-d {
+    flex: 1;
+}
+
+.book-details-d {
     flex-grow: 1;
 }
 
-.book-title-author {
+.book-title-author-d {
     margin-bottom: 15px;
 }
 
-.book-title-author h3 {
+.book-title-author-d h3 {
     font-size: 16px;
     font-weight: 500;
 }
 
-.book-category {
+.book-category-d {
     font-size: 14px;
 }
-.book-category .category-row {
+
+.book-category-d .category-row-d {
     display: flex;
     align-items: center;
-    column-gap: 40px; /* 라벨과 값 사이 간격 넓히기 */
-  }
+    column-gap: 40px;
+}
 
-.category-row {
+.category-row-d {
     display: flex;
     margin-bottom: 8px;
     align-items: center;
 }
 
-.category-label {
+.category-label-d {
     min-width: 60px;
     color: #757575;
 }
 
-.category-value {
+.category-value-d {
     flex-grow: 1;
     display: flex;
-
-
 }
 
-.select-input {
+.select-input-d {
     width: 100%;
     max-width: 200px;
     padding: 5px 8px;
@@ -195,43 +201,43 @@ body {
     font-family: 'Noto Sans KR', sans-serif;
 }
 
-.select-input:focus {
+.select-input-d:focus {
     border-color: #1976D2;
 }
 
-.star-rating {
+.star-rating-d {
     display: flex;
     align-items: center;
 }
 
-.star {
+.star-d {
     color: #BDBDBD;
     cursor: pointer;
     font-size: 18px;
 }
 
-.filled-star {
+.filled-star-d {
     color: #FFC107;
 }
 
-.tags {
+.tags-d {
     align-items: flex-start;
 }
 
-.tag-container {
+.tag-container-d {
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
 }
 
-.tag {
-    background-color: #F5F5F5;
+.tag-d {
+    background-color: #f3e13e;
     border-radius: 15px;
     padding: 3px 10px;
     font-size: 12px;
 }
 
-.add-tag {
+.add-tag-d {
     background-color: #EEEEEE;
     border: none;
     border-radius: 50%;
@@ -243,8 +249,8 @@ body {
     cursor: pointer;
 }
 
-/* 커스텀 날짜 입력 필드 */
-.custom-date-input {
+/* 날짜 입력 */
+.custom-date-input-d {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -257,17 +263,17 @@ body {
     font-size: 14px;
 }
 
-.custom-date-input:hover {
+.custom-date-input-d:hover {
     background-color: #f0f0f0;
     border-color: #aaa;
 }
 
-.calendar-icon {
+.calendar-icon-d {
     font-size: 16px;
     color: #555;
 }
 
-.today-button {
+.today-button-d {
     margin-left: 8px;
     padding: 5px 10px;
     font-size: 13px;
@@ -279,15 +285,15 @@ body {
     white-space: nowrap;
 }
 
-.today-button:hover {
+.today-button-d:hover {
     background-color: #d0f0d3;
 }
 
-.react-datepicker-wrapper {
+.react-datepicker-wrapper-d {
     width: 100%;
 }
 
-.react-datepicker__input-container input {
+.react-datepicker__input-container-d input {
     width: 120px;
     padding: 6px 10px;
     border: 1px solid #ccc;
@@ -297,46 +303,46 @@ body {
     cursor: pointer;
 }
 
-.date-display-line {
+.date-display-line-d {
     display: flex;
     align-items: center;
     gap: 10px;
     flex-wrap: nowrap;
     font-size: 15px;
-    white-space: nowrap; /* 한 줄 유지 */
+    white-space: nowrap;
 }
 
-.date-separator {
+.date-separator-d {
     font-size: 16px;
     color: #444;
 }
 
-.read-summary {
+.read-summary-d {
     white-space: nowrap;
     font-weight: 500;
     color: #333;
 }
 
-/* 인용구 섹션 */
-.quotes-section {
+/* 인용구 */
+.quotes-section-d {
     background-color: #F5F5F5;
     border-radius: 10px;
     padding: 15px;
     margin-bottom: 20px;
 }
 
-.quotes-header {
+.quotes-header-d {
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
 }
 
-.quotes-header h3 {
+.quotes-header-d h3 {
     font-size: 15px;
     font-weight: 500;
 }
 
-.more-button {
+.more-button-d {
     background: none;
     border: none;
     color: #757575;
@@ -344,43 +350,12 @@ body {
     cursor: pointer;
 }
 
-.quotes-content {
+.quotes-content-d {
     font-size: 14px;
-}
-
-.quote {
-    margin-bottom: 10px;
-    line-height: 1.4;
-}
-
-/* 기존 CSS에 추가할 부분 */
-
-/* 인용구 섹션 스타일 업데이트 */
-.quotes-section {
-    background-color: #F5F5F5;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 20px;
-}
-
-.quotes-header {
-    display: flex;
-    justify-content: space-between;
     margin-bottom: 15px;
 }
 
-.quotes-header h3 {
-    font-size: 15px;
-    font-weight: 500;
-}
-
-.quotes-content {
-    font-size: 14px;
-    margin-bottom: 15px;  /* 아래 여백 추가 */
-}
-
-/* 인용구 말풍선 스타일 */
-.quote-bubble {
+.quote-bubble-d {
     background-color: white;
     border-radius: 8px;
     padding: 12px;
@@ -391,102 +366,29 @@ body {
     line-height: 1.4;
 }
 
-.quote-bubble:last-child {
+.quote-bubble-d:last-child {
     margin-bottom: 0;
 }
 
-.delete-icon {
+.delete-icon-d {
     color: #999;
     cursor: pointer;
     font-size: 18px;
 }
 
-.delete-icon:hover {
+.delete-icon-d:hover {
     color: #f44336;
 }
 
-/* 추가하기 버튼 스타일 */
-.add-quote-button {
-    display: flex;
-    align-items: center;
-    background: none;
-    border: none;
-    color: #555;
-    font-size: 14px;
-    padding: 8px 0;
-    cursor: pointer;
-    margin-top: 5px;
-}
-
-.add-quote-button:hover {
-    color: #4CAF50;
-}
-
-.add-icon {
-    margin-right: 6px;
-    font-size: 16px;
-}
-/* 기존 CSS에 추가할 부분 */
-
-/* 인용구 섹션 스타일 업데이트 */
-.quotes-section {
-    background-color: #F5F5F5;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 20px;
-}
-
-.quotes-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-}
-
-.quotes-header h3 {
-    font-size: 15px;
-    font-weight: 500;
-}
-
-.quotes-content {
-    font-size: 14px;
-    margin-bottom: 15px;  /* 아래 여백 추가 */
-}
-
-/* 인용구 말풍선 스타일 */
-.quote-bubble {
-    background-color: white;
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    line-height: 1.4;
-}
-
-.quote-bubble:last-child {
-    margin-bottom: 0;
-}
-
-.delete-icon {
-    color: #999;
-    cursor: pointer;
-    font-size: 18px;
-}
-
-.delete-icon:hover {
-    color: #f44336;
-}
-
-/* 인용구 입력 폼 스타일 */
-.quote-form {
+.quote-form-d {
     background-color: white;
     border-radius: 8px;
     padding: 12px;
     margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.quote-input {
+.quote-input-d {
     width: 100%;
     height: 80px;
     border: 1px solid #E0E0E0;
@@ -495,42 +397,9 @@ body {
     resize: none;
     font-family: inherit;
     font-size: 14px;
-    margin-bottom: 10px;
 }
 
-.quote-form-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
-.quote-form-button {
-    padding: 6px 12px;
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    border: none;
-}
-
-.quote-form-button.save {
-    background-color: #4CAF50;
-    color: white;
-}
-
-.quote-form-button.save:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-}
-
-.quote-form-button.cancel {
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
-    color: #555;
-}
-
-/* 추가하기 버튼 스타일 */
-.add-quote-button {
+.add-quote-button-d {
     display: flex;
     align-items: center;
     background: none;
@@ -542,227 +411,31 @@ body {
     margin-top: 5px;
 }
 
-.add-quote-button:hover {
+.add-quote-button-d:hover {
     color: #4CAF50;
 }
 
-.add-icon {
+.add-icon-d {
     margin-right: 6px;
     font-size: 16px;
 }
 
-/* 감상평 섹션 - 높이 수정 */
-.thoughts-input {
-    width: 100%;
-    height: 200px; /* 기존 100px에서 200px로 높이 증가 */
-    border: 1px solid #E0E0E0;
-    border-radius: 5px;
-    padding: 10px;
-    resize: none;
-    font-family: inherit;
-    font-size: 14px;
-}
-
-/* 태그 관련 스타일 */
-.tag-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-}
-
-.tag-item {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-}
-
-.tag {
-    background-color: #f3e13e;
-    border-radius: 15px;
-    padding: 3px 10px;
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-}
-
-.tag-delete {
-    margin-left: 3px;
-    font-size: 16px;
-    cursor: pointer;
-    color: #999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background-color: #e0e0e0;
-    line-height: 1;
-}
-
-.tag-delete:hover {
-    background-color: #f44336;
-    color: white;
-}
-
-.add-tag {
-    background-color: #EEEEEE;
-    border: none;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-
-.add-tag:hover {
-    background-color: #BDBDBD;
-}
-
-/* 태그 입력 폼 */
-.tag-form {
-    margin-top: 10px;
-    margin-bottom: 15px;
-    background-color: white;
-    border-radius: 8px;
-    padding: 12px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.tag-input {
-    width: 100%;
-    border: 1px solid #E0E0E0;
-    border-radius: 5px;
-    padding: 8px 10px;
-    font-family: inherit;
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-
-.tag-form-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
-.tag-form-button {
-    padding: 6px 12px;
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    border: none;
-}
-
-.tag-form-button.save {
-    background-color: #4CAF50;
-    color: white;
-}
-
-.tag-form-button.save:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-}
-
-.tag-form-button.cancel {
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
-    color: #555;
-}
-
-/* 인용구 입력 폼 스타일 */
-.quote-form {
-    background-color: white;
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.quote-input {
-    width: 100%;
-    height: 80px;
-    border: 1px solid #E0E0E0;
-    border-radius: 5px;
-    padding: 10px;
-    resize: none;
-    font-family: inherit;
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-
-.quote-form-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
-.quote-form-button {
-    padding: 6px 12px;
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    border: none;
-}
-
-.quote-form-button.save {
-    background-color: #4CAF50;
-    color: white;
-}
-
-.quote-form-button.save:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-}
-
-.quote-form-button.cancel {
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
-    color: #555;
-}
-
-/* 추가하기 버튼 스타일 */
-.add-quote-button {
-    display: flex;
-    align-items: center;
-    background: none;
-    border: none;
-    color: #555;
-    font-size: 14px;
-    padding: 8px 0;
-    cursor: pointer;
-    margin-top: 5px;
-}
-
-.add-quote-button:hover {
-    color: #4CAF50;
-}
-
-.add-icon {
-    margin-right: 6px;
-    font-size: 16px;
-}
-
-/* 감상평 섹션 - 높이 수정 */
-.thoughts-section {
+/* 감상평 */
+.thoughts-section-d {
     background-color: #F5F5F5;
     border-radius: 10px;
     padding: 15px;
 }
 
-.thoughts-section h3 {
+.thoughts-section-d h3 {
     font-size: 15px;
     font-weight: 500;
     margin-bottom: 10px;
 }
 
-.thoughts-input {
+.thoughts-input-d {
     width: 100%;
-    height: 200px; /* 기존 100px에서 200px로 높이 증가 */
+    height: 200px;
     border: 1px solid #E0E0E0;
     border-radius: 5px;
     padding: 10px;
@@ -771,65 +444,66 @@ body {
     font-size: 14px;
 }
 
-/* 반응형 스타일 */
+/* 반응형 */
 @media (max-width: 480px) {
-    .book-info {
+    .book-info-d {
         flex-direction: column;
         align-items: center;
     }
 
-    .book-cover {
+    .book-cover-d {
         width: 130px;
         margin-bottom: 15px;
     }
 
-    .book-title-author {
+    .book-title-author-d {
         text-align: center;
     }
 
-    .category-row {
+    .category-row-d {
         flex-wrap: wrap;
     }
 
-    .category-label {
+    .category-label-d {
         min-width: 100%;
         margin-bottom: 5px;
     }
 
-    .select-input {
+    .select-input-d {
         max-width: 100%;
     }
 
-    .tag-container {
+    .tag-container-d {
         justify-content: center;
     }
 
-    .date-display-line {
-        flex-direction: row; /* 세로가 아니라 가로 정렬 */
+    .date-display-line-d {
+        flex-direction: row;
         flex-wrap: wrap;
-        white-space: normal; /* 자동 줄바꿈 허용 */
+        white-space: normal;
         align-items: center;
         gap: 6px;
     }
 
-    .custom-date-input {
+    .custom-date-input-d {
         width: 100%;
     }
 
-    .today-button, .read-summary {
+    .today-button-d, .read-summary-d {
         margin-left: 0;
     }
-    .book-details {
+
+    .book-details-d {
         width: 100%;
     }
 
-    .cover-image {
+    .cover-image-d {
         max-width: 100%;
     }
 }
 
 @media (min-width: 481px) and (max-width: 768px) {
-    .book-cover {
+    .book-cover-d {
         width: 100px;
     }
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import section from '../my_style/BookSection.css'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 const BookList = () => {
@@ -109,9 +109,9 @@ const BookList = () => {
                                 ))}
                             </select>
                         </span>
-                        <button onClick={booklist} className="view-all-button" style={{ alignItems: 'end', backgroundColor: '#f5f5f5' }}>
-                    전체 보기
-                        </button>
+                        <Link to='/search' className="view-all-button" title="도서추가" style={{ alignItems: 'end', backgroundColor: '#f5f5f5', textDecoration: 'none' }}>
+                            추가하기
+                        </Link>
 
                     </h4>
                     <div className="book-grid"> {/* 시작 */}
@@ -120,6 +120,7 @@ const BookList = () => {
                                 .filter(book => selectedCategory === '전체' || book.genre === selectedCategory)
                                 .map((book) => (
                                     <div key={book.logIdx} className="book-item">
+                                        <Link to={`/bookdetail?logIdx=${book.logIdx}`} style={{ textDecoration: 'none' }} >
                                         <div className="book-cover" style={{ borderRadius: '0px', margin: '0px', maxHeight: '170px', maxWidth:'130px',objectFit: 'cover', backgroundColor: 'transparent' }}>
                                             <img
                                                 src={book.bookImgUrl}
@@ -127,10 +128,11 @@ const BookList = () => {
                                                 style={{ height: '160px', objectFit: 'cover' }}
                                             />
                                         </div>
-                                        <div className="book-info" style={{ marginLeft: '0px', marginBottom: '0px', backgroundColor: '#f5f5f5' }}>
-                                            <h4 className="book-title" style={{ marginTop: '10px', alignItems:'center' }}>{book.title}</h4>
-                                            <p className="book-author" style={{ marginLeft: '0px',  marginTop: '-10px' }}>{book.author}</p>
+                                        <div className="books-info" style={{ marginLeft: '0px', marginBottom: '0px', backgroundColor: '#f5f5f5' }}>
+                                            <h4 className="books-title" style={{ alignItems:'center' }}>{book.title}</h4>
+                                            <p className="books-author" style={{ marginLeft: '0px',  marginTop: '-10px' }}>{book.author}</p>
                                         </div>
+                                        </Link>
                                     </div>
                                 ))
                         ) : (

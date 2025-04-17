@@ -23,7 +23,7 @@ public interface ReadingLogMapper {
 	// 피드용 독서 기록 조회
 	ArrayList<ReadingLogDTO> findLogs(@Param("logIdx") int logIdx);
 
-	// 댓글 조회 
+	// 댓글 조회
 	ArrayList<CommentDTO> findCommentsByLogIdx(int logIdx);
 
 	// 독서 기록 추가
@@ -52,15 +52,29 @@ public interface ReadingLogMapper {
 
 	// 독서 기록 삭제
 	int deleteLog(int logIdx);
-	
+
 	// 인용구 하나 삭제
 	int deleteQuote(@Param("quoteIdx") int quoteIdx);
 
 	// 좋아요 수 조회
 	int countLikes(@Param("logIdx") int logIdx);
-	
+
 	// 독서 기록 중복 확인
 	ReadingLogDTO findLogByUserIdAndBookIdx(@Param("userId") String userId, @Param("bookIdx") int bookIdx);
 
-	
+	// 댓글 저장
+	int insertComment(CommentDTO comment);
+
+	// 댓글 삭제
+	int deleteComment(@Param("commentIdx") int commentIdx);
+
+	// 좋아요 추가
+	int insertLike(@Param("userId") String userId, @Param("logIdx") int logIdx);
+
+	// 좋아요 삭제
+	int deleteLike(@Param("userId") String userId, @Param("logIdx") int logIdx);
+
+	// 좋아요 여부 확인
+	int checkIfLiked(@Param("userId") String userId, @Param("logIdx") int logIdx);
+
 }

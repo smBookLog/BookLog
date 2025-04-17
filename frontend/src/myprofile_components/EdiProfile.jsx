@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import editprofile from "../myprofile_style/EditProfile.css";
-import image from "../etc_assets/profile.png";
+import image from "../etc_assets/profile_1.png";
 import Header_mypage from "../header_components/Header_mypage";
 
 function EditProfile() {

@@ -4,7 +4,8 @@
 
 	<insert id="insertFollow"
 		parameterType="com.booklog.model.FollowDTO">
-		INSERT INTO FOLLOW (FOLLOWER_ID, FOLLOWING_ID, FOLLOW_DATE)
+		INSERT INTO FOLLOW (FOLLOWER_ID, FOLLOWING_ID,
+		FOLLOW_DATE)
 		VALUES (#{followerId}, #{followingId}, NOW())
 	</insert>
 
@@ -16,15 +17,23 @@
 
 	<select id="findFollowing" resultType="string">
 		SELECT FOLLOWING_ID
-		FROM FOLLOW
+		FROM
+		FOLLOW
 		WHERE FOLLOWER_ID = #{userId}
 	</select>
 
 	<select id="findFollowers" resultType="string">
 		SELECT FOLLOWER_ID
-		FROM FOLLOW
+		FROM
+		FOLLOW
 		WHERE FOLLOWING_ID = #{userId}
 	</select>
 
+	<select id="isFollowing" resultType="boolean">
+		SELECT COUNT(*) > 0
+		FROM FOLLOW
+		WHERE FOLLOWER_ID = #{followerId}
+		AND FOLLOWING_ID = #{followingId}
+	</select>
 
 </mapper>

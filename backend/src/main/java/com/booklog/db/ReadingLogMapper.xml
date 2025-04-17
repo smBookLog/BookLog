@@ -191,4 +191,34 @@
 	    WHERE USER_ID = #{userId} AND BOOK_IDX = #{bookIdx}
 	</select>
 	
+	<!-- 댓글  -->
+   <insert id="insertComment" parameterType="com.booklog.model.CommentDTO">
+       INSERT INTO COMMENT (LOG_IDX, USER_ID, CONTENT, CREATED_AT)
+       VALUES (#{logIdx}, #{userId}, #{content}, NOW())
+   </insert>
+   
+   <!-- 댓글 삭제  -->
+   <delete id="deleteComment" parameterType="int">
+       DELETE FROM COMMENT
+       WHERE COMMENT_IDX = #{commentIdx}
+   </delete>
+   
+   <!-- 좋아요 추가  -->
+   <insert id="insertLike">
+       INSERT INTO READING_LOG_LIKE (USER_ID, LOG_IDX)
+       VALUES (#{userId}, #{logIdx})
+   </insert>
+   
+   <!-- 좋아요 삭제  -->
+   <delete id="deleteLike">
+       DELETE FROM READING_LOG_LIKE
+       WHERE USER_ID = #{userId} AND LOG_IDX = #{logIdx}
+   </delete>
+   
+   <!-- 좋아요 여부 확인 -->
+   <select id="checkIfLiked" resultType="int">
+       SELECT COUNT(*) FROM READING_LOG_LIKE
+       WHERE USER_ID = #{userId} AND LOG_IDX = #{logIdx}
+   </select>
+	
 </mapper>

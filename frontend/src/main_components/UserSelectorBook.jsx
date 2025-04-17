@@ -30,7 +30,7 @@ function UserSelectorBook() {
   return (
     <div className="user-recommendation-container">
       <h3 className="recommendation-title">회원님과 취향이 비슷한 유저들💕</h3>
-      <div className="user-list">
+      <div className="user-list-horizontal">
         {recommendedUsers.map((user, index) => (
           <div key={index} className="recommended-user">
             <div className="avatar-container">

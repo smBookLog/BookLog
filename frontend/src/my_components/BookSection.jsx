@@ -127,9 +127,9 @@ const BookSection = () => {
                                                 style={{ height: '160px', objectFit: 'cover' }}
                                             />
                                         </div>
-                                        <div className="book-info" style={{ marginLeft: '0px', marginBottom: '0px', backgroundColor: '#f5f5f5' }}>
-                                            <h4 className="book-title" style={{ marginTop: '10px', alignItems:'center' }}>{book.title}</h4>
-                                            <p className="book-author" style={{ marginLeft: '0px',  marginTop: '-10px' }}>{book.author}</p>
+                                        <div className="books-info" style={{ marginLeft: '0px', marginBottom: '0px', backgroundColor: '#f5f5f5' }}>
+                                            <h4 className="books-title" style={{ alignItems:'center' }}>{book.title}</h4>
+                                            <p className="books-author" style={{ marginLeft: '0px',  marginTop: '-10px' }}>{book.author}</p>
                                         </div>
                                     </div>
                                 ))
