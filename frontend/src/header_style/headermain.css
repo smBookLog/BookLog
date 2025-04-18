@@ -60,27 +60,28 @@
 }
 
 .search-box .search-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #333;
-    pointer-events: none; /* 클릭 방지 */
-  }
-  
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #333;
+  pointer-events: none;
+  /* 클릭 방지 */
+}
+
 
 /* 유저 프로필 */
 .user-info {
   display: flex;
   flex-direction: column;
-
-
   align-items: center;
   font-size: 10px;
-  transform: scale(0.9); /* 전체 크기를 80%로 축소 */
-  transform-origin: bottom right; /* 축소 기준점: 오른쪽 위 */
-  
+  transform: scale(0.9);
+  transform-origin: bottom right;
+  gap: 0 !important;
+  /* 간격을 없앰 */
 }
+
 
 .user-info img {
   width: 2.1rem;
@@ -95,8 +96,9 @@
   display: none;
   max-width: 100%;
   padding: 0 10px;
-  
+
 }
+
 .mobile-nav {
   display: flex;
   gap: 130px;
@@ -118,23 +120,25 @@
     display: none;
   }
 
-  .input-wrapper{
+  .input-wrapper {
     gap: 10px;
   }
 
 }
 
 .custom-link {
-  color: black; /* 원하는 색상 */
-  text-decoration: none; /* 밑줄 제거 */
-  transition: color 0.3s; /* 부드러운 전환 효과 */
+  color: black;
+  /* 원하는 색상 */
+  text-decoration: none;
+  /* 밑줄 제거 */
+  transition: color 0.3s;
+  /* 부드러운 전환 효과 */
   justify-self: center;
 
 }
 
 .custom-link:hover {
-  color: green; /* 마우스 올렸을 때 색상 */
+  color: green;
+  /* 마우스 올렸을 때 색상 */
   font-weight: 500;
 }
-
-

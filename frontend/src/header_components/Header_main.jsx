@@ -26,8 +26,8 @@ const Header = () => {
     };
 
     return (
-        <header className="header" style={{paddingLeft:'0px'}}>
-            <div className="header-top" style={{gap:'17px'}}>
+        <header className="header" style={{ paddingLeft: '0px' }}>
+            <div className="header-top" style={{ gap: '17px' }}>
                 <img className="logo" src={logo} alt="BookLog 로고" />
 
                 {/* PC용 메뉴 */}
@@ -48,15 +48,15 @@ const Header = () => {
                     </div>
                 </div>
 
-                <div className="user-info" onClick={handleProfileClick} style={{ cursor: "pointer", flexDirection:'column' }}>
+                <div className="user-info" onClick={handleProfileClick} style={{ cursor: "pointer", flexDirection: 'column' }}>
                     <img
                         src={user?.profileImg || defaultProfileImg}
                         alt="프로필"
                         className="profile-img"
-                        style={{marginRight:'0px'}}
+                        style={{ boxShadow: 'none', marginRight: '0px' }}
                     />
                     <div>
-                        <span className="userid">@{user?.userId}</span>
+                        <span className="userid">{user?.userId}</span>
                     </div>
                 </div>
             </div>

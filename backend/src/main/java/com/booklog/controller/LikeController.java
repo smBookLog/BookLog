@@ -35,7 +35,7 @@ public class LikeController {
 
 	// 좋아요 취소
 	// http://localhost:8082/controller/dislike
-	@DeleteMapping(value = "/dislike", produces = "text/plain; charset=UTF-8")
+	@DeleteMapping(value = "/dislike", consumes = "application/json", produces = "text/plain; charset=UTF-8")
 	public String unlike(@RequestBody LikeDTO like) {
 	    int logIdx = like.getLogIdx();
 	    String userId = like.getUserId();
@@ -47,10 +47,13 @@ public class LikeController {
 	    return "좋아요한 게시물이 아닙니다";
 	}
 
+
+
 	// 좋아요 수 조회
 	// http://localhost:8082/controller/39/likes
 	@GetMapping(value = "/{logIdx}/likes")
 	public int getLikeCount(@PathVariable int logIdx) {
 		return likeMapper.countLikes(logIdx);
 	}
+	
 }

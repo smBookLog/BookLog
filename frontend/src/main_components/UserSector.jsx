@@ -24,7 +24,7 @@ function UserSector({ users }) {
                                 <div className="default-avatar">{user.userName ? user.userName.charAt(0).toUpperCase() : '?'}</div>
                             )}
                         </div>
-                        <div className="user-info">
+                        <div className="user-info" >
                             <div className="user-name">{user.userName || '익명'}</div>
                             {user.genres && user.genres.length > 0 && (
                                 <div className="user-genres">

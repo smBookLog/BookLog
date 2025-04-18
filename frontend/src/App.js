@@ -5,6 +5,7 @@ import './App.css';
 
 import Header_main from './header_components/Header_main'; // 로고 - 메인 - 나의 서재 - 검색 - 내정보
 import Header from './header_components/Header'; // 헤더 < - 로고
+import Header_mypage from './header_components/Header_mypage'; // 독서목록 헤더 < - 로고
 import Search from './header_components/Search'; // 검색창
 import Information from './information_components/Information'; // 책 정보
 import EditProfile from './myprofile_components/EdiProfile'; // 회원정보수정
@@ -97,13 +98,14 @@ function App() {
         } />
 
         {/* 책 정보 */}
-        <Route path='/information/:idx' element={<Information></Information>}></Route>
+        <Route path='/information/:isbn' element={<Information />} />
+        
         {/* 독서 목록 */}
         <Route
           path='/booklist'
           element={
             <div className="app">
-              <Header />
+              <Header_mypage />
               <main className="main-content">
                 {/* <TabBar /> */}
                 <BookList books={books} />

@@ -281,9 +281,8 @@ body {
 
 .comment {
   margin-bottom: 15px;
-  padding-bottom: 15px;
+  padding-bottom: 3px;
   padding-top: 15px;
-  border-bottom: 1px solid #e0e0e0;
   border-top: 1px solid #e0e0e0;
 }
 
@@ -310,6 +309,9 @@ body {
   display: flex;
   padding-left: 50px;
   padding-top: 8px;
+  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .comment-input-container {
@@ -317,6 +319,16 @@ body {
   align-items: center;
   padding-top: 15px;
   position: relative;
+}
+
+.comment-actions button {
+  padding: 4px 10px;
+  font-size: 12x;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .comment-input {

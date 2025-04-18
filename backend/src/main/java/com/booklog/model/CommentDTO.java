@@ -9,13 +9,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommentDTO {
 
-	private int commentIdx;
-	private String userId;
-	private String content;
-	private Integer parentIdx;
-	private String createdAt;
-	private int isDeleted;
+   private int commentIdx;
+   private String userId;
+   private String content;
+   private Integer parentIdx;
+   private String createdAt;
+   private int isDeleted;
+   private String profileImgUrl;
 
-	private int logIdx;
+   private int logIdx;
 
 }
