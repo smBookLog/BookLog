@@ -132,9 +132,11 @@ public class FeedController {
 		String joinedQuotes = quotes.stream().map(q -> "- " + q).collect(Collectors.joining("\n"));
 
 		// 인용구와 prompt 결합
-		String prompt = "I told you don't speak in English!!!!!!"
+		String prompt = "I told you don't speak in English, No English at all"
 				+ "The following are quotes that the user saved from books they read. Based on these quotes, analyze the user's interests and recommend exactly 5 Korean books that match those themes. "
-				+ "The response must follow this **exact** format:\n" + "📚 제목 / 작가명 \n\n" + "→ 책 소개 \n\n\n\n"
+				+ "The response must follow this **exact** format:\n" 
+				+ "📚 제목 / 작가명 \n\n" 
+				+ "→ 책 소개 \n\n\n\n"
 				+ "List only the book title, author and descripion in Korean. NO ENGLISH AT ALL!!!!!"
 				+ "Do not explain anything. No numbering. No extra description. Just output in the above format.\n"
 				+ joinedQuotes;

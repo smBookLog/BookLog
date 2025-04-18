@@ -11,12 +11,19 @@ const Search = () => {
     const [tab, setTab] = useState('전체');
     const [searchQuery, setSearchQuery] = useState('');
     const tabs = ['전체', '계정', '책'];
+    const [allUsers, setAllUsers] = useState([]);
+
 
     const [accountResults, setAccountResults] = useState([]);
     const [bookResults, setBookResults] = useState([]);
     const [imgErrors, setImgErrors] = useState([]);
 
     const navigate = useNavigate();
+    useEffect(() => {
+        axios.get(`http://localhost:8082/controller/search/users`)
+            .then(res => setAllUsers(res.data || []))
+            .catch(() => setAllUsers([]));
+    }, []);
 
     // 이미지 URL 보정
     const getValidImageUrl = (url) => {
@@ -32,16 +39,14 @@ const Search = () => {
         setImgErrors(updatedErrors);
     };
 
-    const fetchUsers = async () => {
-        try {
-            const res = await axios.get(`http://localhost:8082/controller/search/user/keyword?keyword=${searchQuery}`);
-            let data = res.data;
-            if (typeof data === 'string') data = JSON.parse(data);
-            setAccountResults(Array.isArray(data) ? data : []);
-        } catch {
-            setAccountResults([]);
-        }
+    const fetchUsers = () => {
+        const keyword = searchQuery.toLowerCase();
+        const filtered = allUsers.filter(user =>
+            (user.userId && user.userId.toLowerCase().includes(keyword))
+        );
+        setAccountResults(filtered);
     };
+
 
     const fetchBooksByIsbn = async () => {
         try {
@@ -93,18 +98,24 @@ const Search = () => {
             if (searchQuery.trim() === "") {
                 fetchDefaultResults();
             } else {
-                fetchUsers();
+                fetchUsers(); // 프론트에서 필터링된 함수
                 /^\d{13}$/.test(searchQuery) ? fetchBooksByIsbn() : fetchBooksByKeyword();
             }
         }, 300);
 
         delaySearch();
         return () => delaySearch.cancel();
-    }, [searchQuery]);
+    }, [searchQuery, allUsers]);
+
 
     const handleAccountClick = (userId) => {
-        navigate(`/user/${userId}`);
+        navigate(`/mypage/${userId}`, {
+            state: {
+                from: 'search'
+            }
+        });
     };
+
 
     const renderAccounts = () =>
         accountResults.map((acc, idx) => (
@@ -119,7 +130,7 @@ const Search = () => {
                     alt="유저 프로필"
                     className="account-image"
                 />
-                <span>{acc.nickname || acc.name || acc.userId || "이름 없음"}</span>
+                <span>{acc.userId || "이름 없음"}</span>
             </div>
         ));
 
@@ -129,15 +140,25 @@ const Search = () => {
             const isDefault = imgErrors[idx] || !book.bookImg || imageUrl === bookinformation;
 
             const handleClick = () => {
+                if (!book.bookIdx) {
+                    alert("책 고유 ID(bookIdx)가 없습니다. 저장할 수 없습니다.");
+                    return;
+                }
+
                 navigate(`/information/${book.isbn}`, {
                     state: {
+                        from: 'search',
                         bookIdx: book.bookIdx,
                         title: book.title,
                         author: book.author,
-                        imageUrl: book.bookImg
+                        bookImg: book.bookImg,
+                        genre: book.genre,
+                        description: book.description
                     }
                 });
             };
+
+
 
             return (
                 <div

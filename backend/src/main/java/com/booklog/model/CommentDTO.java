@@ -15,6 +15,7 @@ public class CommentDTO {
 	private Integer parentIdx;
 	private String createdAt;
 	private int isDeleted;
+	private String profileImgUrl;
 
 	private int logIdx;
 

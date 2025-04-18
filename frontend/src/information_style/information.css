@@ -1,106 +1,107 @@
 /* 컨테이너 정렬 */
 .information-container {
-  max-width: 800px ;
-  margin: 0 auto ;
-  padding: 20px ;
-  font-family: 'Noto Sans KR', sans-serif ;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 /* 책 정보 (표지 + 설명) 가로 나열 */
 .book-info {
   display: flex;
-  flex-direction: row ; /* 가로 정렬 */
-  align-items: center ;
-  justify-content: center ;
-  max-width: 900px ;
-  height: 320px ;
-  gap: 30px ;
-  margin-bottom: 40px ;
-  padding: 100px ;
+  flex-direction: row;
+  /* 가로 정렬 */
+  align-items: center;
+  justify-content: center;
+  max-width: 900px;
+  height: 320px;
+  gap: 30px;
+  margin-bottom: 40px;
+  padding: 100px;
 }
 
 /* 책 표지 */
 .book-cover {
-  border: 1px solid #ddd ;
-  border-radius: 10px ;
-  object-fit: cover ;
-  width: 200px ;
-  height: 180px ;
-  max-width: 100% ;
-  aspect-ratio: 200 / 293 ;
-  object-fit: contain ;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  object-fit: cover;
+  width: 200px;
+  height: 180px;
+  max-width: 100%;
+  aspect-ratio: 200 / 293;
+  object-fit: contain;
 }
 
 /* 책 정보 텍스트 */
 .book-meta {
-  flex: 1 ;
-  display: flex ;
-  flex-direction: column ;
-  justify-content: flex-start ;
-  gap: 10px ;
-  font-size: 16px ;
-  align-items: flex-start ;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+  font-size: 16px;
+  align-items: flex-start;
 }
 
 /* 드롭다운 */
 .dropdown-wrapper {
-  position: relative ;
-  width: fit-content ;
+  position: relative;
+  width: fit-content;
 }
 
 .add-button {
   background-color: #7ac64d;
-  color: white ;
-  padding: 10px 16px ;
-  border: none ;
-  border-radius: 8px ;
-  font-weight: bold ;
-  cursor: pointer ;
-  font-size: 14px ;
-  transition: background-color 0.2s ease-in-out ;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .add-button:hover {
-  background-color: #68b03f ;
+  background-color: #68b03f;
 }
 
 .dropdown-menu {
-  position: absolute ;
-  top: 110% ;
-  left: 0 ;
-  width: 150px ;
-  background-color: white ;
-  border: 1px solid #ddd ;
-  border-radius: 8px ;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) ;
-  padding: 0 ;
-  z-index: 1000 ;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 150px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  z-index: 1000;
 }
 
 .dropdown-menu li {
-  list-style: none ;
-  padding: 10px 14px ;
-  cursor: pointer ;
-  font-size: 14px ;
-  transition: background-color 0.2s ease ;
+  list-style: none;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
 }
 
 .dropdown-menu li:hover {
-  background-color: #7ac64d ;
-  color: white ;
+  background-color: #7ac64d;
+  color: white;
 }
 
 /* 책 소개 */
 .book-description {
-  margin-top: 40px ;
-  text-align: left ;
+  margin-top: 40px;
+  text-align: left;
 }
 
 .book-description h2 {
-  font-size: 20px ;
-  border-bottom: 2px solid #7ac64d ;
-  padding-bottom: 8px ;
-  margin-bottom: 16px ;
+  font-size: 20px;
+  border-bottom: 2px solid #7ac64d;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
 }
 
 .book-description p {
@@ -120,44 +121,44 @@
 
   .book-info {
     flex-direction: column;
-    align-items: center ;
-    padding: 40px 20px ;
-    height: auto ;
-    gap: 20px ;
+    align-items: center;
+    padding: 40px 20px;
+    height: auto;
+    gap: 20px;
   }
 
   .book-cover {
-    width: 140px ;
-    height: auto ;
-    aspect-ratio: 200 / 293 ;
+    width: 140px;
+    height: auto;
+    aspect-ratio: 200 / 293;
   }
 
   .book-meta {
-    font-size: 14px ;
-    width: 100% ;
-    align-items: flex-start ;
+    font-size: 14px;
+    width: 100%;
+    align-items: flex-start;
   }
 
   .add-button {
-    font-size: 13px ;
-    padding: 8px 12px ;
+    font-size: 13px;
+    padding: 8px 12px;
   }
 
   .dropdown-menu {
-    width: 140px ;
-    font-size: 13px ;
+    width: 140px;
+    font-size: 13px;
   }
 
   .dropdown-menu li {
-    padding: 8px 12px ;
+    padding: 8px 12px;
   }
 
   .book-description h2 {
-    font-size: 18px ;
+    font-size: 18px;
   }
 
   .book-description p {
-    font-size: 14px ;
-    line-height: 1.6 ;
+    font-size: 14px;
+    line-height: 1.6;
   }
 }

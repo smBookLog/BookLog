@@ -234,7 +234,7 @@ function EditProfile() {
                         src={user.profileImg || image}
                         alt="유저 프로필"
                         onClick={handleProfileImgClick}
-                        style={{ width: "100px", height: "100px",cursor: "pointer" }}
+                        style={{ width: "100px", height: "100px", cursor: "pointer" }}
                         title="클릭하여 이미지 URL 변경"
                     />
                 </div>
@@ -293,7 +293,7 @@ function EditProfile() {
                             placeholder="변경할 비밀번호를 입력하세요"
                         />
                     </div>
-                    
+
                     {/* 비밀번호 확인 */}
                     <div className="form-group">
                         <label>비밀번호 확인</label>
@@ -325,7 +325,7 @@ function EditProfile() {
                                 <option value="example.com">example.com</option>
                             </select>
                             <div className="input-with-button">
-                            <button type="button" onClick={checkEmail}>중복 확인</button>
+                                <button type="button" onClick={checkEmail}>중복 확인</button>
                             </div>
                         </div>
                     </div>

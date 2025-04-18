@@ -30,7 +30,7 @@
 .profile-info {
   flex: 1;
   margin-left: 20px;
-  
+
 }
 
 .profile-header {
@@ -47,27 +47,106 @@
 }
 
 .profile-badge {
-  font-size: 0.75rem;
-  padding: 0.125rem 0.5rem;
+  display: inline-flex;
+  /* 인라인 요소지만 flex 속성 사용 */
+  justify-content: center;
+  /* 가로축 중앙 정렬 */
+  align-items: center;
+  /* 세로축 중앙 정렬 */
+  width: 40px;
+  /* 더 넓은 알약 모양을 위해 너비 설정 */
+  height: 30px;
+  /* 높이 설정 */
   border-radius: 9999px;
+  /* 완전한 둥근 모서리 */
   color: white;
+  /* 아이콘 색상 흰색 */
+  border: none;
+  /* 테두리 제거 */
+  cursor: pointer;
+  /* 마우스 오버시 손가락 커서 표시 */
+}
+
+.profile-badge svg {
+  width: 16px;
+  /* 모든 아이콘의 너비 통일 */
+  height: 16px;
+  /* 모든 아이콘의 높이 통일 */
 }
 
 .profile-badge.subscribe {
   background-color: #3b82f6;
-  font-size: 15px;
-
+  /* 팔로우 버튼의 파란색 배경 */
 }
 
 .profile-badge.follow {
   background-color: #10b981;
-  font-size: 15px;
+  /* 메시지 버튼의 초록색 배경 */
 }
 
-.profile-bio {
-  color: #4b5563;
-  font-size: 0.875rem;
-  margin: 0.25rem 0 0.5rem;
+.profile-badge.following {
+  background-color: #4ade80;
+  /* 팔로잉 상태일 때 밝은 초록색 배경 */
+}
+
+/* 호버 효과 추가 */
+.profile-badge:hover {
+  opacity: 0.9;
+  /* 호버시 약간 투명하게 */
+  transform: scale(1.05);
+  /* 호버시 살짝 커지는 효과 */
+  transition: all 0.2s ease;
+  /* 부드러운 전환 효과 */
+}
+
+/* 클릭 가능한 통계 스타일 */
+.clickable-stat {
+  cursor: pointer;
+  /* 마우스 오버 시 포인터 커서 표시 */
+  transition: color 0.3s ease;
+  /* 부드러운 색상 변화 효과 */
+  padding: 3px 8px;
+  /* 내부 여백 추가 */
+  border-radius: 4px;
+  /* 살짝 둥근 모서리 */
+  display: inline-block;
+  /* 인라인 블록으로 표시 */
+}
+
+/* 호버 효과 */
+.clickable-stat:hover {
+  color: #3b82f6;
+  /* 마우스 오버 시 파란색으로 변경 */
+  background-color: rgba(59, 130, 246, 0.1);
+  /* 연한 파란색 배경 */
+}
+
+/* 클릭(액티브) 효과 */
+.clickable-stat:active {
+  color: #1d4ed8;
+  /* 클릭 시 진한 파란색으로 변경 */
+  transform: scale(0.97);
+  /* 클릭 시 살짝 작아지는 효과 */
+}
+
+/* 팔로우/팔로잉 사이의 구분자 스타일 */
+.profile-stats {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  display: flex;
+  /* 플렉스 컨테이너로 설정 */
+  align-items: center;
+  /* 세로 중앙 정렬 */
+  gap: 8px;
+  /* 요소 사이 간격 */
+}
+
+/* 구분자 (가운데 점) 스타일 */
+.profile-stats .separator {
+  color: #999;
+  /* 구분자 색상 */
 }
 
 .profile-tags {

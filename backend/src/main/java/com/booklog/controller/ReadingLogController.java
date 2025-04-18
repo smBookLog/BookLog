@@ -55,6 +55,10 @@ public class ReadingLogController {
          ArrayList<String> quotes = new ArrayList<>(readingLogMapper.findQuotesByLogIdx(logIdx));
          ArrayList<CommentDTO> comments = new ArrayList<>(readingLogMapper.findCommentsByLogIdx(logIdx));
          int likeCount = readingLogMapper.countLikes(logIdx);
+         
+         // 태그도 불러와서 추가
+         ArrayList<String> tags = new ArrayList<>(readingLogMapper.findTagsByLogIdx(logIdx));
+         log.setTags(tags); // ← 반드시 필요!
 
          log.setQuotes(quotes);
          log.setComments(comments);
@@ -216,5 +220,8 @@ public class ReadingLogController {
    public boolean checkIfLiked(@RequestParam String userId, @RequestParam int logIdx) {
        return readingLogMapper.checkIfLiked(userId, logIdx) > 0;
    }
+   
+   
+   
 
 }

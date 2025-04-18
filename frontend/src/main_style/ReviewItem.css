@@ -11,12 +11,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 16px 8px 16px;
-  margin-bottom: 10px;
-  
-  /* padding-right: 25px; */
-
-
+  padding: 24px 24px 16px 24px;
+  /* padding 키움 */
+  margin-bottom: 16px;
 }
 
 .user-info {
@@ -25,11 +22,12 @@
 }
 
 .user-avatar {
-  width: 30px;
-  height: 30px;
+  width: 45px !important;
+  /* !important 추가 */
+  height: 45px !important;
   border-radius: 50%;
   overflow: hidden;
-  margin-right: 8px;
+  margin-right: 12px;
 }
 
 .user-avatar img {
@@ -40,8 +38,10 @@
 
 .username {
   font-weight: 600;
-  font-size: 14px;
+  font-size: 23px;
+  /* 글자 크게 */
   color: #333;
+  margin-left: 10px !important;
 }
 
 .rating-display {
@@ -51,8 +51,9 @@
 
 .rating-number {
   font-weight: bold;
-  margin-right: 6px;
-  font-size: 15px;
+  margin-right: 8px;
+  font-size: 18px;
+  /* 숫자도 키움 */
 }
 
 .stars {
@@ -60,8 +61,9 @@
 }
 
 .star {
-  margin-left: 1px;
-  font-size: 15px;
+  margin-left: 2px;
+  font-size: 20px;
+  /* 별 아이콘 키움 */
 }
 
 .star.filled {
@@ -72,10 +74,11 @@
   color: #e0e0e0;
 }
 
+
 /* 리뷰 내용 */
 .review-content {
   padding: 0 30px 12px 30px;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
   color: #333;
   /* margin-left: 20px; */
@@ -150,7 +153,8 @@
   align-items: center;
 }
 
-.like-button, .comment-button {
+.like-button,
+.comment-button {
   display: flex;
   align-items: center;
   background: none;
@@ -166,7 +170,8 @@
   color: #ff4d4d;
 }
 
-.like-count, .comment-count {
+.like-count,
+.comment-count {
   margin-left: 4px;
   font-size: 14px;
 }

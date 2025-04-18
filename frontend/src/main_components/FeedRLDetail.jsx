@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../header_components/Header';
-import defaultUserImage from'../etc_assets/profile_1.png';
+import defaultUserImage from '../etc_assets/profile_1.png';
 import defaultBookCover from '../etc_assets/bookinformation.png';
 import { HiArrowNarrowUp } from "react-icons/hi";
 import '../main_style/FeedRLDetail.css';
@@ -149,9 +149,11 @@ const FeedRLDetail = () => {
             onClick={() => navigate(`/information/${log.isbn}`, {
               state: {
                 bookIdx: log.bookIdx,
-                title: log.bookTitle,
-                author: log.bookAuthor,
-                imageUrl: log.bookImgUrl
+                title: log.title,
+                author: log.author,
+                bookImg: log.bookImgUrl,
+                genre: log.genre,
+                description: log.description
               }
             })}
             style={{
@@ -193,7 +195,7 @@ const FeedRLDetail = () => {
               </div>
               <div style={{ fontSize: '0.95rem', color: '#555' }}>
                 저자: {bookInfo?.author || bookInfo?.book_author || state?.bookAuthor || log.bookAuthor || "저자 정보 없음"}</div>
-              
+
               <div style={{ fontSize: '0.9rem', color: '#999', marginTop: '8px' }}>
                 {bookInfo?.description || log.description || "책 소개가 없습니다."}
               </div>
@@ -222,7 +224,11 @@ const FeedRLDetail = () => {
           <div className="comment" key={i}>
             <div className="comment-header">
               <div className="commenter-info">
-                <img src={defaultUserImage} alt="Commenter Avatar" className="commenter-avatar" />
+                <img
+                  src={comment.profileImgUrl || defaultUserImage}
+                  alt="Commenter Avatar"
+                  className="commenter-avatar"
+                />
                 <span className="commenter-name">{comment.userId}</span>
               </div>
               <div className="comment-date">{new Date(comment.createdAt).toLocaleDateString()}</div>
@@ -230,25 +236,26 @@ const FeedRLDetail = () => {
 
             <p className="comment-text">{comment.content}</p>
 
-            {comment.userId === userId && (
-              <div className="comment-actions">
-                <button onClick={() => handleDeleteComment(comment.commentIdx)}>삭제</button>
-              </div>
-            )}
-
             <div className="comment-footer">
-              <button className="like-button" disabled>
-                <FiHeart /> <span>0</span>
-              </button>
-              <button className="comment-button" disabled>
-                <LuMessageSquareMore /> <span>0</span>
-              </button>
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <button className="like-button" disabled>
+                  <FiHeart /><span style={{ marginLeft: '5px' }}>0</span>
+                </button>
+                <button className="comment-button" disabled>
+                  <LuMessageSquareMore /> <span style={{ marginLeft: '5px' }}>0</span>
+                </button>
+              </div>
+              {comment.userId === userId && (
+                <div className="comment-actions" style={{ marginLeft: '5px' }}>
+                  <button onClick={() => handleDeleteComment(comment.commentIdx)}>삭제</button>
+                </div>
+              )}
             </div>
           </div>
         ))}
 
         <div className="comment-input-container">
-          <img src={defaultUserImage} alt="User Avatar" className="comment-input-avatar" />
+          <img src={userId.profileImgUrl || defaultUserImage} alt="User Avatar" className="comment-input-avatar" />
           <input
             type="text"
             className="comment-input"

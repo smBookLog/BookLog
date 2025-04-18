@@ -64,14 +64,16 @@ const Bookdetail = () => {
         if (userId && logIdx) {
             fetch(`http://localhost:8082/controller/feed/${logIdx}`)
                 .then(res => {
-                    if (!res.ok) {
-                        throw new Error('서버 응답 오류: ' + res.status);
-                    }
+                    if (!res.ok) throw new Error('서버 응답 오류: ' + res.status);
                     return res.json();
                 })
                 .then(data => {
                     if (data && data.length > 0) {
                         const d = data[0];
+
+                        // ✅ 추가: 응답 확인용 로그
+                        console.log('서버로부터 받아온 태그:', d.tags);
+
                         if (d.userId && d.userId !== userId) {
                             alert("접근 권한이 없는 독서 기록입니다.");
                             navigate('/');
@@ -84,7 +86,10 @@ const Bookdetail = () => {
                         setRating(d.rating || 5);
                         setThoughts(d.content || '');
                         setQuotes(d.quotes || []);
-                        setTags(d.tags || []);
+
+                        // ✅ 여기 수정: fallback 처리
+                        setTags(Array.isArray(d.tags) ? d.tags : []);
+
                         setBookTitle(d.title || '제목 없음');
                         setBookAuthor(d.author || '저자 미상');
                         setBookImage(d.bookImgUrl || defaultImg);
@@ -99,15 +104,29 @@ const Bookdetail = () => {
         }
     }, [logIdx, userId, navigate]);
 
+
     useEffect(() => {
         if (!logIdx && location.state) {
-            const { title, author, imageUrl, bookIdx: bookId } = location.state || {};
+            const {
+                title,
+                author,
+                imageUrl,
+                bookIdx: bookId,
+                tags: stateTags // ✅ tags도 같이 받는다
+            } = location.state || {};
+
             setBookTitle(title || '제목 없음');
             setBookAuthor(author || '저자 미상');
             setBookImage(imageUrl || defaultImg);
             setBookIdx(bookId);
+
+            // ✅ 여기 추가: location.state로 전달된 tags도 반영
+            if (Array.isArray(stateTags)) {
+                setTags(stateTags);
+            }
         }
     }, [logIdx, location.state]);
+
 
     useEffect(() => {
         if (!logIdx && !bookIdx && location.state === undefined) {
@@ -203,6 +222,7 @@ const Bookdetail = () => {
         } catch (error) {
             console.error("저장 중 오류:", error);
             alert(logIdx ? "수정 실패!" : "등록 실패!");
+            navigate('/booklist');
         }
     };
 
@@ -238,6 +258,10 @@ const Bookdetail = () => {
             alert("삭제 실패!");
         }
     };
+    const getTagColorClass = (index) => {
+        const tagColorCount = 6; // 클래스는 color-0 ~ color-5로 구성
+        return `color-${index % tagColorCount}`;
+    };
 
     if (!userId) return null;
     if (!bookIdx && !logIdx && !location.state) return null;
@@ -251,7 +275,7 @@ const Bookdetail = () => {
                         <h2>독서 기록</h2>
                         <div className="button-group-d">
                             <button className="edit-button-d" onClick={handleSubmit}>
-                                {logIdx ? '수정' : '등록'}
+                                {logIdx ? '저장' : '등록'}
                             </button>
                             {logIdx && (
                                 <button className="delete-button-d" onClick={handleDelete}>
@@ -266,9 +290,10 @@ const Bookdetail = () => {
                             <div className="detail-book-cover-d">
                                 <img src={bookImage} alt="도서 표지" className="detail-cover-image-d" />
                             </div>
-                            <div className="detail-book-info-d">
+                            <div className="detail-book-info-d" id='a'>
                                 <div className="book-header-d">
-                                    <h3>{bookTitle || '제목 없음'} | {bookAuthor || '저자 미상'}</h3>
+                                    <h3>{bookTitle || '제목 없음'} </h3>
+                                    <h4>| {bookAuthor || '저자 미상'}</h4>
                                     <div className="category-row-d underline-d">
                                         <span className="category-label-d">장르</span>
                                         <span>{genre}</span>
@@ -293,7 +318,7 @@ const Bookdetail = () => {
                                     </div>
 
                                     <div className="category-row-d underline-d">
-                                        <span className="category-label-d">독서 기간</span>
+                                        <span className="category-label-d">독서기간</span>
                                         <div className="date-display-line-d">
                                             <DatePicker
                                                 selected={startDate}
@@ -325,7 +350,7 @@ const Bookdetail = () => {
                                         <div className="tag-container-d">
                                             {tags.map((tag, index) => (
                                                 <div key={index} className="tag-item-d">
-                                                    <span className="tag-d">{tag}</span>
+                                                    <span className={`tag-d ${getTagColorClass(index)}`}>{tag}</span>
                                                     <span className="tag-delete-d" onClick={() => handleDeleteTag(index)}>×</span>
                                                 </div>
                                             ))}
@@ -374,8 +399,10 @@ const Bookdetail = () => {
                                     value={newQuote}
                                     onChange={(e) => setNewQuote(e.target.value)}
                                 />
-                                <button className="quote-form-button-d save-d" onClick={handleAddQuote}>저장</button>
-                                <button className="quote-form-button-d cancel-d" onClick={toggleQuoteForm}>취소</button>
+                                <div className="quote-form-buttons-d">
+                                    <button className="quote-form-button-d save-d" onClick={handleAddQuote}>저장</button>
+                                    <button className="quote-form-button-d cancel-d" onClick={toggleQuoteForm}>취소</button>
+                                </div>
                             </div>
                         )}
 
@@ -401,4 +428,3 @@ const Bookdetail = () => {
 };
 
 export default Bookdetail;
-

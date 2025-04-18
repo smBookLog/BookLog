@@ -25,6 +25,8 @@ import Bookdetail from './BookDetail_components/Bookdetail'; // 독서 기록
 // import TabBar from './my_components/TabBar'; // 독서 목록
 import BookList from './my_components/BookList';
 import ReviewList from './main_components/ReviewList';
+import Header_mypage from './header_components/Header_mypage'; // 독서목록 헤더 < - 로고
+
 
 
 function App() {
@@ -89,7 +91,7 @@ function App() {
           </div>
         }></Route>
 
-        {/* 필드리딩디테일 */}
+        {/* 피드 리딩 디테일 */}
         <Route path='/feed/:logIdx' element={
           <div className="app-container">
             <FeedRLDetail />
@@ -97,13 +99,13 @@ function App() {
         } />
 
         {/* 책 정보 */}
-        <Route path='/information/:idx' element={<Information></Information>}></Route>
-        {/* 독서 목록 */}
+        <Route path='/information/:isbn' element={<Information />} />
+
         <Route
           path='/booklist'
           element={
             <div className="app">
-              <Header />
+              <Header_mypage />
               <main className="main-content">
                 {/* <TabBar /> */}
                 <BookList books={books} />
@@ -161,7 +163,7 @@ function App() {
 // 리다이렉트를 위한 컴포넌트 추가
 function MyPageRedirect() {
   const user = JSON.parse(localStorage.getItem("user") || '{"userId": ""}');
-  
+
   if (user && user.userId) {
     return <Navigate to={`/mypage/${user.userId}`} replace />;
   } else {

@@ -52,7 +52,8 @@ public class GeminiApiController {
        String joinedQuotes = quotes.stream().map(q -> "- " + q).collect(Collectors.joining("\n"));
 
        // 인용구와 prompt 결합
-       String prompt = "The following are quotes that the user saved from books they read. Based on these quotes, analyze the user's interests and recommend exactly 5 Korean books that match those themes. "
+       String prompt = "I told you don't speak in English!!!!!!"
+       		+ "The following are quotes that the user saved from books they read. Based on these quotes, analyze the user's interests and recommend exactly 5 Korean books that match those themes. "
                + "The response must follow this **exact** format:\n"
                + "📚 제목 / 작가명 \n\n"
                + "→ 책 소개 \n\n\n\n"

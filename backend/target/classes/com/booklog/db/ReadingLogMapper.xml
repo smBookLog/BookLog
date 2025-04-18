@@ -84,16 +84,18 @@
 	<select id="findCommentsByLogIdx" parameterType="int"
 		resultType="com.booklog.model.CommentDTO">
 		SELECT
-		COMMENT_IDX AS commentIdx,
-		USER_ID AS userId,
-		CONTENT,
-		PARENT_IDX AS parentIdx,
-		CREATED_AT
-		AS createdAt,
-		IS_DELETED AS isDeleted
-		FROM COMMENT
-		WHERE LOG_IDX = #{logIdx}
-		ORDER BY CREATED_AT ASC
+		C.COMMENT_IDX AS commentIdx,
+		C.USER_ID AS userId,
+		C.CONTENT,
+		C.PARENT_IDX AS parentIdx,
+		C.CREATED_AT AS createdAt,
+		C.IS_DELETED AS
+		isDeleted,
+		U.PROFILE_IMG AS profileImgUrl
+		FROM COMMENT C
+		LEFT JOIN USER U ON C.USER_ID = U.USER_ID
+		WHERE C.LOG_IDX = #{logIdx}
+		ORDER BY C.CREATED_AT ASC
 	</select>
 
 	<!-- 독서 기록 추가 -->

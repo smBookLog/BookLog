@@ -21,48 +21,84 @@ const ReviewItem = ({ review }) => {
         isbn,
         bookIdx,
         bookTitle,
-        bookAuthor
+        bookAuthor,
+        genre,
+        description
     } = review;
 
+    const [tags, setTags] = useState([]);
     const [likes, setLikes] = useState(0);
     const [isLiked, setIsLiked] = useState(false);
+    const [commentCount, setCommentCount] = useState(0);
     const navigate = useNavigate();
 
-    // 책 리뷰 이동
+    // 태그 색상 클래스 계산 함수
+    const getTagColorClass = (index) => {
+        const tagColorCount = 6;
+        return `color-${index % tagColorCount}`;
+    };
+
+    // 책 리뷰 상세로 이동
     const handleReviewClick = () => {
         navigate(`/feed/${review.logIdx}`, {
             state: {
                 bookTitle: bookTitle || title,
                 bookAuthor: bookAuthor || author,
-                bookImgUrl: bookImgUrl
+                bookImgUrl: bookImgUrl,
+                bookGenre: genre || "장르 정보 없음"
             }
         });
-
     };
-    // 책 정보 이동
-    const handleBookClick = () => {
+
+    // 책 정보 페이지로 이동
+    const handleBookClick = (e) => {
+        e.stopPropagation(); // 이벤트 버블링 방지
         navigate(`/information/${isbn}`, {
             state: {
                 bookIdx,
                 title: bookTitle || title,
                 author: bookAuthor || author,
-                imageUrl: bookImgUrl,
-                genre: review.genre,
-                description: review.description
+                bookImg: bookImgUrl,
+                genre: genre,
+                description: description
             }
         });
-
-
     };
+
+    // 유저 프로필 페이지로 이동 - 새로 추가된 함수
+    const handleUserClick = (e) => {
+        e.stopPropagation(); // 이벤트 버블링 방지
+        navigate(`/user/${userId}`);
+    };
+
     useEffect(() => {
         // 초기 좋아요 수 로딩
         axios.get(`http://localhost:8082/controller/${review.logIdx}/likes`)
             .then(res => setLikes(res.data))
             .catch(err => console.error(err));
+
+        // 댓글 수 로딩 - 피드 데이터에서 댓글 정보 가져오기
+        axios.get(`http://localhost:8082/controller/feed/${review.logIdx}`)
+            .then(res => {
+                if (res.data && res.data.length > 0) {
+                    const logData = res.data[0];
+                    // 댓글 배열이 있으면 그 길이를 사용, 없으면 0으로 설정
+                    setCommentCount(Array.isArray(logData.comments) ? logData.comments.length : 0);
+                }
+            })
+            .catch(err => console.error("댓글 수 로딩 중 오류:", err));
+
+        // 좋아요 상태 확인
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user) {
+            axios.get(`http://localhost:8082/controller/isLiked?logIdx=${review.logIdx}&userId=${user.userId}`)
+                .then(res => setIsLiked(res.data === true))
+                .catch(err => console.error("좋아요 상태 확인 실패", err));
+        }
     }, [review.logIdx]);
 
-
-    const handleLike = async () => {
+    const handleLike = async (e) => {
+        e.stopPropagation(); // Prevent event bubbling
         const user = JSON.parse(localStorage.getItem("user"));
         if (!user) {
             alert("로그인 후 이용해주세요");
@@ -76,7 +112,13 @@ const ReviewItem = ({ review }) => {
 
         try {
             if (isLiked) {
-                await axios.delete("http://localhost:8082/controller/dislike", { data: likeData });
+                // Fix for DELETE request with body
+                await axios.delete("http://localhost:8082/controller/dislike", {
+                    data: likeData,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
                 setLikes(prev => prev - 1);
             } else {
                 await axios.post("http://localhost:8082/controller/like", likeData);
@@ -85,18 +127,31 @@ const ReviewItem = ({ review }) => {
             setIsLiked(!isLiked);
         } catch (error) {
             console.error("좋아요 처리 중 오류 발생:", error);
+            console.log("에러 상세:", error.response ? error.response.data : "응답 데이터 없음");
         }
     };
 
+
+    // 태그 불러오기
+    useEffect(() => {
+        axios.get(`http://localhost:8082/controller/feed/${review.logIdx}`)
+            .then(res => {
+                if (res.data && res.data.length > 0) {
+                    setTags(res.data[0].tags || []);
+                }
+            })
+            .catch(err => console.error("태그 불러오기 실패", err));
+    }, [review.logIdx]);
+
     return (
         <div className="review-wrapper">
-            {/* 사용자 정보 */}
+            {/* 사용자 정보 - 클릭 이벤트 추가 */}
             <div className="review-header">
-                <div className="user-info">
+                <div className="user-info" onClick={handleUserClick} style={{ cursor: 'pointer' }}>
                     <div className="user-avatar" style={{ width: '50px', height: '50px' }}>
                         <img src={profileImgUrl || defaultUserImage} alt={userId} />
                     </div>
-                    <div className="username" style={{marginLeft:'0px'}}>{userId}</div>
+                    <div className="username" style={{ marginLeft: '0px' }}>{userId}</div>
                 </div>
 
                 <div className="rating-display">
@@ -111,9 +166,9 @@ const ReviewItem = ({ review }) => {
                 </div>
             </div>
 
-            {/* 리뷰 내용 */}
+            {/* 리뷰 본문 */}
             <div className="review-content" onClick={handleReviewClick} style={{ cursor: "pointer" }}>
-                <p>{content} <span className="more-link" >...더보기</span></p>
+                <p>{content}</p>
             </div>
 
             {/* 책 정보 카드 */}
@@ -132,7 +187,6 @@ const ReviewItem = ({ review }) => {
                     cursor: 'pointer'
                 }}
             >
-                {/* 책 이미지 */}
                 <div>
                     <img
                         src={bookImgUrl || defaultBookCover}
@@ -146,7 +200,6 @@ const ReviewItem = ({ review }) => {
                     />
                 </div>
 
-                {/* 책 정보 */}
                 <div
                     style={{
                         display: 'flex',
@@ -162,9 +215,10 @@ const ReviewItem = ({ review }) => {
                         {author}
                     </div>
                     <div style={{ fontSize: '0.9rem', color: '#999', marginTop: '8px' }}>
-                        {review.description || "책 소개가 없습니다."}
+                        {description && description.length > 100
+                            ? `${description.substring(0, 100)}...`
+                            : description || "책 소개가 없습니다."}
                     </div>
-
                 </div>
             </div>
 
@@ -175,14 +229,15 @@ const ReviewItem = ({ review }) => {
                         {isLiked ? <span className="like-filled"><FaHeart /></span> : <FiHeart />}
                         <span className="like-count">{likes}</span>
                     </button>
-                    <button className="comment-button">
+                    <button className="comment-button" onClick={handleReviewClick}>
                         <LuMessageSquareMore />
-                        <span className="comment-count">0</span>
+                        <span className="comment-count">{commentCount}</span>
                     </button>
                 </div>
                 <div className="publish-date">{new Date(createdAt).toLocaleDateString()}</div>
             </div>
         </div>
+
     );
 };
 

@@ -99,7 +99,7 @@ const Message = () => {
                     <img src={profileImg} alt="기본 프로필" />
                   )}
                 </div>
-                <span>{user.nickname}</span>
+                <span style={{ fontSize: '20px', marginLeft: '10px' }}>{user.nickname}</span>
               </div>
               <Link to={`/chat/${user.userId}`} className="message-btn">
                 Message

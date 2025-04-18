@@ -135,7 +135,7 @@ a:hover {
   text-decoration: none;
   display: flex;
   align-items: center;
-  background-color: #e8f5e9; 
+  background-color: #e8f5e9;
   padding: 6px 12px;
   border-radius: 4px;
   font-size: 14px;
@@ -147,6 +147,14 @@ a:hover {
   text-decoration: none;
   background-color: #c8e6c9;
 }
+
+.no-books-message {
+  text-align: center;
+  margin-top: 50px;
+  /* 필요에 따라 조정 */
+  font-size: 1.2rem;
+}
+
 
 @media (max-width: 480px) {
   .book-list {

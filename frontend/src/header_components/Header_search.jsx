@@ -4,7 +4,7 @@ import { RiArrowLeftSLine } from "react-icons/ri";
 import { Link } from 'react-router-dom';
 import '../header_style/headermain.css';
 
-const Header = () => {
+const Header_search = () => {
     const headerStyle = {
         display: 'flex',
         alignItems: 'center',
@@ -26,7 +26,7 @@ const Header = () => {
     return (
         <header style={headerStyle_1}>
             <div style={headerStyle}>
-                <Link to="/mypage" className='custom-link'>
+                <Link to="/search" className='custom-link'>
                     <RiArrowLeftSLine size={35} />
                 </Link>
                 <div style={headerStyle_loge}>
@@ -39,4 +39,4 @@ const Header = () => {
     );
 }
 
-export default Header;
+export default Header_search;

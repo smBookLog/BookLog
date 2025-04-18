@@ -156,7 +156,7 @@ body {
   margin-right: 5px;
   font-size: 16px;
   font-weight: bold;
-  
+
 }
 
 .review-text {
@@ -174,7 +174,7 @@ body {
   width: auto;
   /* margin-left: 60px; */
   object-fit: cover;
-   display: flex;
+  display: flex;
   flex-direction: column;
 }
 
@@ -281,9 +281,8 @@ body {
 
 .comment {
   margin-bottom: 15px;
-  padding-bottom: 15px;
+  padding-bottom: 3px;
   padding-top: 15px;
-  border-bottom: 1px solid #e0e0e0;
   border-top: 1px solid #e0e0e0;
 }
 
@@ -310,6 +309,9 @@ body {
   display: flex;
   padding-left: 50px;
   padding-top: 8px;
+  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .comment-input-container {
@@ -317,6 +319,16 @@ body {
   align-items: center;
   padding-top: 15px;
   position: relative;
+}
+
+.comment-actions button {
+  padding: 4px 10px;
+  font-size: 12x;
+  background-color: #888;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .comment-input {
@@ -360,7 +372,8 @@ body {
     padding-right: 30px;
     width: auto;
     align-items: center;
-    margin-left: 0px;  /* ← 이것이 가운데 정렬 핵심 */
+    margin-left: 0px;
+    /* ← 이것이 가운데 정렬 핵심 */
 
     /* margin-bottom: 15px; */
     /* padding: 40px; */
