@@ -397,3 +397,7 @@ body {
     padding-left: 0;
   }
 }
+
+.like-filled {
+  color: #ff4d4d;
+}

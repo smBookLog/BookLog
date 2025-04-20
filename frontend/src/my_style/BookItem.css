@@ -48,3 +48,40 @@
     object-fit: cover;
     max-width: 100%; /* 부모 요소를 넘지 않도록 제한 */
   }
+
+  .tag-d {
+    background-color: #f3e13e;
+    border-radius: 15px;
+    padding: 3px 10px;
+    font-size: 12px;
+}
+
+.tag-d.color-0 {
+    background-color: #FFD8D8;
+    color: #A60000;
+}
+
+.tag-d.color-1 {
+    background-color: #D8F0FF;
+    color: #006999;
+}
+
+.tag-d.color-2 {
+    background-color: #D8FFD8;
+    color: #007A1E;
+}
+
+.tag-d.color-3 {
+    background-color: #F8D8FF;
+    color: #850085;
+}
+
+.tag-d.color-4 {
+    background-color: #FFF0D8;
+    color: #9B5700;
+}
+
+.tag-d.color-5 {
+    background-color: #E2E2E2;
+    color: #3C3C3C;
+}
