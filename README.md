@@ -192,7 +192,7 @@
 <img src="./images/search.png" alt="검색" width="500"/>
 - 기능: 통합 검색(책, 유저)
 <br/><br/>
-<img src="./images/add_book.png" alt="책 디테일" width="500"/>
+<img src="./images/book_detail.png" alt="책 디테일" width="500"/>
 - 기능: 도서 정보 조회, 독서 상태 선택하여 추가<br/>
 - 특징: 도서관 정보나루 API 연동
   
