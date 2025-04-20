@@ -18,7 +18,7 @@ import com.booklog.db.ReadingLogMapper;
 import com.booklog.model.CommentDTO;
 import com.booklog.model.ReadingLogDTO;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 @RestController
 public class ReadingLogController {
 

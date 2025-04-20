@@ -292,7 +292,7 @@ const Bookdetail = () => {
                             <div className="detail-book-info-d" id='a'>
                                 <div className="book-header-d">
                                     <h3>{bookTitle || '제목 없음'} </h3>
-                                    <h4>| {bookAuthor || '저자 미상'}</h4>
+                                    <h4>{bookAuthor || '저자 미상'}</h4>
                                     <div className="category-row-d underline-d">
                                         <span className="category-label-d">장르</span>
                                         <span>{genre}</span>

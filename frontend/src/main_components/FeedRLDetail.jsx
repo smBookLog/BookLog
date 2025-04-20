@@ -266,7 +266,6 @@ const FeedRLDetail = () => {
             style={{
               display: "flex",
               alignItems: "flex-start",
-              backgroundColor: "#eeeeee",
               padding: "16px",
               borderRadius: "20px",
               marginTop: "16px",

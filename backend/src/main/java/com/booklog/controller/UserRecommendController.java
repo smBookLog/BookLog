@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.booklog.db.UserRecommendMapper;
 import com.booklog.model.UserRecommendDTO;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 @RestController
 public class UserRecommendController {
 

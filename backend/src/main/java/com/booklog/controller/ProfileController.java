@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.booklog.db.ProfileMapper;
 import com.booklog.model.ProfileDTO;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 @RestController
 public class ProfileController {
 

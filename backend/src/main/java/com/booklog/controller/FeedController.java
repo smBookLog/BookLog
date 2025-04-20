@@ -26,7 +26,7 @@ import com.booklog.model.FeedItemDTO;
 import com.booklog.model.ReadingLogDTO;
 import com.booklog.model.UserRecommendDTO;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 @RestController
 @PropertySource("classpath:config.properties")
 public class FeedController {

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.booklog.db.UserMapper;
 import com.booklog.model.UserDTO;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 @RestController
 public class UserController {
 

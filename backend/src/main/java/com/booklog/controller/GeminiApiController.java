@@ -21,7 +21,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.booklog.db.GeminiApiMapper;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 @RestController
 @PropertySource("classpath:config.properties")
 public class GeminiApiController {
