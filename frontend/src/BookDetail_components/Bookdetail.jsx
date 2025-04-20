@@ -262,7 +262,6 @@ const Bookdetail = () => {
         const tagColorCount = 6; // 클래스는 color-0 ~ color-5로 구성
         return `color-${index % tagColorCount}`;
     };
-
     if (!userId) return null;
     if (!bookIdx && !logIdx && !location.state) return null;
 

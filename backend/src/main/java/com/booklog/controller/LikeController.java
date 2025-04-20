@@ -33,27 +33,24 @@ public class LikeController {
       return "이미 좋아요한 게시물입니다";
    }
 
-   // 좋아요 취소
-   // http://localhost:8082/controller/dislike
-   @DeleteMapping(value = "/dislike", consumes = "application/json", produces = "text/plain; charset=UTF-8")
-   public String unlike(@RequestBody LikeDTO like) {
-       int logIdx = like.getLogIdx();
-       String userId = like.getUserId();
+	// 좋아요 취소
+	// http://localhost:8082/controller/dislike
+	@DeleteMapping(value = "/dislike", consumes = "application/json", produces = "text/plain; charset=UTF-8")
+	public String unlike(@RequestBody LikeDTO like) {
+	    int logIdx = like.getLogIdx();
+	    String userId = like.getUserId();
 
-       if (likeMapper.hasLiked(logIdx, userId) > 0) {
-           likeMapper.deleteLike(logIdx, userId);
-           return "좋아요 취소 완료";
-       }
-       return "좋아요한 게시물이 아닙니다";
-   }
+	    if (likeMapper.hasLiked(logIdx, userId) > 0) {
+	        likeMapper.deleteLike(logIdx, userId);
+	        return "좋아요 취소 완료";
+	    }
+	    return "좋아요한 게시물이 아닙니다";
+	}
 
-
-
-   // 좋아요 수 조회
-   // http://localhost:8082/controller/39/likes
-   @GetMapping(value = "/{logIdx}/likes")
-   public int getLikeCount(@PathVariable int logIdx) {
-      return likeMapper.countLikes(logIdx);
-   }
-   
+	// 좋아요 수 조회
+	// http://localhost:8082/controller/39/likes
+	@GetMapping(value = "/{logIdx}/likes")
+	public int getLikeCount(@PathVariable int logIdx) {
+		return likeMapper.countLikes(logIdx);
+	}
 }

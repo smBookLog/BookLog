@@ -33,3 +33,18 @@
     max-width: 95%;
   }
 }
+
+
+
+/* ReviewList.css 파일에 추가 */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px; /* 필요에 따라 조정 */
+}
+
+.loading-spinner {
+  width: 50px; /* GIF 크기에 따라 조정 */
+  height: 50px; /* GIF 크기에 따라 조정 */
+}

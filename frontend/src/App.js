@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 
 import Header_main from './header_components/Header_main'; // 로고 - 메인 - 나의 서재 - 검색 - 내정보
-import Header from './header_components/Header'; // 헤더 < - 로고
+import Header_mypage from './header_components/Header_mypage'; // 독서목록 헤더 < - 로고
 import Search from './header_components/Search'; // 검색창
 import Information from './information_components/Information'; // 책 정보
 import EditProfile from './myprofile_components/EdiProfile'; // 회원정보수정
@@ -22,10 +22,8 @@ import MessageList from './FollowersChat_components/MessageList'; // 채팅
 import Message from './FollowersChat_components/Message';
 import ChatPage from './FollowersChat_components/ChatPage';
 import Bookdetail from './BookDetail_components/Bookdetail'; // 독서 기록
-// import TabBar from './my_components/TabBar'; // 독서 목록
 import BookList from './my_components/BookList';
 import ReviewList from './main_components/ReviewList';
-import Header_mypage from './header_components/Header_mypage'; // 독서목록 헤더 < - 로고
 
 
 
@@ -53,7 +51,7 @@ function App() {
     }
   )
     .then((res) => {
-      console.log(res)
+      // console.log(res)
       setCk(res.data)
     })
     .catch(err => {
@@ -101,6 +99,7 @@ function App() {
         {/* 책 정보 */}
         <Route path='/information/:isbn' element={<Information />} />
 
+        {/* 독서 목록 */}
         <Route
           path='/booklist'
           element={

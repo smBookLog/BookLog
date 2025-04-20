@@ -276,7 +276,6 @@ const Information = () => {
             <p>
               <strong>장르: </strong> {book.genre || "장르 정보 없음"}
             </p>
-
             <div className="dropdown-wrapper" ref={dropdownRef}>
               <button
                 className="add-button"

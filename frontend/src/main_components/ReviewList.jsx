@@ -11,7 +11,7 @@ function ReviewList() {
   const [feedItems, setFeedItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [userInfo, setUserInfo] = useState(null);
+  const [userInfo, setUserInfo] = useState(null); 
   const navigate = useNavigate();
   const [recommendation, setRecommendation] = useState(null);
 

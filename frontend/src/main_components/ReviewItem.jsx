@@ -112,13 +112,15 @@ const ReviewItem = ({ review }) => {
 
         try {
             if (isLiked) {
-                // Fix for DELETE request with body
-                await axios.delete("http://localhost:8082/controller/dislike", {
+                await axios.request({
+                    method: 'DELETE',
+                    url: 'http://localhost:8082/controller/dislike',
                     data: likeData,
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 });
+
                 setLikes(prev => prev - 1);
             } else {
                 await axios.post("http://localhost:8082/controller/like", likeData);

@@ -7,7 +7,6 @@ import defaultPic from '../etc_assets/profile_1.png'; // 기본 프로필 이미
 const FollowersPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
   // 로케이션에서 프로필 사용자 ID 받기 (없으면 현재 로그인한 사용자)
   const profileUserId = location.state?.userId;
   const initialFollowersCount = location.state?.followersCount || 0;
@@ -129,14 +128,23 @@ const FollowersPage = () => {
     })
       .then(res => {
         console.log('팔로우 응답:', res.data);
-        // 상태 업데이트
+
+        // 팔로우 상태 업데이트
         setFollowStatus(prev => ({
           ...prev,
           [targetUserId]: true
         }));
-        // 현재 탭에 따라 데이터 갱신
-        if (activeTab === 'following' && userId === currentUserId) {
-          setFollowing(prev => [...prev, targetUserId]);
+
+        // 프로필 페이지가 내가 로그인한 사용자일 때와 아닐 때를 분기하여 카운터 업데이트
+        if (userId === currentUserId) {
+          // 내 프로필에서 다른 사용자를 팔로우한 경우 => 나의 팔로잉 수 증가
+          setFollowingCount(prevCount => prevCount + 1);
+          setFollowing(prev => [...prev, targetUserId]); // 목록에도 추가
+        } else {
+          // 다른 사용자의 프로필이라면 해당 사용자의 팔로워 수 증가
+          setFollowerCount(prevCount => prevCount + 1);
+          // 팔로워 목록에 추가하는 로직 (원하는 경우에만)
+          setFollowers(prev => [...prev, targetUserId]);
         }
       })
       .catch(err => {
@@ -155,25 +163,41 @@ const FollowersPage = () => {
     axios.delete(`http://localhost:8082/controller/unfollow/${currentUserId}/${targetUserId}`)
       .then(res => {
         console.log('언팔로우 응답:', res.data);
-        // 상태 업데이트
+
+        // 팔로우 상태 업데이트
         setFollowStatus(prev => ({
           ...prev,
           [targetUserId]: false
         }));
-        // 현재 탭에 따라 데이터 갱신
-        if (activeTab === 'following' && userId === currentUserId) {
+
+        // 프로필 페이지가 내가 로그인한 사용자일 때와 아닐 때를 분기하여 카운터 업데이트
+        if (userId === currentUserId) {
+          // 내 프로필에서 언팔로우한 경우 => 나의 팔로잉 수 감소
+          setFollowingCount(prevCount => prevCount - 1);
           setFollowing(prev => prev.filter(id => id !== targetUserId));
-          // 사용자 목록에서도 제거 (following 탭에서만)
-          if (activeTab === 'following') {
-            setUsers(prev => prev.filter(user => user.userId !== targetUserId));
-          }
+          // 사용자 목록에서도 제거 (자신의 팔로잉 목록에 반영)
+          setUsers(prev => prev.filter(user => user.userId !== targetUserId));
+        } else {
+          // 다른 사용자의 프로필이라면 해당 사용자의 팔로워 수 감소
+          setFollowerCount(prevCount => prevCount - 1);
+          // 팔로워 목록에서 제거하는 로직 (원하는 경우에만)
+          setFollowers(prev => prev.filter(id => id !== targetUserId));
+          // followers 탭에서는 목록은 유지하면서 상태만 업데이트
+          setUsers(prev =>
+            prev.map(user =>
+              user.userId === targetUserId ? { ...user } : user
+            )
+          );
         }
       })
       .catch(err => {
-        console.error('언팔로우 실패', err);
+        console.error('언팔로우 실패', err.response?.data || err.message || err);
         alert('언팔로우에 실패했습니다. 다시 시도해주세요.');
       });
   };
+
+
+
 
   // 탭 전환 처리
   const handleTabChange = (type) => {

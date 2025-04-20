@@ -35,13 +35,11 @@ function UserSelectorBook() {
       .then(followingRes => {
         if (followingRes && followingRes.data) {
           const followingList = followingRes.data;
-
           // 팔로우 상태 설정
           const status = {};
           recommendedUsers.forEach(user => {
             status[user.userId] = followingList.includes(user.userId);
           });
-
           setFollowStatus(status);
         }
       })
