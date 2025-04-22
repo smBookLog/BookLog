@@ -17,13 +17,13 @@
 
 ## 👩‍💻 팀원 소개
 
-| 이름   | 역할         | 담당 업무 |
-|--------|--------------|-----------|
-| 권현정 | Front-End / 팀장 |- 로그인, 회원가입 페이지 개발<br>- UI 컴포넌트 개발<br>- 반응형 웹 구현 |
-| 김효진 | Front-End / 일정 관리 | - 나의 서재 페이지 개발<br>- 메시지, 팔로우 기능 구현<br>- 개발 일정 관리|
-| 김혜수 | Back-End / DB | - 백엔드 개발<br>- 데이터베이스 설계 및 구현<br>- API 개발 |
-| 김민지 | Front-End / 모델링 | - 프론트엔드 개발 총괄<br>- 메인 페이지 개발<br>- 헤더, 검색 기능 구현 |
-| 국태은 | Front-End / 발표 | - 발표 자료 준비<br>- 반응형 웹 구현<br>- UI/UX 설계 |
+| 이름   | 역할         | 담당 업무 | GitHub |
+|--------|--------------|-----------|--------|
+| 권현정 | Front-End / 팀장 | - 로그인, 회원가입 페이지 개발<br>- UI 컴포넌트 개발<br>- 반응형 웹 구현 | [khj0721](https://github.com/khj0721) |
+| 김효진 | Front-End / 일정 관리 | - 나의 서재 페이지 개발<br>- 메시지, 팔로우 기능 구현<br>- 개발 일정 관리 | [hyojin10](https://github.com/hyojin10) |
+| 김혜수 | Back-End / DB | - 백엔드 개발<br>- 데이터베이스 설계 및 구현<br>- API 개발 | [hk678](https://github.com/hk678) |
+| 김민지 | Front-End / 모델링 | - 프론트엔드 개발 총괄<br>- 메인 페이지 개발<br>- 헤더, 검색 기능 구현 | [Hanleeyun](https://github.com/Hanleeyun) |
+| 국태은 | Front-End / 발표 | - 발표 자료 준비<br>- 반응형 웹 구현<br>- UI/UX 설계 | [TaeeunKuk](https://github.com/TaeeunKuk) |
 
 <br/>
 
